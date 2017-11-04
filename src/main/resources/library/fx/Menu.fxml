@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<MenuBar
+        xmlns="http://javafx.com/javafx/8.0.111"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="library.fx.Menu">
+    <Menu text="File">
+        <MenuItem onAction="#newAction" text="New">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+            </accelerator>
+        </MenuItem>
+        <MenuItem onAction="#open" text="Open">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+            </accelerator>
+        </MenuItem>
+        <MenuItem onAction="#save" text="Save">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+            </accelerator>
+        </MenuItem>
+        <SeparatorMenuItem mnemonicParsing="false"/>
+        <MenuItem onAction="#settings" text="Settings">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+            </accelerator>
+        </MenuItem>
+        <SeparatorMenuItem mnemonicParsing="false"/>
+        <MenuItem onAction="#quit" text="Quit"/>
+        <accelerator>
+            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+        </accelerator>
+    </Menu>
+    <Menu text="Edit">
+        <accelerator>
+            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+        </accelerator>
+        <MenuItem mnemonicParsing="false" text="Undo"/>
+        <MenuItem mnemonicParsing="false" text="Redo"/>
+    </Menu>
+    <Menu text="Help">
+        <accelerator>
+            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+        </accelerator>
+        <MenuItem onAction="#documentation" text="Documentation">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+            </accelerator>
+        </MenuItem>
+        <MenuItem onAction="#about" text="About"/>
+    </Menu>
+</MenuBar>
