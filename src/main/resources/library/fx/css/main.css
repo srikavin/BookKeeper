@@ -1,0 +1,10 @@
+.main-selection:hover {
+    -fx-background-color: #bcdfff;
+    -fx-fill: #bcdfff;
+}
+
+.main-selection-container:hover .main-selection {
+    -fx-background-color: #bcdfff;
+    -fx-fill: #bcdfff;
+    -fx-cursor: hand;
+}
