@@ -2,7 +2,7 @@ package library.data;
 
 import java.util.Objects;
 
-public class Identifier {
+public class Identifier implements Comparable<Identifier> {
     private final String id;
 
     public Identifier(String id) {
@@ -15,7 +15,7 @@ public class Identifier {
 
     @Override
     public boolean equals(Object o) {
-        return this == o || (o instanceof Identifier && Objects.equals(id, o));
+        return this == o || (o instanceof Identifier && Objects.equals(id, ((Identifier) o).id));
     }
 
     public int get() {
@@ -28,5 +28,10 @@ public class Identifier {
     @Override
     public String toString() {
         return id;
+    }
+
+    @Override
+    public int compareTo(Identifier o) {
+        return id.compareTo(o.id);
     }
 }

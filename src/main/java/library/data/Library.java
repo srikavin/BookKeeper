@@ -91,7 +91,7 @@ public class Library {
         return null;
     }
 
-    public void saveToFile(FileWriter fileWriter) throws IOException {
+    public void save(FileWriter fileWriter) throws IOException {
         fileWriter.write(dataTypeSeparator + "TYPE");
         for (Patron patron : patrons) {
             String[] data = patron.asData();
@@ -101,4 +101,13 @@ public class Library {
         }
     }
 
+    private void appendToWriter(FileWriter writer, List<LibraryData> libraryObjects) throws IOException {
+        for (LibraryData e : libraryObjects) {
+            String[] data = e.asData();
+            for (String value : data) {
+                writer.write(value + ",");
+            }
+            writer.write("\n");
+        }
+    }
 }
