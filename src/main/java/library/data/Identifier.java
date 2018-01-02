@@ -1,5 +1,7 @@
 package library.data;
 
+import java.util.Objects;
+
 public class Identifier {
     private final String id;
 
@@ -7,15 +9,16 @@ public class Identifier {
         this.id = id;
     }
 
-    public Identifier(int id) {
-        this.id = String.valueOf(id);
-    }
-
     public String getId() {
         return id;
     }
 
-    public int get(){
+    @Override
+    public boolean equals(Object o) {
+        return this == o || (o instanceof Identifier && Objects.equals(id, o));
+    }
+
+    public int get() {
         return Integer.parseInt(id);
     }
 
