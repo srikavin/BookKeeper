@@ -8,3 +8,18 @@
     -fx-fill: #bcdfff;
     -fx-cursor: hand;
 }
+
+:invalid-input {
+    -fx-text-box-border: red;
+    -fx-focus-color: red;
+}
+
+/** Size the combo-box button. */
+.combo-box {
+    -fx-pref-width: 100;
+}
+
+/** Size the combo-box drop down list. */
+.combo-box-popup > .list-view {
+    -fx-pref-width: 100;
+}

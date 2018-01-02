@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 
-public class Menu extends BorderPane {
+public class Menu extends BaseController {
     @FXML
     void about(ActionEvent event) {
 

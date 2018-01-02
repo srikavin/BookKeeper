@@ -1,25 +1,22 @@
 package library.data;
 
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Identifier {
-    private final SimpleStringProperty id = new ReadOnlyStringWrapper();
+    private final String id;
 
     public Identifier(String id) {
-        this.id.set(id);
+        this.id = id;
     }
 
     public Identifier(int id) {
-        this.id.set(String.valueOf(id));
-    }
-
-    public SimpleStringProperty idProperty() {
-        return id;
+        this.id = String.valueOf(id);
     }
 
     public String getId() {
-        return id.get();
+        return id;
+    }
+
+    public int get(){
+        return Integer.parseInt(id);
     }
 
     /**
@@ -27,6 +24,6 @@ public class Identifier {
      */
     @Override
     public String toString() {
-        return id.get();
+        return id;
     }
 }

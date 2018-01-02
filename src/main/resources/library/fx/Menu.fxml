@@ -7,11 +7,6 @@
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="library.fx.Menu">
     <Menu text="File">
-        <MenuItem onAction="#newAction" text="New">
-            <accelerator>
-                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-            </accelerator>
-        </MenuItem>
         <MenuItem onAction="#open" text="Open">
             <accelerator>
                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
