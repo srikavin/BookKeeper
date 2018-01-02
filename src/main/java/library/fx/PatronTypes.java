@@ -37,9 +37,9 @@ public class PatronTypes extends BaseController implements Initializable {
 
     @FXML
     private void updatePatronType(ActionEvent event) {
-        int index = Integer.parseInt(identifier.getText());
-        PatronType type = patronTypeTable.getItems().get(index);
+        PatronType type = patronTypeTable.getSelectionModel().getSelectedItem();
         if (validate()) {
+            int index = patronTypeTable.getItems().indexOf(type);
             type.setMaxCheckedOutBooks(maxCheckedOutBooks.getValue());
             type.setMaxCheckoutDays(maxCheckoutDays.getValue());
             type.setName(name.getText());

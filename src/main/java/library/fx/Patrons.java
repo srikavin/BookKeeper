@@ -46,14 +46,14 @@ public class Patrons extends BaseController implements Initializable {
 
     @FXML
     private void updatePatron(ActionEvent event) {
-        int index = Integer.parseInt(identifier.getText());
-        Patron patron = patronTable.getItems().get(index);
+        Patron patron = patronTable.getSelectionModel().getSelectedItem();
         if (validate()) {
+            int index = patronTable.getItems().indexOf(patron);
             patron.setPatronType(patronTypes.getSelectionModel().getSelectedItem());
             patron.setFirstName(firstName.getText());
             patron.setLastName(lastName.getText());
+            patronTable.getItems().set(index, patron);
         }
-        patronTable.getItems().set(index, patron);
     }
 
     @FXML
