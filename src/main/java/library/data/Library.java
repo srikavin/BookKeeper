@@ -68,17 +68,23 @@ public class Library {
      * @return The {@linkplain PatronType} object represented by the specified identifier or null, if not found
      */
     public PatronType getPatronTypeFromId(Identifier id) {
-        return patronTypes.get(id.get());
+        for (PatronType e : patronTypes) {
+            if (e.getIdentifier().equals(id)) {
+                return e;
+            }
+        }
+        return null;
     }
 
     /**
      * Resolves a {@link PatronType} from a specified name
+     *
      * @param name Name of the PatronType
      * @return The {@linkplain PatronType} object represented by the specified name or null, if not found
      */
-    public PatronType getPatronTypeFromName(String name){
-        for(PatronType e: patronTypes){
-            if(e.getName().equals(name)){
+    public PatronType getPatronTypeFromName(String name) {
+        for (PatronType e : patronTypes) {
+            if (e.getName().equals(name)) {
                 return e;
             }
         }
