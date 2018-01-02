@@ -18,10 +18,6 @@ public class Identifier implements Comparable<Identifier> {
         return this == o || (o instanceof Identifier && Objects.equals(id, ((Identifier) o).id));
     }
 
-    public int get() {
-        return Integer.parseInt(id);
-    }
-
     /**
      * {@inheritDoc}
      */
