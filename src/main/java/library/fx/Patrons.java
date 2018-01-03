@@ -3,8 +3,11 @@ package library.fx;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -43,6 +46,9 @@ public class Patrons extends BaseController implements Initializable {
     private Pane contentBackground;
     @FXML
     private Pane container;
+    @FXML
+    private TextField filter;
+    private FilteredList<Patron> filteredList;
 
     @FXML
     private void updatePatron(ActionEvent event) {
@@ -57,7 +63,7 @@ public class Patrons extends BaseController implements Initializable {
     }
 
     @FXML
-    private void goHome(ActionEvent event) {
+    private void goHome(Event event) {
         getInitializer().setContent("MainWindow.fxml");
     }
 
@@ -137,11 +143,30 @@ public class Patrons extends BaseController implements Initializable {
             //Set the currently selected PatronType
             patronTypes.getSelectionModel().select(patron.getPatronType());
         });
+
+        filter.textProperty().addListener(
+                (observable, oldValue, newValue) ->
+                        filteredList.setPredicate((e) -> {
+                                    String lowerCaseValue = newValue.toLowerCase();
+                                    return e.getFirstName().toLowerCase().contains(lowerCaseValue) ||
+                                            e.getLastName().toLowerCase().contains(lowerCaseValue) ||
+                                            e.getIdentifier().getId().toLowerCase().contains(lowerCaseValue);
+                                }
+                        ));
     }
 
     @Override
     public void initializeData() {
         Library library = getLibrary();
-        patronTable.setItems(FXCollections.observableList(library.getPatrons()));
+
+        //Load data from Library object
+        ObservableList<Patron> observableList = FXCollections.observableList(library.getPatrons());
+        //Setup filtering
+        filteredList = new FilteredList<>(observableList);
+        //Setup sorting
+        SortedList<Patron> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(patronTable.comparatorProperty());
+        //Set the list to the table
+        patronTable.setItems(sortedList);
     }
 }

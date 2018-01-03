@@ -4,8 +4,10 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -34,6 +36,9 @@ public class PatronTypes extends BaseController implements Initializable {
     private TextField name;
     @FXML
     private TextField identifier;
+    @FXML
+    private TextField filter;
+    private FilteredList<PatronType> filteredList;
 
     @FXML
     private void updatePatronType(ActionEvent event) {
@@ -48,7 +53,7 @@ public class PatronTypes extends BaseController implements Initializable {
     }
 
     @FXML
-    private void goHome(ActionEvent event) {
+    private void goHome(Event event) {
         getInitializer().setContent("MainWindow.fxml");
     }
 
@@ -123,11 +128,19 @@ public class PatronTypes extends BaseController implements Initializable {
             //Set the identifier
             identifier.setText(patronType.getIdentifier().toString());
         });
+
+        filter.textProperty().addListener(
+                (observable, oldValue, newValue) ->
+                        filteredList.setPredicate(
+                                e -> e.getName().toLowerCase().contains(newValue.toLowerCase())
+                                        || e.getIdentifier().getId().contains(newValue)));
     }
 
     @Override
     public void initializeData() {
         Library library = getLibrary();
-        patronTypeTable.setItems(FXCollections.observableList(library.getPatronTypes()));
+        ObservableList<PatronType> list = FXCollections.observableList(library.getPatronTypes());
+        filteredList = new FilteredList<>(list);
+        patronTypeTable.setItems(filteredList);
     }
 }
