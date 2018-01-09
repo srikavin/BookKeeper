@@ -1,24 +1,25 @@
 package library.fx;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.css.PseudoClass;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
+import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import library.data.Library;
 import library.data.Patron;
 import library.data.PatronType;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * This class serves as a controller of the Patrons view defined in the FXML.
@@ -26,48 +27,35 @@ import java.util.ResourceBundle;
  *
  * @author Srikavin Ramkumar
  */
-public class Patrons extends BaseController implements Initializable {
-    private final PseudoClass errorClass = PseudoClass.getPseudoClass("invalid-input");
+public class Patrons extends DataViewController<Patron> implements Initializable {
     @FXML
     private ChoiceBox<PatronType> patronTypes;
-    @FXML
-    private TableView<Patron> patronTable;
     @FXML
     private TextField lastName;
     @FXML
     private TextField identifier;
     @FXML
     private TextField firstName;
-    @FXML
-    private Pane header;
-    @FXML
-    private Pane headerBackground;
-    @FXML
-    private Pane contentBackground;
-    @FXML
-    private Pane container;
-    @FXML
-    private TextField filter;
-    private FilteredList<Patron> filteredList;
 
-    @FXML
-    private void updatePatron(ActionEvent event) {
-        Patron patron = patronTable.getSelectionModel().getSelectedItem();
-        if (validate()) {
-            int index = patronTable.getItems().indexOf(patron);
-            patron.setPatronType(patronTypes.getSelectionModel().getSelectedItem());
-            patron.setFirstName(firstName.getText());
-            patron.setLastName(lastName.getText());
-            patronTable.getItems().set(index, patron);
-        }
+    public static void initializeTable(TableView<Patron> tableView) {
+        //Create all columns
+        ObservableList<TableColumn<Patron, ?>> columns = tableView.getColumns();
+
+        TableColumn<Patron, String> idColumn = new TableColumn<>("Identifier");
+        TableColumn<Patron, String> firstNameColumn = new TableColumn<>("First Name");
+        TableColumn<Patron, String> lastNameColumn = new TableColumn<>("Last Name");
+        TableColumn<Patron, String> patronTypeColumn = new TableColumn<>("Patron Type");
+
+        idColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getIdentifier().getId()));
+        firstNameColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getFirstName()));
+        lastNameColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getLastName()));
+        patronTypeColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getPatronType().getName()));
+
+        //Add columns to the table
+        columns.setAll(idColumn, firstNameColumn, lastNameColumn, patronTypeColumn);
     }
 
-    @FXML
-    private void goHome(Event event) {
-        getInitializer().setContent("MainWindow.fxml");
-    }
-
-    private boolean validate() {
+    protected boolean validate() {
         //Set all fields to the valid state to reset error states
         firstName.pseudoClassStateChanged(errorClass, false);
         lastName.pseudoClassStateChanged(errorClass, false);
@@ -78,95 +66,92 @@ public class Patrons extends BaseController implements Initializable {
         String fName = firstName.getText();
         String lName = lastName.getText();
 
-        boolean success = true;
+        //Keep track of the values
+        Set<Node> errors = new HashSet<>();
 
         //Make sure the first name is not empty
-        if (fName.length() == 0) {
-            firstName.pseudoClassStateChanged(errorClass, true);
-            success = false;
+        if (fName.isEmpty()) {
+            errors.add(firstName);
         }
         //Make sure the last name is not empty
-        if (lName.length() == 0) {
-            lastName.pseudoClassStateChanged(errorClass, true);
-            success = false;
+        if (lName.isEmpty()) {
+            errors.add(lastName);
         }
 
         //Make sure the currently selected PatronType is not empty
-        SelectionModel<PatronType> patronTypeSelectionModel = patronTypes.getSelectionModel();
-        if (patronTypeSelectionModel.isEmpty() || patronTypeSelectionModel.getSelectedItem() == null) {
-            patronTypes.pseudoClassStateChanged(errorClass, true);
-            success = false;
+        if (patronTypes.getSelectionModel().isEmpty()) {
+            errors.add(patronTypes);
         }
 
-        return success;
+        //Iterate through all errors and add a red outline to them
+        for (Node e : errors) {
+            e.pseudoClassStateChanged(errorClass, true);
+        }
+
+        //Return true if errors is empty and return false if errors have occurred
+        return errors.isEmpty();
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //Override id column defined in the fxml
-        ObservableList<TableColumn<Patron, ?>> columns = patronTable.getColumns();
-        TableColumn<Patron, String> idColumn = new TableColumn<>("Identifier");
-        TableColumn<Patron, String> patronTypeColumn = new TableColumn<>("Patron Type");
-        idColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getIdentifier().getId()));
-        patronTypeColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getPatronType().getName()));
-        columns.set(0, idColumn);
-        columns.set(3, patronTypeColumn);
+    protected void setupColumns(TableView table) {
+        //Initialize the table with default columns
+        initializeTable(this.table);
+    }
 
-        patronTable.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() == -1) {
-                return;
-            }
-            //Get the patron currently selected
-            Patron patron = patronTable.getItems().get(newValue.intValue());
-            //Set the lastname
-            lastName.setText(patron.getLastName());
-            //Set the firstname
-            firstName.setText(patron.getFirstName());
-            //Set the identifier
-            identifier.setText(patron.getIdentifier().toString());
+    @Override
+    protected void setCurrentState(Patron patron) {
+        //Set the lastname
+        lastName.setText(patron.getLastName());
+        //Set the firstname
+        firstName.setText(patron.getFirstName());
+        //Set the identifier
+        identifier.setText(patron.getIdentifier().toString());
+        //Set the currently selected PatronType
+        patronTypes.getSelectionModel().select(patron.getPatronType());
+    }
 
-            //Set how to display PatronType objects in the UI
-            patronTypes.setConverter(new StringConverter<PatronType>() {
-                @Override
-                public String toString(PatronType type) {
-                    return type.getName();
-                }
+    @Override
+    protected Predicate<Patron> getFilterPredicate(String filter) {
+        return (e) -> {
+            String lowerCaseValue = filter.toLowerCase();
+            return e.getFirstName().toLowerCase().contains(lowerCaseValue) ||
+                    e.getLastName().toLowerCase().contains(lowerCaseValue) ||
+                    e.getIdentifier().getId().toLowerCase().contains(lowerCaseValue);
+        };
+    }
 
-                @Override
-                public PatronType fromString(String typeString) {
-                    return getLibrary().getPatronTypeFromName(typeString);
-                }
-            });
-
-            //Set the available patron types into the select box
-            patronTypes.setItems(FXCollections.observableList(getLibrary().getPatronTypes()));
-            //Set the currently selected PatronType
-            patronTypes.getSelectionModel().select(patron.getPatronType());
-        });
-
-        filter.textProperty().addListener(
-                (observable, oldValue, newValue) ->
-                        filteredList.setPredicate((e) -> {
-                                    String lowerCaseValue = newValue.toLowerCase();
-                                    return e.getFirstName().toLowerCase().contains(lowerCaseValue) ||
-                                            e.getLastName().toLowerCase().contains(lowerCaseValue) ||
-                                            e.getIdentifier().getId().toLowerCase().contains(lowerCaseValue);
-                                }
-                        ));
+    @Override
+    protected List<Patron> getDataSource() {
+        Library library = getLibrary();
+        return library.getPatrons();
     }
 
     @Override
     public void initializeData() {
-        Library library = getLibrary();
+        super.initializeData();
+        //Set how to display PatronType objects in the UI
+        patronTypes.setConverter(new StringConverter<PatronType>() {
+            @Override
+            public String toString(PatronType type) {
+                return type.getName();
+            }
 
-        //Load data from Library object
-        ObservableList<Patron> observableList = FXCollections.observableList(library.getPatrons());
-        //Setup filtering
-        filteredList = new FilteredList<>(observableList);
-        //Setup sorting
-        SortedList<Patron> sortedList = new SortedList<>(filteredList);
-        sortedList.comparatorProperty().bind(patronTable.comparatorProperty());
-        //Set the list to the table
-        patronTable.setItems(sortedList);
+            @Override
+            public PatronType fromString(String typeString) {
+                return getLibrary().getPatronTypeFromName(typeString);
+            }
+        });
+
+        //Set the available patron types into the select box
+        patronTypes.setItems(FXCollections.observableList(getLibrary().getPatronTypes()));
+
+        Platform.runLater(() -> table.refresh());
+    }
+
+    @Override
+    protected void update(Patron patron) {
+        patron.setFirstName(firstName.getText());
+        patron.setLastName(lastName.getText());
+        patron.setPatronType(patronTypes.getSelectionModel().getSelectedItem());
     }
 }

@@ -44,18 +44,13 @@ public class Patron implements LibraryData {
      */
     public Patron(String[] patronData, Library library) {
         //Delegate object construction to other constructor
-        this(checkDataFormatAndGetIdentifier(patronData),
+        this(new Identifier(patronData[0]),
                 patronData[1],
                 patronData[2],
                 library.getPatronTypeFromId(new Identifier(patronData[3])));
-    }
-
-    private static Identifier checkDataFormatAndGetIdentifier(String[] patronData) {
-        //Check for an illegal data format.
         if (patronData.length != 4) {
-            throw new IllegalArgumentException("Invalid data format used.");
+            throw new RuntimeException("Invalid data type!");
         }
-        return new Identifier(patronData[0]);
     }
 
     /**

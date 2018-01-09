@@ -4,9 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="624.0" style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="624.0" style="-fx-background-color: #f0f0f0;"
+            stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.111"
             fx:controller="library.fx.MainWindow">
 
     <AnchorPane fx:id="container" layoutX="-1.0" layoutY="96.0" prefHeight="301.0" prefWidth="624.0"
@@ -24,7 +25,7 @@
                     <Font name="Roboto Condensed Light" size="27.0"/>
                 </font>
             </Text>
-            <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+            <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&#xE915;"
                   textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <font>

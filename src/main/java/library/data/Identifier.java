@@ -9,6 +9,10 @@ public class Identifier implements Comparable<Identifier> {
         this.id = id;
     }
 
+    public Identifier(int id) {
+        this.id = String.format("%06d", id);
+    }
+
     public String getId() {
         return id;
     }

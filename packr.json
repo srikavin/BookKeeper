@@ -1,0 +1,15 @@
+{
+  "platform": "windows32",
+  "jdk": "C:\\Users\\Srikavin Ramkumar\\Desktop\\java-1.8.0-openjdk-1.8.0.151-1.b12.ojdkbuild.windows.x86.zip",
+  "executable": "BookKeeper",
+  "classpath": [
+    "fblalibrary2017.jar"
+  ],
+  "mainclass": "library.Main",
+  "vmargs": [
+    "Xmx1G"
+  ],
+  "minimizejre": "soft",
+  "output": "out-windows",
+  "verbose": true
+}

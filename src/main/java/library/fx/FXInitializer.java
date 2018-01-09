@@ -9,9 +9,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import library.data.Library;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -38,6 +40,8 @@ public class FXInitializer extends Application {
         //Load the menu items separately from the main content
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
         MenuBar menuBar = menuLoader.load();
+        BaseController menuController = menuLoader.getController();
+        menuController.initialize(this, library);
 
         //Load the default content
         FXMLCacheHolder cacheHolder = loadFile("MainWindow.fxml");
@@ -72,6 +76,25 @@ public class FXInitializer extends Application {
         loadHelp();
     }
 
+    public void loadFile(Path path) throws IOException {
+        this.library = new Library(path);
+        setContent("MainWindow.fxml");
+    }
+
+    public Pair<Object, Stage> showDialog(String fxFile) {
+        try {
+            Stage stage = new Stage();
+            FXMLCacheHolder cacheHolder = loadFile(fxFile);
+            Object controller = cacheHolder.controller;
+            Parent root = cacheHolder.parent;
+            stage.setScene(new Scene(root));
+            return new Pair<>(controller, stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     /**
      * Load all fonts needed
      */
@@ -92,7 +115,7 @@ public class FXInitializer extends Application {
     public void setContent(String fxmlFile) {
         try {
             //Load the specified fxml file
-            FXMLCacheHolder loadedCache = loadFile(fxmlFile);
+            FXMLCacheHolder<BaseController> loadedCache = loadFile(fxmlFile);
 
             //Get the parent node from the file
             Parent content = loadedCache.parent;
@@ -149,11 +172,11 @@ public class FXInitializer extends Application {
         helpStage.toFront();
     }
 
-    private static class FXMLCacheHolder {
-        BaseController controller;
+    private static class FXMLCacheHolder<T> {
+        T controller;
         Parent parent;
 
-        FXMLCacheHolder(BaseController controller, Parent parent) {
+        FXMLCacheHolder(T controller, Parent parent) {
             this.controller = controller;
             this.parent = parent;
         }

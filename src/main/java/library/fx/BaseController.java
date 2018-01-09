@@ -4,13 +4,20 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import library.data.Library;
 
+/**
+ * This class serves as a base for other GUI's to implement. This class is abstract and cannot be instantiated.
+ *
+ * @author Srikavin Ramkumar
+ */
 public abstract class BaseController {
     /**
      * Should be used for animating the in animations. Used in {@link #animateIn(EventHandler)}
@@ -20,6 +27,7 @@ public abstract class BaseController {
      * Should be used for animating the in animations. Used in {@link #animateOut(EventHandler)}
      */
     protected final Timeline animateOutTimeline = new Timeline();
+    protected final PseudoClass errorClass = PseudoClass.getPseudoClass("invalid-input");
     private FXInitializer initializer;
     private Library library;
     @FXML
@@ -49,6 +57,11 @@ public abstract class BaseController {
         }
         this.initializer = initializer;
         this.library = library;
+    }
+
+    @FXML
+    protected void goHome(Event event) {
+        getInitializer().setContent("MainWindow.fxml");
     }
 
     /**

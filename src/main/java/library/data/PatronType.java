@@ -14,13 +14,13 @@ public class PatronType implements LibraryData {
     }
 
     public PatronType(String[] data) {
+        this(new Identifier(data[0]),
+                data[1],
+                Integer.parseInt(data[2]),
+                Integer.parseInt(data[3]));
         if (data.length != 4) {
             throw new IllegalArgumentException("Invalid data used!");
         }
-        this.identifier = new Identifier(data[0]);
-        this.name = data[1];
-        this.maxCheckoutDays = Integer.parseInt(data[2]);
-        this.maxCheckedOutBooks = Integer.parseInt(data[3]);
     }
 
     public String getName() {

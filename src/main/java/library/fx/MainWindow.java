@@ -38,7 +38,7 @@ public class MainWindow extends BaseController implements Initializable {
      */
     @FXML
     private void books(MouseEvent event) {
-
+        getInitializer().setContent("Books.fxml");
     }
 
     /**
