@@ -111,6 +111,9 @@ public class FXInitializer extends Application {
     private void loadFonts() {
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto-Light.ttf"), 10);
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/MaterialIcons-Regular.ttf"), 10);
+        Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto-Bold.ttf"), 10);
+        Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto_Condensed_Regular.ttf"), 10);
+        Font.loadFont(FXInitializer.class.getResourceAsStream("font/RobotoCondensed-Bold.ttf"), 10);
     }
 
     /**
