@@ -160,7 +160,8 @@
                 </font>
             </Text>
             <Text fill="WHITE" layoutX="506.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Robinson High School">
+                  text="Robinson High School" AnchorPane.bottomAnchor="6.826171875"
+                  AnchorPane.rightAnchor="7.2080078125">
                 <font>
                     <Font name="Roboto Condensed Light" size="13.0"/>
                 </font>
