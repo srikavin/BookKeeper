@@ -10,6 +10,12 @@ import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 public class ReportGenerator {
+    private static final double FINE_RATE = 1.5;
+    private static final double FINE_LIMIT = 60;
+    private static final String BOOK_HEADER_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";
+    private static final String BOOK_CONTENT_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";
+    private static final String SEPARATOR = "---------------------------------------------------------------------------------------------\n";
+
     private final Library library;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
             .withLocale(Locale.US)
@@ -17,7 +23,6 @@ public class ReportGenerator {
 
     public ReportGenerator(Library library) {
         this.library = library;
-
     }
 
     public String formatByPatron(List<Book> books) {
@@ -40,20 +45,22 @@ public class ReportGenerator {
         for (Map.Entry<Patron, List<Book>> e : patronBookMap.entrySet()) {
             List<Book> booksOwned = e.getValue();
             Patron patron = e.getKey();
-            formatter.format("%-8s%-20s\n", patron.getIdentifier(), patron.getLastName() + ", " + patron.getFirstName());
-            formatter.format("%-8s%-30.30s%-30.30s%-25s\n", "Item ID", "Title", "Author", "Due Date");
-            formatter.format("-----------------------------------------------------------------------------\n");
+            report.append(patron.getLastName()).append(", ").append(patron.getFirstName()).append(" - ").append(patron.getIdentifier()).append('\n');
+            formatter.format(BOOK_HEADER_FORMAT, "Item ID", "Title", "Author", "Due Date", "Days Till Due");
+            report.append(SEPARATOR);
 
             PatronType patronType = patron.getPatronType();
 
             for (Book book : booksOwned) {
                 TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
 
+                int daysTillDue = getDayTillDue(book);
+
                 Instant dueDate = book.getCheckOutDate().plus(maxCheckoutTime);
-                formatter.format("%-8s%-30.30s%-30.30s%-25s\n", book.getIdentifier().getId(), book.getName(), book.getAuthor(),
-                        dateTimeFormatter.format(dueDate));
+                formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getName(), book.getAuthor(),
+                        dateTimeFormatter.format(dueDate), getDaysTillDue(daysTillDue));
             }
-            formatter.format("\n");
+            formatter.format("\n\n");
         }
 
         return formatter.out().toString();
@@ -68,6 +75,14 @@ public class ReportGenerator {
         return (int) ChronoUnit.DAYS.between(Instant.now(), dueDate);
     }
 
+    private String getDaysTillDue(int daysLeft) {
+        if (daysLeft > 0) {
+            return String.format("%-8.2s", daysLeft);
+        } else {
+            return "Overdue";
+        }
+    }
+
     public String formatByItems(List<Book> books) {
         if (books.isEmpty()) {
             return "No Books.";
@@ -77,7 +92,8 @@ public class ReportGenerator {
         StringBuilder report = new StringBuilder();
         Formatter formatter = new Formatter(report);
 
-        formatter.format("%-8s%-30.30s%-30.30s%-25s%-8s\n", "Item ID", "Title", "Author", "Due Date", "Days Till Due");
+        formatter.format(BOOK_HEADER_FORMAT, "Item ID", "Title", "Author", "Due Date", "Days Till Due");
+        report.append(SEPARATOR);
 
         for (Book e : books) {
             Patron patron = e.getCurrentPatron();
@@ -88,13 +104,41 @@ public class ReportGenerator {
             int daysLeft = getDayTillDue(e);
 
             Instant dueDate = e.getCheckOutDate().plus(maxCheckoutTime);
-            if (daysLeft > 0) {
-                formatter.format("%-8s%-30.30s%-30.30s%-25s%-8d\n", e.getIdentifier().getId(), e.getName(), e.getAuthor(),
-                        dateTimeFormatter.format(dueDate), daysLeft);
-            } else {
-                formatter.format("%-8s%-30.30s%-30.30s%-25s%-8s\n", e.getIdentifier().getId(), e.getName(), e.getAuthor(),
-                        dateTimeFormatter.format(dueDate), "Overdue");
+            formatter.format(BOOK_CONTENT_FORMAT, e.getIdentifier().getId(), e.getName(), e.getAuthor(),
+                    dateTimeFormatter.format(dueDate), getDaysTillDue(daysLeft));
+
+        }
+        return formatter.out().toString();
+    }
+
+    public String getFines() {
+        List<Book> books = getOverdueBooks();
+        if (books.isEmpty()) {
+            return "No fines.";
+        }
+
+        //Use stringbuilder for efficiency; reduces creation of strings
+        StringBuilder report = new StringBuilder();
+        Formatter formatter = new Formatter(report);
+
+        formatter.format(BOOK_HEADER_FORMAT, "Item ID", "Title", "Author", "Due Date", "Fine");
+
+        for (Book e : books) {
+            Patron patron = e.getCurrentPatron();
+
+            PatronType patronType = patron.getPatronType();
+            TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
+
+            int daysLeft = -getDayTillDue(e);
+            double fine = daysLeft * FINE_RATE;
+            if (fine > FINE_LIMIT) {
+                fine = FINE_LIMIT;
             }
+
+
+            Instant dueDate = e.getCheckOutDate().plus(maxCheckoutTime);
+            formatter.format(BOOK_CONTENT_FORMAT, e.getIdentifier().getId(), e.getName(), e.getAuthor(),
+                    dateTimeFormatter.format(dueDate), fine);
         }
         return formatter.out().toString();
     }

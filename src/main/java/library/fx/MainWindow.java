@@ -83,7 +83,7 @@ public class MainWindow extends BaseController implements Initializable {
 
     @FXML
     private void checkout(MouseEvent event) {
-
+        getInitializer().setContent("Checkout.fxml");
     }
 
     /**
@@ -153,7 +153,7 @@ public class MainWindow extends BaseController implements Initializable {
                 new KeyValue(dateContainer.translateXProperty(), 500, Interpolator.EASE_IN)));
 
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(400),
-                new KeyValue(header.translateYProperty(), -250, Interpolator.EASE_IN)));
+                new KeyValue(header.translateYProperty(), -750, Interpolator.EASE_IN)));
 
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
                 new KeyValue(container.translateXProperty(), 1000, Interpolator.EASE_IN)));
@@ -169,8 +169,5 @@ public class MainWindow extends BaseController implements Initializable {
 
         //Start the animation
         animateOutTimeline.play();
-
     }
-
-
 }

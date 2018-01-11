@@ -3,19 +3,33 @@ package library.fx;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import library.data.Library;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class Menu extends BaseController {
+public class Menu extends BaseController implements Initializable {
+    public CheckMenuItem useAnimations;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //Update use of animations when the option is toggled
+        useAnimations.setSelected(true);
+        useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
+                getInitializer().setUseTransitions(newValue));
+    }
+
     @FXML
     void about(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -28,11 +42,6 @@ public class Menu extends BaseController {
     @FXML
     void documentation(ActionEvent event) {
         getInitializer().loadHelp();
-    }
-
-    @FXML
-    void newAction(ActionEvent event) {
-
     }
 
     @FXML

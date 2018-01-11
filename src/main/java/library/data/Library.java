@@ -145,6 +145,21 @@ public class Library {
         return null;
     }
 
+    /**
+     * Resolves a {@link Patron} from a specified Identifier
+     *
+     * @param identifier The identifier to resolve
+     * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
+     */
+    public Book getBookFromID(Identifier identifier) {
+        for (Book e : books) {
+            if (e.getIdentifier().equals(identifier)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     public void save() throws IOException {
         BufferedWriter writer = Files.newBufferedWriter(dataFile);
         save(writer);

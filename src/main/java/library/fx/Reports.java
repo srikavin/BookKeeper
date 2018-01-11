@@ -13,28 +13,38 @@ import library.data.Book;
 import library.data.Library;
 import library.data.ReportGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Reports extends BaseController {
     public TextArea reportView;
     public RadioButton checkedOutItems;
     public RadioButton overDueItems;
+    public RadioButton itemSort;
+    public RadioButton patronSort;
     private boolean sortByItem = false;
-    private boolean overdueView = false;
+    private Views currentView = Views.CHECKED_OUT;
 
     private void setReportContent() {
         Library library = getLibrary();
         ReportGenerator reportGenerator = library.getReportGenerator();
 
-        List<Book> bookList;
-
-        if (overdueView) {
-            bookList = reportGenerator.getOverdueBooks();
-            checkedOutItems.setSelected(false);
-        } else {
-            bookList = reportGenerator.getCheckedOutBooks();
-            overDueItems.setSelected(false);
+        List<Book> bookList = new ArrayList<>();
+        switch (currentView) {
+            case CHECKED_OUT:
+                bookList = reportGenerator.getCheckedOutBooks();
+                break;
+            case OVERDUE:
+                bookList = reportGenerator.getOverdueBooks();
+                break;
+            case FINES:
+                reportView.setText(reportGenerator.getFines());
+                itemSort.setSelected(false);
+                itemSort.setDisable(true);
+                patronSort.setSelected(true);
+                return;
         }
+        itemSort.setDisable(false);
 
         if (sortByItem) {
             reportView.setText(reportGenerator.formatByItems(bookList));
@@ -45,7 +55,7 @@ public class Reports extends BaseController {
 
     @FXML
     private void viewOverdueItems(ActionEvent event) {
-        overdueView = true;
+        currentView = Views.OVERDUE;
         setReportContent();
     }
 
@@ -63,7 +73,7 @@ public class Reports extends BaseController {
 
     @FXML
     private void checkoutView(ActionEvent event) {
-        overdueView = false;
+        currentView = Views.CHECKED_OUT;
         setReportContent();
     }
 
@@ -91,5 +101,17 @@ public class Reports extends BaseController {
     public void initializeData() {
         super.initializeData();
         setReportContent();
+    }
+
+    @FXML
+    private void viewFines(ActionEvent event) {
+        currentView = Views.FINES;
+        setReportContent();
+    }
+
+    enum Views {
+        CHECKED_OUT,
+        OVERDUE,
+        FINES
     }
 }

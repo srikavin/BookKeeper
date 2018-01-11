@@ -41,6 +41,16 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
 
     protected abstract List<T> getDataSource();
 
+    protected void setData(ObservableList<T> data) {
+        filteredList = new FilteredList<>(data);
+        sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
+
+        filter.textProperty().addListener((observable, oldValue, newValue) ->
+                filteredList.setPredicate(getFilterPredicate(newValue.toLowerCase())));
+    }
+
     protected abstract boolean validate();
 
     protected abstract void setupColumns(TableView<T> table);
@@ -52,13 +62,9 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
     @Override
     public void initializeData() {
         dataSource = FXCollections.observableList(getDataSource());
-        filteredList = new FilteredList<>(dataSource);
-        sortedList = new SortedList<>(filteredList);
-        sortedList.comparatorProperty().bind(table.comparatorProperty());
-        table.setItems(sortedList);
+        setData(dataSource);
 
-        filter.textProperty().addListener((observable, oldValue, newValue) ->
-                filteredList.setPredicate(getFilterPredicate(newValue)));
+        Platform.runLater(() -> table.refresh());
     }
 
     protected T getCurrentlySelected() {
@@ -118,7 +124,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
         T current = getCurrentlySelected();
         if (current != null) {
             dataSource.remove(current);
-            getDataSource().remove(current);
             getLibrary().modify();
         }
     }

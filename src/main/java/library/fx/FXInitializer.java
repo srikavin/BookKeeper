@@ -3,6 +3,7 @@ package library.fx;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import library.data.Library;
 
 import java.io.IOException;
@@ -29,6 +29,7 @@ public class FXInitializer extends Application {
     private BaseController currentController;
     private MenuBar menuBar;
     private Library library;
+    private boolean useTransitions = true;
 
     /**
      * {@inheritDoc}
@@ -90,14 +91,14 @@ public class FXInitializer extends Application {
         setContent("MainWindow.fxml");
     }
 
-    public Pair<Object, Stage> showDialog(String fxFile) {
+    public <T> Stage showDialog(String fxFile, T controllerInstance) {
         try {
             Stage stage = new Stage();
-            FXMLCacheHolder cacheHolder = loadFile(fxFile);
-            Object controller = cacheHolder.controller;
-            Parent root = cacheHolder.parent;
+            FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fxFile));
+            loader.setController(controllerInstance);
+            Parent root = loader.load();
             stage.setScene(new Scene(root));
-            return new Pair<>(controller, stage);
+            return stage;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -124,7 +125,7 @@ public class FXInitializer extends Application {
     public void setContent(String fxmlFile) {
         try {
             //Load the specified fxml file
-            FXMLCacheHolder<BaseController> loadedCache = loadFile(fxmlFile);
+            FXMLCacheHolder loadedCache = loadFile(fxmlFile);
 
             //Get the parent node from the file
             Parent content = loadedCache.parent;
@@ -134,17 +135,13 @@ public class FXInitializer extends Application {
             controller.initialize(this, library);
             controller.initializeData();
 
-            //Set a callback after the animation has finished
-            this.currentController.animateOut((e) ->
-                    controller.animateIn((event) -> {
-                        //Set the center of the pane to the content loaded
-                        borderPane.setCenter(content);
-                        //Keep the menu on top
-                        borderPane.setTop(null);
-                        borderPane.setTop(menuBar);
-                        //Set the current controller to the new content's controller
-                        this.currentController = controller;
-                    }));
+            if (useTransitions) {
+                //Set a callback after the animation has finished
+                this.currentController.animateOut((e) ->
+                        controller.animateIn((event) -> changeContent(content, controller)));
+            } else {
+                changeContent(content, controller);
+            }
         } catch (Exception e) {
             //Display an error message if an Exception occurs
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -154,6 +151,20 @@ public class FXInitializer extends Application {
             alert.showAndWait();
             e.printStackTrace();
         }
+    }
+
+    public void setUseTransitions(boolean useTransitions) {
+        this.useTransitions = useTransitions;
+    }
+
+    private void changeContent(Node content, BaseController controller) {
+        //Set the center of the pane to the content loaded
+        borderPane.setCenter(content);
+        //Keep the menu on top
+        borderPane.setTop(null);
+        borderPane.setTop(menuBar);
+        //Set the current controller to the new content's controller
+        this.currentController = controller;
     }
 
     /**
@@ -184,11 +195,11 @@ public class FXInitializer extends Application {
         helpStage.toFront();
     }
 
-    private static class FXMLCacheHolder<T> {
-        T controller;
+    private static class FXMLCacheHolder {
+        BaseController controller;
         Parent parent;
 
-        FXMLCacheHolder(T controller, Parent parent) {
+        FXMLCacheHolder(BaseController controller, Parent parent) {
             this.controller = controller;
             this.parent = parent;
         }

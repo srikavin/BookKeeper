@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import library.data.*;
 
 import java.time.Instant;
@@ -43,6 +42,24 @@ public class Books extends DataViewController<Book> implements Initializable {
     @FXML
     private TextField currentPatron;
 
+    public static void initializeTable(TableView<Book> table) {
+        ObservableList<TableColumn<Book, ?>> columns = table.getColumns();
+
+        TableColumn<Book, String> idColumn = new TableColumn<>("ID");
+        TableColumn<Book, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Book, String> isbnColumn = new TableColumn<>("ISBN");
+        TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
+        TableColumn<Book, BookStatus> statusColumn = new TableColumn<>("Status");
+
+        idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier().getId()));
+        nameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getName()));
+        isbnColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIsbn()));
+        authorColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAuthor()));
+        statusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getStatus()));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        columns.addAll(idColumn, nameColumn, isbnColumn, authorColumn, statusColumn);
+    }
 
     @FXML
     protected void update(Book book) {
@@ -59,7 +76,7 @@ public class Books extends DataViewController<Book> implements Initializable {
     @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
         return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
-                || book.getIdentifier().getId().contains(filter)
+                || book.getName().contains(filter)
                 || book.getIsbn().toLowerCase().contains(filter)
                 || book.getAuthor().toLowerCase().contains(filter);
     }
@@ -132,24 +149,7 @@ public class Books extends DataViewController<Book> implements Initializable {
 
     @Override
     protected void setupColumns(TableView<Book> table) {
-        //Add columns
-        ObservableList<TableColumn<Book, ?>> columns = table.getColumns();
-
-        TableColumn<Book, String> idColumn = new TableColumn<>("ID");
-        TableColumn<Book, String> nameColumn = new TableColumn<>("Name");
-        TableColumn<Book, String> isbnColumn = new TableColumn<>("ISBN");
-        TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
-        TableColumn<Book, BookStatus> statusColumn = new TableColumn<>("Status");
-
-        idColumn.setCellValueFactory((value) ->
-                new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier().getId()));
-        nameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getName()));
-        isbnColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIsbn()));
-        authorColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAuthor()));
-        statusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getStatus()));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        columns.addAll(idColumn, nameColumn, isbnColumn, authorColumn, statusColumn);
+        initializeTable(table);
     }
 
     @Override
@@ -176,14 +176,11 @@ public class Books extends DataViewController<Book> implements Initializable {
 
     @FXML
     private void findPatron(MouseEvent mouseEvent) {
+        Select.PatronSelect select = new Select.PatronSelect();
         Library library = getLibrary();
-        Pair<Object, Stage> dialogInfo = getInitializer().showDialog("PatronSelect.fxml");
-        Stage stage = dialogInfo.getValue();
-        PatronSelect patronSelect = (PatronSelect) dialogInfo.getKey();
-        patronSelect.init((e) -> currentPatron.setText(e.getId()), library.getPatrons(), stage);
+        Stage stage = getInitializer().showDialog("Select.fxml", select);
+        select.init((e) -> currentPatron.setText(e.getId()), library.getPatrons(), stage);
         stage.showAndWait();
-        stage.toFront();
-        stage.setTitle("Select a Patron");
     }
 
     @Override
