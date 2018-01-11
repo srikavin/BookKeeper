@@ -36,7 +36,7 @@ public class FXInitializer extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        library = new Library(Paths.get("testing", "data"));
+        library = new Library(Paths.get("SampleData", "data"));
 
         //Load all fonts before initializing the program
         loadFonts();
