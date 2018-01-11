@@ -1,14 +1,17 @@
 package library.fx;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import library.data.Identifier;
 import library.data.LibraryData;
 
 import java.net.URL;
@@ -32,6 +35,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
     protected SortedList<T> sortedList;
     @FXML
     protected TextField filter;
+    private T currentlyCreating;
 
     protected abstract Predicate<T> getFilterPredicate(String filterText);
 
@@ -42,6 +46,8 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
     protected abstract void setupColumns(TableView<T> table);
 
     protected abstract void setCurrentState(T current);
+
+    protected abstract T createNewItem(Identifier identifier);
 
     @Override
     public void initializeData() {
@@ -64,6 +70,14 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
         setupColumns(table);
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //Ensure the user finishes creating the new item
+            if (currentlyCreating != null) {
+                if (newValue != currentlyCreating) {
+                    validate();
+                    Platform.runLater(() -> table.getSelectionModel().select(currentlyCreating));
+                }
+                return;
+            }
             //Ensure that a change actually occurred in the selection
             if (newValue != null && oldValue != newValue) {
                 setCurrentState(newValue);
@@ -80,6 +94,10 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
         }
         //Make sure the entered data is valid
         if (validate()) {
+            //If we are creating a new object, we can set it as created because it passes validation
+            if (currentlyCreating != null) {
+                currentlyCreating = null;
+            }
             update(current);
             getLibrary().modify();
             table.refresh();
@@ -90,11 +108,53 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
 
     @FXML
     protected void delete(ActionEvent event) {
+        if (currentlyCreating != null) {
+            //Set currently creating to a temp variable to set that nothing is being created before deleting the object
+            //to prevent visual glitches
+            T temp = currentlyCreating;
+            currentlyCreating = null;
+            dataSource.remove(temp);
+        }
         T current = getCurrentlySelected();
         if (current != null) {
             dataSource.remove(current);
             getDataSource().remove(current);
+            getLibrary().modify();
         }
+    }
+
+
+    @Override
+    protected void goHome(Event event) {
+        //Before going home, delete the object being currently created
+        dataSource.remove(currentlyCreating);
+        currentlyCreating = null;
+        super.goHome(event);
+    }
+
+    @FXML
+    protected void newItem(ActionEvent event) {
+        if (currentlyCreating != null) {
+            dataSource.remove(currentlyCreating);
+            currentlyCreating = null;
+        }
+        T newItem = createNewItem(getNextIdentifier(dataSource));
+        dataSource.add(newItem);
+        table.scrollTo(newItem);
+        table.getSelectionModel().select(newItem);
+        currentlyCreating = newItem;
+    }
+
+    private Identifier getNextIdentifier(List<T> list) {
+        int cur = list.size() + 1;
+        Identifier curId = new Identifier(cur);
+        for (T e : list) {
+            if (e.getIdentifier().equals(curId)) {
+                cur++;
+                curId = new Identifier(cur);
+            }
+        }
+        return curId;
     }
 
 }

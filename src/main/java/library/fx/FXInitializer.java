@@ -1,11 +1,13 @@
 package library.fx;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -25,6 +27,7 @@ public class FXInitializer extends Application {
     private Stage helpStage;
     private BorderPane borderPane = new BorderPane();
     private BaseController currentController;
+    private MenuBar menuBar;
     private Library library;
 
     /**
@@ -37,9 +40,16 @@ public class FXInitializer extends Application {
         //Load all fonts before initializing the program
         loadFonts();
 
+        //Add app icons
+        ObservableList<Image> icons = primaryStage.getIcons();
+        icons.add(new Image(getClass().getResourceAsStream("icons/icon@0.5x.png")));
+        icons.add(new Image(getClass().getResourceAsStream("icons/icon@2x.png")));
+        icons.add(new Image(getClass().getResourceAsStream("icons/icon@3x.png")));
+        icons.add(new Image(getClass().getResourceAsStream("icons/icon@4x.png")));
+
         //Load the menu items separately from the main content
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
-        MenuBar menuBar = menuLoader.load();
+        menuBar = menuLoader.load();
         BaseController menuController = menuLoader.getController();
         menuController.initialize(this, library);
 
@@ -54,10 +64,11 @@ public class FXInitializer extends Application {
         //Set FXInitializer to this object
         controller.initialize(this, library);
 
-        //Set the top of the pane to the menu bar
-        borderPane.setTop(menuBar);
+
         //Set the center of the pane to the content
         borderPane.setCenter(parent);
+        //Set the top of the pane to the menu bar
+        borderPane.setTop(menuBar);
         //Set the content of the window to the pane
         primaryStage.setScene(new Scene(borderPane));
         //Set the title
@@ -72,8 +83,6 @@ public class FXInitializer extends Application {
         helpStage.setScene(new Scene(root, 450, 450));
         helpStage.setMinHeight(600);
         helpStage.setMinWidth(500);
-
-        loadHelp();
     }
 
     public void loadFile(Path path) throws IOException {
@@ -130,6 +139,9 @@ public class FXInitializer extends Application {
                     controller.animateIn((event) -> {
                         //Set the center of the pane to the content loaded
                         borderPane.setCenter(content);
+                        //Keep the menu on top
+                        borderPane.setTop(null);
+                        borderPane.setTop(menuBar);
                         //Set the current controller to the new content's controller
                         this.currentController = controller;
                     }));

@@ -17,6 +17,7 @@ public class Library {
     private List<Patron> patrons = new ArrayList<>();
     private List<PatronType> patronTypes = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
+    private ReportGenerator reportGenerator;
     private Path dataFile;
     /**
      * Used to identify when changes are made to this library that are not saved.
@@ -40,11 +41,16 @@ public class Library {
                 //Split only on commas not inside of quotes
                 //Matches -> |  author, name, string
                 //No Match-> |  "Book title, also part of book title"
-                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                //-1 makes sure all elements are returned
+                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
-                //Remove unnecessary quotes from saved fields
+                //Remove unnecessary quotes from saved fields and empty fields
                 for (int i = 0; i < data.length; i++) {
                     String s = data[i];
+                    if (s == null || s.isEmpty()) {
+                        data[i] = "";
+                        continue;
+                    }
                     if (s.contains(",") && s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"') {
                         data[i] = s.substring(1, s.length() - 1);
                     }
@@ -60,7 +66,7 @@ public class Library {
                         patrons.add(patron);
                         break;
                     case "BOOKS":
-                        Book book = new Book(data);
+                        Book book = new Book(data, this);
                         books.add(book);
                         break;
                 }
@@ -74,6 +80,12 @@ public class Library {
                 throw new RuntimeException(e);
             }
         }
+        //Create a report generator using this as its data source
+        reportGenerator = new ReportGenerator(this);
+    }
+
+    public ReportGenerator getReportGenerator() {
+        return reportGenerator;
     }
 
     public void modify() {

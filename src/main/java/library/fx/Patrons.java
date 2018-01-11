@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import library.data.Identifier;
 import library.data.Library;
 import library.data.Patron;
 import library.data.PatronType;
@@ -108,6 +109,11 @@ public class Patrons extends DataViewController<Patron> implements Initializable
         identifier.setText(patron.getIdentifier().toString());
         //Set the currently selected PatronType
         patronTypes.getSelectionModel().select(patron.getPatronType());
+    }
+
+    @Override
+    protected Patron createNewItem(Identifier identifier) {
+        return new Patron(identifier, "", "", new PatronType(identifier, "", 0, 0));
     }
 
     @Override

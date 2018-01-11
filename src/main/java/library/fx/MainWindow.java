@@ -68,7 +68,7 @@ public class MainWindow extends BaseController implements Initializable {
      */
     @FXML
     private void reports(MouseEvent event) {
-
+        getInitializer().setContent("Reports.fxml");
     }
 
     /**
@@ -79,6 +79,11 @@ public class MainWindow extends BaseController implements Initializable {
     @FXML
     private void types(MouseEvent event) {
         getInitializer().setContent("PatronTypes.fxml");
+    }
+
+    @FXML
+    private void checkout(MouseEvent event) {
+
     }
 
     /**

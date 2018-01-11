@@ -89,6 +89,17 @@ public class PatronTypes extends DataViewController<PatronType> implements Initi
         //Set how data is populated in each column
         maxCheckedOutBooks.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
         maxCheckoutDays.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
+        //Force spinners to update their value when the user clicks out of them
+        maxCheckoutDays.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                maxCheckoutDays.increment(0);
+            }
+        });
+        maxCheckedOutBooks.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                maxCheckedOutBooks.increment(0);
+            }
+        });
         idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier()));
         nameColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(value.getValue().getName()));
         checkoutDaysColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getMaxCheckoutDays()));
@@ -108,6 +119,11 @@ public class PatronTypes extends DataViewController<PatronType> implements Initi
         maxCheckoutDays.getValueFactory().setValue(patronType.getMaxCheckoutDays());
         //Set the identifier
         identifier.setText(patronType.getIdentifier().toString());
+    }
+
+    @Override
+    protected PatronType createNewItem(Identifier identifier) {
+        return new PatronType(identifier, "", 1, 1);
     }
 
     @Override

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="336.0" prefWidth="600.0" stylesheets="@css/main.css"
+            xmlns="http://javafx.com/javafx/8.0.111" fx:controller="library.fx.Reports">
+    <AnchorPane fx:id="contentBackground" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f0f0f0;"
+                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="45.0">
+        <AnchorPane fx:id="container" prefHeight="291.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane dividerPositions="0.3010033444816054" prefHeight="291.0" prefWidth="600.0"
+                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                       AnchorPane.topAnchor="0.0">
+                <AnchorPane maxWidth="-Infinity" prefHeight="160.0" prefWidth="250.0">
+                    <RadioButton fx:id="checkedOutItems" layoutX="14.0" layoutY="33.0" mnemonicParsing="false"
+                                 onAction="#checkoutView" text="Checked Out Books">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="view"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <Text layoutX="3.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View:">
+                        <font>
+                            <Font name="System Bold" size="12.0"/>
+                        </font>
+                    </Text>
+                    <RadioButton fx:id="overDueItems" layoutX="14.0" layoutY="57.0" mnemonicParsing="false"
+                                 onAction="#viewOverdueItems" text="Overdue Books" toggleGroup="$view"/>
+                    <Button layoutX="67.0" layoutY="256.0" minHeight="-Infinity" minWidth="-Infinity"
+                            mnemonicParsing="false" onAction="#print" text="Print" AnchorPane.bottomAnchor="8.0"
+                            AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="67.0"/>
+                    <RadioButton fx:id="overDueItems1" layoutX="14.0" layoutY="81.0" mnemonicParsing="false"
+                                 onAction="#viewOverdueItems" text="Fines">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="view1"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <RadioButton layoutX="19.0" layoutY="133.0" mnemonicParsing="false" onAction="#sortByPatron"
+                                 selected="true" text="Patron">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="sortButton1"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <RadioButton layoutX="19.0" layoutY="156.0" mnemonicParsing="false" onAction="#sortByItem"
+                                 text="Item">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="sortButton1"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <Text layoutX="3.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort:">
+                        <font>
+                            <Font name="System Bold" size="12.0"/>
+                        </font>
+                    </Text>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0"
+                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                AnchorPane.topAnchor="0.0">
+                        <TextArea fx:id="reportView" editable="false" focusTraversable="false"
+                                  maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                  prefHeight="200.0" prefWidth="200.0">
+                            <font>
+                                <Font name="Monospaced Regular" size="12.0"/>
+                            </font>
+                        </TextArea>
+                    </ScrollPane>
+                </AnchorPane>
+            </SplitPane>
+        </AnchorPane>
+    </AnchorPane>
+    <AnchorPane fx:id="headerBackground" layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
+                style="-fx-background-color: #1564bf;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="header" prefHeight="39.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+            <Text fill="WHITE" layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                  AnchorPane.leftAnchor="14.0">
+                <font>
+                    <Font name="Material Icons" size="46.0"/>
+                </font>
+            </Text>
+            <Text fill="WHITE" layoutX="73.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports"
+                  AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="-2.615234375">
+                <font>
+                    <Font name="Roboto Condensed Bold" size="33.0"/>
+                </font>
+            </Text>
+            <Text fill="WHITE" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                  AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.5">
+                <font>
+                    <Font name="Material Icons" size="31.0"/>
+                </font>
+            </Text>
+        </AnchorPane>
+    </AnchorPane>
+</AnchorPane>

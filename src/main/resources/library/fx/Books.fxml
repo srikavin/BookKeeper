@@ -171,7 +171,7 @@
                         AnchorPane.rightAnchor="84.0"/>
                 <Button layoutX="545.0" layoutY="7.0" mnemonicParsing="false" onAction="#update" text="Update"
                         AnchorPane.rightAnchor="14.0"/>
-                <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#newBook" text="New Book"
+                <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#newItem" text="New Book"
                         AnchorPane.leftAnchor="14.0"/>
             </AnchorPane>
         </AnchorPane>

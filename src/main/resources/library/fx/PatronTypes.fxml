@@ -63,7 +63,7 @@
                             <Insets left="7.0"/>
                         </GridPane.margin>
                     </Text>
-                    <Spinner fx:id="maxCheckoutDays" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                    <Spinner fx:id="maxCheckoutDays" editable="true" maxWidth="1.7976931348623157E308" prefHeight="25.0"
                              prefWidth="165.0" GridPane.columnIndex="1" GridPane.halignment="LEFT"
                              GridPane.hgrow="ALWAYS"/>
                     <GridPane.margin>
@@ -104,7 +104,8 @@
                             <Insets left="15.0"/>
                         </GridPane.margin>
                     </Text>
-                    <Spinner fx:id="maxCheckedOutBooks" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                    <Spinner fx:id="maxCheckedOutBooks" editable="true" maxWidth="1.7976931348623157E308"
+                             GridPane.columnIndex="1">
                         <GridPane.margin>
                             <Insets left="8.0"/>
                         </GridPane.margin>
@@ -113,11 +114,11 @@
             </GridPane>
             <AnchorPane prefHeight="39.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                         AnchorPane.rightAnchor="0.0">
-                <Button layoutX="465.0" layoutY="7.0" mnemonicParsing="false" text="Delete"
+                <Button layoutX="465.0" layoutY="7.0" mnemonicParsing="false" onAction="#delete" text="Delete"
                         AnchorPane.rightAnchor="84.0"/>
                 <Button layoutX="545.0" layoutY="7.0" mnemonicParsing="false" onAction="#update" text="Update"
                         AnchorPane.rightAnchor="14.0"/>
-                <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="New Patron"
+                <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#newItem" text="New Patron Type"
                         AnchorPane.leftAnchor="14.0"/>
             </AnchorPane>
         </AnchorPane>

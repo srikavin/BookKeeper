@@ -2,7 +2,6 @@ package library.fx;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -14,11 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import library.data.Book;
-import library.data.BookStatus;
-import library.data.Identifier;
-import library.data.Library;
+import library.data.*;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,11 +46,14 @@ public class Books extends DataViewController<Book> implements Initializable {
 
     @FXML
     protected void update(Book book) {
+        Library library = getLibrary();
+
         book.setAuthor(author.getText());
         book.setName(bookName.getText());
         book.setIdentifier(new Identifier(identifier.getText()));
         book.setIsbn(isbn.getText());
         book.setStatus(status.getValue());
+        book.setCurrentPatron(library.getPatronFromID(new Identifier(currentPatron.getText())));
     }
 
     @Override
@@ -78,12 +78,14 @@ public class Books extends DataViewController<Book> implements Initializable {
         isbn.pseudoClassStateChanged(errorClass, false);
         identifier.pseudoClassStateChanged(errorClass, false);
         status.pseudoClassStateChanged(errorClass, false);
+        currentPatron.pseudoClassStateChanged(errorClass, false);
 
         //Get values
         String authorValue = author.getText();
         String bookNameValue = bookName.getText();
         String isbnValue = isbn.getText();
         String identifierValue = identifier.getText();
+        String currentPatronValue = currentPatron.getText();
 
         //Keep track of the values
         Set<Node> errors = new HashSet<>();
@@ -94,17 +96,22 @@ public class Books extends DataViewController<Book> implements Initializable {
         if (bookNameValue.isEmpty()) {
             errors.add(bookName);
         }
+        if (!currentPatronValue.isEmpty()) {
+            //Verify current patron is a valid patron ID
+            Library library = getLibrary();
+            if (library.getPatronFromID(new Identifier(currentPatronValue)) == null) {
+                errors.add(currentPatron);
+            }
+        }
         //Verify the ISBN to have 10 or 13 digits (excluding non-digit characters)
-        if (isbnValue.isEmpty()) {
-            int numbers = 0;
-            for (char e : isbn.getText().toCharArray()) {
-                if (Character.isDigit(e) || Character.isAlphabetic(e)) {
-                    numbers++;
-                }
+        int numbers = 0;
+        for (char e : isbnValue.toCharArray()) {
+            if (Character.isDigit(e) || Character.isAlphabetic(e)) {
+                numbers++;
             }
-            if (numbers != 10 && numbers != 13) {
-                errors.add(isbn);
-            }
+        }
+        if (numbers != 10 && numbers != 13) {
+            errors.add(isbn);
         }
         if (identifierValue.isEmpty()) {
             errors.add(identifier);
@@ -134,7 +141,8 @@ public class Books extends DataViewController<Book> implements Initializable {
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         TableColumn<Book, BookStatus> statusColumn = new TableColumn<>("Status");
 
-        idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier().getId()));
+        idColumn.setCellValueFactory((value) ->
+                new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier().getId()));
         nameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getName()));
         isbnColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIsbn()));
         authorColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAuthor()));
@@ -146,19 +154,25 @@ public class Books extends DataViewController<Book> implements Initializable {
 
     @Override
     protected void setCurrentState(Book book) {
-        //Get the PatronType currently selected
+        //Set the text field values to the current state
         identifier.setText(book.getIdentifier().getId());
         author.setText(book.getAuthor());
         isbn.setText(book.getIsbn());
         bookName.setText(book.getName());
         status.getSelectionModel().select(book.getStatus());
+        //Make sure the current patron value does not cause a null pointer exception
+        Patron currentPatronValue = book.getCurrentPatron();
+        if (currentPatronValue == null) {
+            currentPatron.setText("");
+        } else {
+            currentPatron.setText(currentPatronValue.getIdentifier().getId());
+        }
     }
 
-    @FXML
-    private void newBook(ActionEvent event) {
-
+    @Override
+    protected Book createNewItem(Identifier identifier) {
+        return new Book(identifier, "", "", "", BookStatus.AVAILABLE, null, Instant.now());
     }
-
 
     @FXML
     private void findPatron(MouseEvent mouseEvent) {

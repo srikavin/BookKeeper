@@ -9,6 +9,9 @@
     -fx-cursor: hand;
 }
 
+/*
+  Used for highlighting invalid fieldss
+ */
 :invalid-input {
     -fx-text-box-border: red;
     -fx-focus-color: red;
