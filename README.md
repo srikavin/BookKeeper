@@ -32,6 +32,7 @@ The layout of the database is designed to encourage modularity, e.g. changes
 in the patron table should be reflected in the book table automatically, without 
 knowledge of the specific patron entry.
 
+#### Layout
 ![Mockup Images](img/mockup/MainWindow.png)
 ###### *Balasmiq mockup was used to design wireframes and aid in planning*
 More planning images can be found [here](img/mockup). These planning documents were modified 
