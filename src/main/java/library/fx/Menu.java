@@ -65,7 +65,7 @@ public class Menu extends BaseController implements Initializable {
             try {
                 getInitializer().loadFile(path);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to load library data file!");
+                showError("opening the data file", e);
             }
         });
     }
@@ -105,22 +105,51 @@ public class Menu extends BaseController implements Initializable {
             library.save();
         } catch (IOException e) {
             //Display an error message if an exception occurs when saving
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Request");
-            alert.setHeaderText("There was an error in saving!");
-            alert.setContentText(e.getLocalizedMessage());
-            alert.showAndWait();
+            showError("saving the library", e);
         }
     }
 
     @FXML
     private void newLibrary(ActionEvent event) {
-//        getInitializer().loadFile();
+        unsavedChanges(() -> {
+            try {
+                getInitializer().loadFile(null);
+            } catch (IOException e) {
+                //Display an error message if an exception occurs when saving
+                showError("creating a new library", e);
+            }
+        });
+    }
+
+    private void showError(String error, Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Request");
+        alert.setHeaderText("There was an error in " + error + "!");
+        alert.setContentText(e.getLocalizedMessage());
+        alert.showAndWait();
     }
 
     @FXML
     private void saveAs(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(Paths.get("").toAbsolutePath().toFile());
+        directoryChooser.setTitle("Save As...");
 
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        File file = directoryChooser.showDialog(stage);
+
+        if (file == null) {
+            return;
+        }
+        Path path = file.toPath();
+
+        Library library = getLibrary();
+        try {
+            library.saveTo(path);
+        } catch (IOException e) {
+            showError("saving the library", e);
+        }
     }
 
     @FXML
@@ -130,11 +159,7 @@ public class Menu extends BaseController implements Initializable {
             Files.copy(getClass().getResourceAsStream("data.txt"), temp.resolve("data.txt"));
             getInitializer().loadFile(temp);
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Request");
-            alert.setHeaderText("There was an error in loading sample data!");
-            alert.setContentText(e.getLocalizedMessage());
-            alert.showAndWait();
+            showError("loading sample data", e);
         }
     }
 }

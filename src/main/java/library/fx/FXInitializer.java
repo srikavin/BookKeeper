@@ -26,6 +26,7 @@ public class FXInitializer extends Application {
     private Stage helpStage;
     private BorderPane borderPane = new BorderPane();
     private BaseController currentController;
+    private BaseController menuController;
     private MenuBar menuBar;
     private Library library;
     private boolean useTransitions = true;
@@ -54,7 +55,7 @@ public class FXInitializer extends Application {
         //Load the menu items separately from the main content
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
         menuBar = menuLoader.load();
-        BaseController menuController = menuLoader.getController();
+        menuController = menuLoader.getController();
         menuController.initialize(this, library);
 
         //Load the default content
@@ -95,6 +96,7 @@ public class FXInitializer extends Application {
     public void loadFile(Path path) throws IOException {
         this.library = new Library(path);
         setContent("MainWindow.fxml");
+        menuController.initialize(this, library);
     }
 
     public <T> Stage showDialog(String fxFile, T controllerInstance) {
