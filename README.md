@@ -1,17 +1,17 @@
 ## BookKeeper - Library Management System
 BookKeeper was designed for the management of large scale libraries from the ground up. 
 
-###Usage
+### Usage
 BookKeeper requires Java 8. If java 8 is not installed, the program will use a bundled JVM to execute.
 
-###Generating Executable
+### Generating Executable
 ```
 javapackager -deploy -native image -Bruntime="C:\Program Files\Java\jdk1.8.0_131\jre" -outdir building -outfile BookKeeper -srcfiles
    application.jar -appclass library.fx.FXInitializer -name BookKeeper -title "BookKeeper - Library Management System"
 ```
 Used for creating a executable file with a bundled-JVM using the JDK-bundled `javapackager` tool.
 
-###Features
+### Features
 * Quickly editable patron information and catalogue information
 * Allows filtering and sorting in any table view
 * Includes customization of patron types
@@ -20,23 +20,23 @@ Used for creating a executable file with a bundled-JVM using the JDK-bundled `ja
 * Cross Platform and can run on Windows, Linux, and MacOS 
 * Includes fully-featured interactive documentation featuring images and videos 
 
-###Screenshots
-####Main Window:
+### Screenshots
+#### Main Window:
 ![Main Window of BookKeeper](img/mainWindow.png)
 
-###Planning
-####Database
+### Planning
+#### Database
 ![Database Plan of BookKeeper](img/databasePlan.png)
-######*[Vertabelo](https://www.vertabelo.com/) was used to aid the design of the database*
+###### *[Vertabelo](https://www.vertabelo.com/) was used to aid the design of the database*
 The layout of the database is designed to encourage modularity, e.g. changes 
 in the patron table should be reflected in the book table automatically, without 
 knowledge of the specific patron entry.
 
 ![Mockup Images](img/mockup/MainWindow.png)
-######*Balasmiq mockup was used to design wireframes and aid in planning*
+###### *Balasmiq mockup was used to design wireframes and aid in planning*
 More planning images can be found [here](img/mockup). These planning documents were modified 
 
-####Technologies Used
+#### Technologies Used
 * Gluon Scenebuilder - used to quickly create JavaFX layouts
 * IntelliJ IDEA - used to write Java code efficiently and quickly
 * Java 8 - used to write efficient and robust code
@@ -46,8 +46,8 @@ More planning images can be found [here](img/mockup). These planning documents w
 * Adobe Illustrator - used to customize and design application icons
 * HTML & CSS - used to create application help
 
-###Technical Documentation
+### Technical Documentation
 Documentation (javadocs) can be found inside javadocs or [here](javadoc/index.html)
 
-###About
+### About
 Written by Srikavin Ramkumar for the FBLA Coding and Programming Competition.
