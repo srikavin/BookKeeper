@@ -1,2 +1,7 @@
 #CatalogName HelpFile
-Patrons patrons.html
+Managing Patrons --- patrons.html
+Managing Patron Types --- types.html
+Managing Books --- books.html
+Filtering and Sorting --- filterSort.html
+Creating Reports --- reports.html
+Navigating the Main Menu --- navigation.html
