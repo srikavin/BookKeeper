@@ -1,0 +1,5 @@
+.img-container {
+    position: fixed;
+    right: -5vw;
+    transform: scale(.9);
+}

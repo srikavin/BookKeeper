@@ -113,7 +113,17 @@ public class Patrons extends DataViewController<Patron> implements Initializable
 
     @Override
     protected Patron createNewItem(Identifier identifier) {
-        return new Patron(identifier, "", "", new PatronType(identifier, "", 0, 0));
+        List<PatronType> patronTypes = getLibrary().getPatronTypes();
+        PatronType patronType = null;
+        if (patronTypes.size() > 0) {
+            patronType = getLibrary().getPatronTypes().get(0);
+        }
+
+        if (patronType == null) {
+            patronType = new PatronType(new Identifier(""), "", 0, 0);
+        }
+
+        return new Patron(identifier, "", "", patronType);
     }
 
     @Override

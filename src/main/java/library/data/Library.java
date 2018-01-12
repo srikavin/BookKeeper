@@ -25,6 +25,9 @@ public class Library {
     private boolean modified = false;
 
     public Library(Path dataFilePath) throws IOException {
+        if (dataFilePath == null) {
+            return;
+        }
         //Load the data file
         dataFile = dataFilePath.resolve("data.txt");
 
@@ -161,7 +164,11 @@ public class Library {
     }
 
     public void save() throws IOException {
-        BufferedWriter writer = Files.newBufferedWriter(dataFile);
+        saveTo(dataFile.getParent());
+    }
+
+    public void saveTo(Path path) throws IOException {
+        BufferedWriter writer = Files.newBufferedWriter(path.resolve("data.txt"));
         save(writer);
         writer.close();
     }

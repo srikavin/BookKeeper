@@ -64,8 +64,7 @@ public class Help extends BaseController implements Initializable {
         //On selecting the list, load the specified html page
         helpList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             WebEngine engine = helpWebView.getEngine();
-            engine.load("http://css3test.com/");
-//            engine.load(Help.class.getResource("help/" + categoryFileMap.get(newValue)).toExternalForm());
+            engine.load(Help.class.getResource("help/" + categoryFileMap.get(newValue)).toExternalForm());
         });
     }
 }

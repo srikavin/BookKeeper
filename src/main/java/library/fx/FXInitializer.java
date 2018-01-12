@@ -16,7 +16,6 @@ import library.data.Library;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * The starting point for the JavaFX GUI. Initializes the JavaFX system and starts the program.
@@ -31,12 +30,16 @@ public class FXInitializer extends Application {
     private Library library;
     private boolean useTransitions = true;
 
+    public static void main(String[] args) {
+        Application.launch(FXInitializer.class, args);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        library = new Library(Paths.get("SampleData", "data"));
+        library = new Library(null);
 
         //Load all fonts before initializing the program
         loadFonts();
@@ -197,6 +200,8 @@ public class FXInitializer extends Application {
         helpStage.show();
         //Un-minimize the window
         helpStage.setIconified(false);
+        //Maximize window
+        helpStage.setMaximized(true);
         //Bring the window to the front of all other windows
         helpStage.toFront();
     }

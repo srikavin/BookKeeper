@@ -13,9 +13,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import library.data.Library;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -47,10 +50,17 @@ public class Menu extends BaseController implements Initializable {
     @FXML
     void open(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(Paths.get("").toAbsolutePath().toFile());
         directoryChooser.setTitle("Open library data file");
+
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        Path path = directoryChooser.showDialog(stage).toPath();
+        File file = directoryChooser.showDialog(stage);
+
+        if (file == null) {
+            return;
+        }
+        Path path = file.toPath();
         unsavedChanges(() -> {
             try {
                 getInitializer().loadFile(path);
@@ -104,13 +114,8 @@ public class Menu extends BaseController implements Initializable {
     }
 
     @FXML
-    void settings(ActionEvent event) {
-
-    }
-
-    @FXML
     private void newLibrary(ActionEvent event) {
-
+//        getInitializer().loadFile();
     }
 
     @FXML
@@ -120,6 +125,16 @@ public class Menu extends BaseController implements Initializable {
 
     @FXML
     private void loadSampleData(ActionEvent event) {
-
+        try {
+            Path temp = Files.createTempDirectory("sampleData");
+            Files.copy(getClass().getResourceAsStream("data.txt"), temp.resolve("data.txt"));
+            getInitializer().loadFile(temp);
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Request");
+            alert.setHeaderText("There was an error in loading sample data!");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+        }
     }
 }
