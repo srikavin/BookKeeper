@@ -1,7 +1,8 @@
 #CatalogName HelpFile
+Navigating the File Menu --- file.html
+Navigating the Main Menu --- navigation.html
 Managing Patrons --- patrons.html
 Managing Patron Types --- types.html
 Managing Books --- books.html
-Filtering and Sorting --- filterSort.html
-Creating Reports --- reports.html
-Navigating the Main Menu --- navigating.html
+Generating Reports --- reports.html
+Checkout and Return --- checkout.html
