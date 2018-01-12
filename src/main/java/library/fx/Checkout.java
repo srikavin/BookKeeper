@@ -57,7 +57,7 @@ public class Checkout extends DataViewController<Book> {
 
     @Override
     protected void setCurrentState(Book current) {
-
+        updateBook(current.getIdentifier());
     }
 
     @Override
