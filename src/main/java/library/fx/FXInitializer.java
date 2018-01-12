@@ -85,8 +85,8 @@ public class FXInitializer extends Application {
         helpStage.setMinHeight(600);
         helpStage.setMinWidth(500);
 
-        primaryStage.setMinWidth(640);
-        primaryStage.setMinHeight(460);
+        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(400);
     }
 
     public void loadFile(Path path) throws IOException {

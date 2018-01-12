@@ -39,6 +39,7 @@ public class Reports extends BaseController {
                 break;
             case FINES:
                 reportView.setText(reportGenerator.getFines());
+                sortByItem = false;
                 itemSort.setSelected(false);
                 itemSort.setDisable(true);
                 patronSort.setSelected(true);
