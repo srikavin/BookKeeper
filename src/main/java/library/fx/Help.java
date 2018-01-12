@@ -40,14 +40,14 @@ public class Help extends BaseController implements Initializable {
                     .filter((e) -> !e.startsWith("#"))
                     .forEach((e) -> {
 
-                        //Split the string on spaces to separate the name and the html filename
-                        String[] split = e.split(" ");
+                        //Split the string on '---' to separate the name and the html filename
+                        String[] split = e.split("---");
 
                         //Load the data into the category-file map
-                        categoryFileMap.put(split[0], split[1]);
+                        categoryFileMap.put(split[0].trim(), split[1].trim());
 
                         //Add the category name to the list
-                        list.add(split[0]);
+                        list.add(split[0].trim());
 
                     });
         } catch (IOException e) {
@@ -64,7 +64,8 @@ public class Help extends BaseController implements Initializable {
         //On selecting the list, load the specified html page
         helpList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             WebEngine engine = helpWebView.getEngine();
-            engine.load(Help.class.getResource("help/" + categoryFileMap.get(newValue)).toExternalForm());
+            engine.load("http://css3test.com/");
+//            engine.load(Help.class.getResource("help/" + categoryFileMap.get(newValue)).toExternalForm());
         });
     }
 }

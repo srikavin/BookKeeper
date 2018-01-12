@@ -121,25 +121,41 @@ public class ReportGenerator {
         StringBuilder report = new StringBuilder();
         Formatter formatter = new Formatter(report);
 
-        formatter.format(BOOK_HEADER_FORMAT, "Item ID", "Title", "Author", "Due Date", "Fine");
+        Map<Patron, List<Book>> patronBookMap = new HashMap<>();
 
         for (Book e : books) {
             Patron patron = e.getCurrentPatron();
 
-            PatronType patronType = patron.getPatronType();
-            TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
-
-            int daysLeft = -getDayTillDue(e);
-            double fine = daysLeft * FINE_RATE;
-            if (fine > FINE_LIMIT) {
-                fine = FINE_LIMIT;
-            }
-
-
-            Instant dueDate = e.getCheckOutDate().plus(maxCheckoutTime);
-            formatter.format(BOOK_CONTENT_FORMAT, e.getIdentifier().getId(), e.getName(), e.getAuthor(),
-                    dateTimeFormatter.format(dueDate), fine);
+            patronBookMap.computeIfAbsent(patron, (s) -> new ArrayList<>());
+            patronBookMap.get(patron).add(e);
         }
+
+        for (Map.Entry<Patron, List<Book>> bookValue : patronBookMap.entrySet()) {
+            List<Book> booksOwned = bookValue.getValue();
+            Patron patron = bookValue.getKey();
+            report.append(patron.getLastName()).append(", ").append(patron.getFirstName()).append(" - ").append(patron.getIdentifier()).append('\n');
+            formatter.format(BOOK_HEADER_FORMAT, "Item ID", "Title", "Author", "Due Date", "Fine");
+            report.append(SEPARATOR);
+
+            PatronType patronType = patron.getPatronType();
+
+            for (Book book : booksOwned) {
+                TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
+
+                int daysLeft = -getDayTillDue(book);
+                double fine = daysLeft * FINE_RATE;
+                if (fine > FINE_LIMIT) {
+                    fine = FINE_LIMIT;
+                }
+
+                Instant dueDate = book.getCheckOutDate().plus(maxCheckoutTime);
+
+                formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getName(), book.getAuthor(),
+                        dateTimeFormatter.format(dueDate), fine);
+            }
+            formatter.format("\n\n");
+        }
+
         return formatter.out().toString();
     }
 

@@ -17,6 +17,7 @@ public class Patron implements LibraryData {
      * @param identifier A {@link Identifier} object containing the desired identifier for this patron.
      * @param firstName  A {@linkplain String} object containing the desired first name of this patron.
      * @param lastName   A {@linkplain String} object containing the desired last name of this patron.
+     * @param patronType A {@link PatronType} object containing the desired library use values of this patron.
      */
     public Patron(Identifier identifier, String firstName, String lastName, PatronType patronType) {
         if (identifier == null || patronType == null) {
@@ -31,11 +32,11 @@ public class Patron implements LibraryData {
     /**
      * Creates a {@linkplain Patron} object from a String Array, arr, in the format:
      * <pre>
-     *  arr[0] -> identifier
-     *  arr[1] -> firstName
-     *  arr[2] -> lastName
-     *  arr[3] -> birthday in ISO-8601 format
-     *  arr[4] -> {@link PatronType} id
+     *  arr[0] {@literal ->} identifier
+     *  arr[1] {@literal ->} firstName
+     *  arr[2] {@literal ->} lastName
+     *  arr[3] {@literal ->} birthday in ISO-8601 format
+     *  arr[4] {@literal ->} {@link PatronType} id
      * </pre>
      *
      * @param patronData A string array with the format specified above.
