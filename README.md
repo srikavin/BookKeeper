@@ -35,7 +35,7 @@ knowledge of the specific patron entry.
 #### Layout
 ![Mockup Images](img/mockup/MainWindow.png)
 ###### *Balasmiq mockup was used to design wireframes and aid in planning*
-More planning images can be found [here](img/mockup). These planning documents were modified 
+More planning images can be found [here](img/mockup). These planning documents were modified when I discovered a more elegant solution during development. 
 
 #### Technologies Used
 * Gluon Scenebuilder - used to quickly create JavaFX layouts
