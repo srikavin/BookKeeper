@@ -20,7 +20,7 @@
     </rowConstraints>
     <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0"
           GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
-        <Label text="Choose a Patron" wrapText="true">
+        <Label fx:id="label" text="Choose a Patron" wrapText="true">
             <font>
                 <Font name="System Bold" size="13.0"/>
             </font>

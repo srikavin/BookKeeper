@@ -7,6 +7,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -23,6 +24,9 @@ import java.util.function.Consumer;
 abstract class AbstractSelect<T extends LibraryData> {
     @FXML
     private TextField filter;
+
+    @FXML
+    private Label label;
 
     @FXML
     private TableView<T> table;
@@ -43,6 +47,7 @@ abstract class AbstractSelect<T extends LibraryData> {
     public void init(Consumer<Identifier> callback, List<T> dataSource, Stage stage) {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(getTitle());
+        label.setText(getTitle());
         this.callback = callback;
         this.stage = stage;
 
