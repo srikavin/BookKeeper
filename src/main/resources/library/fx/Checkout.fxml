@@ -189,13 +189,27 @@
             <AnchorPane prefHeight="39.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                         AnchorPane.rightAnchor="0.0">
                 <Button layoutX="465.0" layoutY="7.0" mnemonicParsing="false" onAction="#returnBook" text="Return"
-                        AnchorPane.rightAnchor="92.0"/>
+                        AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="92.0"/>
                 <Button layoutX="545.0" layoutY="7.0" mnemonicParsing="false" onAction="#checkoutBook" text="Checkout"
-                        AnchorPane.rightAnchor="15.0"/>
-                <Text layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books Checked Out:"
-                      AnchorPane.leftAnchor="14.0"/>
-                <Text fx:id="booksCheckedOut" layoutX="128.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                      text="0/0" AnchorPane.leftAnchor="128.0"/>
+                        AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="15.0"/>
+                <GridPane AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="69.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Text fx:id="booksCheckedOut" strokeType="OUTSIDE" strokeWidth="0.0" text="0/0"
+                              wrappingWidth="28.61328125" GridPane.columnIndex="1">
+                            <GridPane.margin>
+                                <Insets left="6.0"/>
+                            </GridPane.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books Checked Out:" GridPane.hgrow="ALWAYS"/>
+                    </children>
+                </GridPane>
             </AnchorPane>
         </AnchorPane>
     </AnchorPane>
