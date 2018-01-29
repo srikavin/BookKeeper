@@ -17,6 +17,9 @@ public class Identifier implements Comparable<Identifier> {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         return this == o || (o instanceof Identifier && Objects.equals(id, ((Identifier) o).id));
@@ -30,6 +33,9 @@ public class Identifier implements Comparable<Identifier> {
         return id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int compareTo(Identifier o) {
         return id.compareTo(o.id);

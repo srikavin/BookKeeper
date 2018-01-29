@@ -47,11 +47,17 @@ public class PatronType implements LibraryData {
         this.maxCheckedOutBooks = maxCheckedOutBooks;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Identifier getIdentifier() {
         return identifier;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] asData() {
         return new String[]{
