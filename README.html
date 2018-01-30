@@ -68,6 +68,17 @@
     <div class="row">
         <div class="twelve">
             <h4>Planning</h4>
+			<h5>Design</h5>
+			<p>
+			BookKeeper uses a view, model, and controller system. The program uses JavaFX FXML files for its view layer. The controller layer is implemented through layers. The view is completely isolated from the models. The model layer is represented throught basic Java Objects. The model layer implements few functionalaties, as those are in the controller layer. This organization allows for losely coupled code and increases the efficiency of updating the program.
+			<br>
+			The structure of the code reflects this organization:
+			<ul>
+				<li>The view model is stored in <code>src\main\resources\library\fx</code></li>
+				<li>The controller layer is stored in <code>src\main\java\library\fx</code></li>
+				<li>The model layer is stored in <code>src\main\java\library\data</code></li>
+			</ul>
+			</p>
             <h5>Database</h5>
             <img src="img/databasePlan.png" class="u-max-full-width">
             <h6 id="-vertabelo-https-www-vertabelo-com-was-used-to-aid-the-design-of-the-database-"><em><a
