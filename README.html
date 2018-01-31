@@ -11,14 +11,14 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h3>BookKeeper - Library Management System</h3>
             <p style="margin-top: -1%">BookKeeper was designed for the management of large scale libraries from the
                 ground up. </p>
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Run Instructions</h4>
             <ol>
                 <li>Copy all files to the computer.</li>
@@ -29,14 +29,35 @@
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
+            <h4>Source Code</h4>
+            <h5>Location</h5>
+            <h6>You can view the source code in the following locations:</h6>
+            <ul>
+                <li>View the source code in the <a href="src">src</a> folder found in the root directory of the drive
+                </li>
+                <li>View the source code on <a href="https://github.com/srikavin/BookKeeper">GitHub</a></li>
+            </ul>
+            <h5>Source Structure</h5>
+            <p>
+                The structure of the code reflects MVC organization:
+            <ul style="margin-left: 1vw">
+                <li>The view model is stored in <code>src\main\resources\library\fx</code></li>
+                <li>The controller layer is stored in <code>src\main\java\library\fx</code></li>
+                <li>The model layer is stored in <code>src\main\java\library\data</code></li>
+            </ul>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
             <h4>Usage</h4>
-            <p>BookKeeper requires Java 8. If java 8 is not installed, the program will use a
+            <p>BookKeeper requires Java 8. If Java 8 is not installed, the program will use a
                 bundled JVM to execute.</p>
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Generating Executable</h4>
             <pre><code>javapackager -deploy -native image -Bruntime="C:\Program Files\Java\jdk1.8.0_131\jre" -outdir building -outfile BookKeeper -srcfiles
                 application.jar -appclass library.fx.FXInitializer -name BookKeeper -title "BookKeeper - Library Management System"</code></pre>
@@ -45,7 +66,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Features</h4>
             <ul>
                 <li>Quickly editable patron information and catalogue information</li>
@@ -59,44 +80,42 @@
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Screenshots</h4>
             <h5>Main Window:</h5>
             <img src="src/main/resources/library/fx/help/img/Home.png" class="u-max-full-width">
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Planning</h4>
-			<h5>Design</h5>
-			<p>
-			BookKeeper uses a view, model, and controller system. The program uses JavaFX FXML files for its view layer. The controller layer is implemented through layers. The view is completely isolated from the models. The model layer is represented throught basic Java Objects. The model layer implements few functionalaties, as those are in the controller layer. This organization allows for losely coupled code and increases the efficiency of updating the program.
-			<br>
-			The structure of the code reflects this organization:
-			<ul>
-				<li>The view model is stored in <code>src\main\resources\library\fx</code></li>
-				<li>The controller layer is stored in <code>src\main\java\library\fx</code></li>
-				<li>The model layer is stored in <code>src\main\java\library\data</code></li>
-			</ul>
-			</p>
+            <h5>Design</h5>
+            <p>
+                BookKeeper uses a view, model, and controller system. The program uses JavaFX FXML files for its view
+                layer. The controller layer is implemented through layers. The view is completely isolated from the
+                models. The model layer is represented throught basic Java Objects. The model layer implements few
+                functionalaties, as those are in the controller layer. This organization allows for losely coupled code
+                and increases the efficiency of updating the program.
+                <br>
+
+            </p>
             <h5>Database</h5>
             <img src="img/databasePlan.png" class="u-max-full-width">
-            <h6 id="-vertabelo-https-www-vertabelo-com-was-used-to-aid-the-design-of-the-database-"><em><a
-                    href="https://www.vertabelo.com/">Vertabelo</a> was used to aid the design of the database</em></h6>
+            <h6><em><a href="https://www.vertabelo.com/">Vertabelo</a> was used to aid the design of the database</em>
+            </h6>
             <p>The layout of the database is designed to encourage modularity, e.g. changes
                 in the patron table should be reflected in the book table automatically, without
                 knowledge of the specific patron entry.</p>
 
             <h5>Layout</h5>
-            <img src="img/mockup/MainWindow.png" class="u-max-full-width"><h6
-                id="-balasmiq-mockup-was-used-to-design-wireframes-and-aid-in-planning-"><em>Balasmiq mockup was used to
+            <img src="img/mockup/MainWindow.png" class="u-max-full-width"><h6><em>Balasmiq mockup was used to
             design wireframes and aid in planning</em></h6>
             <p>More planning images can be found <a href="img/mockup">here</a>. These planning documents were modified
                 when I discovered a more elegant solution during development.</p>
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Technologies Used</h4>
             <ul>
                 <li>Gluon Scenebuilder - used to quickly create JavaFX layouts</li>
@@ -111,14 +130,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="twelve">
+        <div class="twelve columns">
             <h4>Technical Documentation</h4>
             <p>Documentation (javadocs) can be found inside javadocs or <a href="javadoc/index.html">here</a></p><br>
         </div>
     </div>
 
     <footer>
-        Written by Srikavin Ramkumar for the FBLA Coding and Programming Competition.</footer>
+        Written by Srikavin Ramkumar for the FBLA Coding and Programming Competition.
+    </footer>
 </div>
 </body>
 </html>
