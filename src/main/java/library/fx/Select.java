@@ -20,7 +20,14 @@ import library.data.Patron;
 import java.util.List;
 import java.util.function.Consumer;
 
-
+/**
+ * Abstract class for quickly building a select dialog.
+ * The select dialog includes items of the specified type and calls the specified callback when an item is chosen by the user.
+ *
+ * @param <T> The type of the selectable object. Should extend {@link LibraryData}
+ *
+ * @author Srikavin Ramkumar
+ */
 abstract class AbstractSelect<T extends LibraryData> {
     @FXML
     private TextField filter;
@@ -66,12 +73,17 @@ abstract class AbstractSelect<T extends LibraryData> {
         Platform.runLater(() -> table.refresh());
     }
 
+    /**
+     * Called when the cancel button is selected
+     */
     @FXML
     private void cancel(ActionEvent event) {
         stage.close();
     }
 
-
+    /**
+     * Called when the select button is selected
+     */
     @FXML
     private void select(ActionEvent event) {
         T selected = table.getSelectionModel().getSelectedItem();
@@ -81,10 +93,28 @@ abstract class AbstractSelect<T extends LibraryData> {
         }
     }
 
+    /**
+     * A method to initialize the specified table with the necessary columns and converters for the specific datatype
+     *
+     * @param table The table to configure with the correct settings
+     */
     protected abstract void initTable(TableView<T> table);
 
+    /**
+     * Returns the desired title of the select window
+     *
+     * @return The desired title of the window
+     */
     protected abstract String getTitle();
 
+    /**
+     * A checking if the specified object matches the filter text
+     *
+     * @param filterText The text to filter the current object on
+     * @param current    The current object being checked by the filter
+     *
+     * @return True if the current object matches the filter text; otherwise, false
+     */
     protected abstract boolean filterPredicate(String filterText, T current);
 }
 
