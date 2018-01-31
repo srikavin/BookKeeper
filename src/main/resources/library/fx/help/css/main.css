@@ -3,3 +3,7 @@
     right: -5vw;
     transform: scale(.9);
 }
+
+ol, ul {
+    margin-left: 1vw;
+}
