@@ -119,7 +119,7 @@ abstract class AbstractSelect<T extends LibraryData> {
 }
 
 /**
- * Class that allows for selecting of a specific Library Data Type
+ * Class that allows for selecting of a specific commonly-used Library Data Types
  */
 public class Select {
     /**
