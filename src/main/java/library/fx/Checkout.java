@@ -74,7 +74,7 @@ public class Checkout extends DataViewController<Book> {
     private void findPatron(MouseEvent event) {
         Select.PatronSelect select = new Select.PatronSelect();
         Library library = getLibrary();
-        Stage stage = getInitializer().showDialog("Select.fxml", select);
+        Stage stage = getInitializer().getDialog("Select.fxml", select);
         select.init(this::updatePatron, library.getPatrons(), stage);
         stage.showAndWait();
     }
@@ -143,7 +143,7 @@ public class Checkout extends DataViewController<Book> {
     private void findBook(MouseEvent event) {
         Select.BookSelect select = new Select.BookSelect();
         Library library = getLibrary();
-        Stage stage = getInitializer().showDialog("Select.fxml", select);
+        Stage stage = getInitializer().getDialog("Select.fxml", select);
         select.init(this::updateBook, library.getBooks(), stage);
         stage.showAndWait();
     }

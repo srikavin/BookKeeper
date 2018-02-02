@@ -38,8 +38,6 @@ public class Books extends DataViewController<Book> implements Initializable {
     @FXML
     private TextField identifier;
     @FXML
-    private TextField filter;
-    @FXML
     private TextField currentPatron;
 
     public static void initializeTable(TableView<Book> table) {
@@ -178,7 +176,7 @@ public class Books extends DataViewController<Book> implements Initializable {
     private void findPatron(MouseEvent mouseEvent) {
         Select.PatronSelect select = new Select.PatronSelect();
         Library library = getLibrary();
-        Stage stage = getInitializer().showDialog("Select.fxml", select);
+        Stage stage = getInitializer().getDialog("Select.fxml", select);
         select.init((e) -> currentPatron.setText(e.getId()), library.getPatrons(), stage);
         stage.showAndWait();
     }

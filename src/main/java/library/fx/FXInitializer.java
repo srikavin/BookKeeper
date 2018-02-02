@@ -59,7 +59,7 @@ public class FXInitializer extends Application {
         menuController.initialize(this, library);
 
         //Load the default content
-        FXMLCacheHolder cacheHolder = loadFile("MainWindow.fxml");
+        FXMLInfoHolder cacheHolder = loadFile("MainWindow.fxml");
         Parent parent = cacheHolder.parent;
 
         //Make sure to load the fxml file before requesting the controller
@@ -99,7 +99,16 @@ public class FXInitializer extends Application {
         menuController.initialize(this, library);
     }
 
-    public <T> Stage showDialog(String fxFile, T controllerInstance) {
+    /**
+     * Load a JavaFX file and return the stage it is on
+     *
+     * @param fxFile             The fx file to load
+     * @param controllerInstance The controller to set on the loaded fx file
+     * @param <T>                The type of the controller
+     *
+     * @return The stage the fx file was loaded on to
+     */
+    public <T> Stage getDialog(String fxFile, T controllerInstance) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fxFile));
@@ -110,11 +119,10 @@ public class FXInitializer extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**
-     * Load all fonts needed
+     * Load all fonts needed to load the application
      */
     private void loadFonts() {
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto-Light.ttf"), 10);
@@ -136,7 +144,7 @@ public class FXInitializer extends Application {
     public void setContent(String fxmlFile) {
         try {
             //Load the specified fxml file
-            FXMLCacheHolder loadedCache = loadFile(fxmlFile);
+            FXMLInfoHolder loadedCache = loadFile(fxmlFile);
 
             //Get the parent node from the file
             Parent content = loadedCache.parent;
@@ -164,6 +172,10 @@ public class FXInitializer extends Application {
         }
     }
 
+    /**
+     * Enable and disables whether or not transitions will be used when moving from one stage to another
+     * @param useTransitions True if transitions should be used; false otherwise
+     */
     public void setUseTransitions(boolean useTransitions) {
         this.useTransitions = useTransitions;
     }
@@ -182,20 +194,22 @@ public class FXInitializer extends Application {
      * Loads the content specified in the file if it has not been cached.
      *
      * @param fileName .fxml file to load
+     *
      * @return The content contained in the file. The same as the result of {@link FXMLLoader#load()}.
+     *
      * @throws IOException If an error occurs when opening the file.
      */
-    private FXMLCacheHolder loadFile(String fileName) throws IOException {
+    private FXMLInfoHolder loadFile(String fileName) throws IOException {
         //Load only if it has not been previously loaded
         FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fileName));
 
         //Save the loaded content into the caches
         Parent loadedParent = loader.load();
-        return new FXMLCacheHolder(loader.getController(), loadedParent);
+        return new FXMLInfoHolder(loader.getController(), loadedParent);
     }
 
     /**
-     * Opens the help window containing documentation.
+     * Opens the help window containing user help/documentation.
      */
     public void loadHelp() {
         //Open the window if it isn't open
@@ -208,11 +222,14 @@ public class FXInitializer extends Application {
         helpStage.toFront();
     }
 
-    private static class FXMLCacheHolder {
+    /**
+     * This class holds the controller and root element of a loaded JavaFX file.
+     */
+    private static class FXMLInfoHolder {
         BaseController controller;
         Parent parent;
 
-        FXMLCacheHolder(BaseController controller, Parent parent) {
+        FXMLInfoHolder(BaseController controller, Parent parent) {
             this.controller = controller;
             this.parent = parent;
         }
