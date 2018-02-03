@@ -37,7 +37,7 @@ public abstract class BaseController {
     @FXML
     private Pane contentBackground;
     @FXML
-    private Pane container;
+    protected Pane container;
 
     /**
      * Sets a {@link FXInitializer}. This is used to open new windows and change currently displayed content.

@@ -3,11 +3,13 @@ package library.fx;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -30,6 +32,8 @@ public class MainWindow extends BaseController implements Initializable {
     private Pane dateContainer;
     @FXML
     private Pane headerBackground;
+    @FXML
+    private AnchorPane patronButton;
 
     /**
      * An event handler called when books is clicked
@@ -94,6 +98,11 @@ public class MainWindow extends BaseController implements Initializable {
         //Set the date in the UI to the formatted date right now when it is initialized
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
         currentDate.setText(formatter.format(LocalDate.now()));
+
+        Platform.runLater(() -> {
+            SpotlightManager manager = new SpotlightManager(rootPane, 0, 0);
+            manager.trigger(patronButton);
+        });
     }
 
     /**
