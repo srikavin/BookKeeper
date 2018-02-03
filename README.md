@@ -6,7 +6,8 @@ BookKeeper requires Java 8. If java 8 is not installed, the program will use a b
 
 ### Generating Executable
 ```
-javafxpackager -deploy -native image -Bruntime="C:\Program Files\Java\jdk1.8.0_131\jre" -outdir building -outfile BookKeeper -srcfiles application.jar -appclass library.fx.FXInitializer -name BookKeeper -title "BookKeeper - Library Management System"
+javapackager -deploy -native image -Bruntime="C:\Program Files\Java\jdk1.8.0_131\jre" -outdir building -outfile BookKeeper -srcfiles
+   application.jar -appclass library.fx.FXInitializer -name BookKeeper -title "BookKeeper - Library Management System"
 ```
 Used for creating a executable file with a bundled-JVM using the JDK-bundled `javapackager` tool.
 
