@@ -45,7 +45,7 @@ public abstract class BaseController {
      *
      * @param initializer The FXInitializer object to use.
      * @param library     The Library object to use.
-     * @throws IllegalArgumentException If the argument passed is null
+     * @throws IllegalArgumentException If the arguments passed are null
      */
     public void initialize(FXInitializer initializer, Library library) {
         //Check for null before setting
