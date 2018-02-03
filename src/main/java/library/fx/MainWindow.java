@@ -3,7 +3,6 @@ package library.fx;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,10 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
 
 public class MainWindow extends BaseController implements Initializable {
     @FXML
@@ -90,19 +87,20 @@ public class MainWindow extends BaseController implements Initializable {
         getInitializer().setContent("Checkout.fxml");
     }
 
+    @Override
+    protected void registerSpotlightItems(SpotlightManager manager) {
+        manager.registerSpotlight(patronButton, "Patrons", "View and manage all patrons\nIt is possible to add, create, and delete patrons.");
+        manager.registerSpotlight(dateContainer, "Date", "The current date is shown here");
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initializeData() {
         //Set the date in the UI to the formatted date right now when it is initialized
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
         currentDate.setText(formatter.format(LocalDate.now()));
-
-        Platform.runLater(() -> {
-            SpotlightManager manager = new SpotlightManager(rootPane, 0, 0);
-            manager.trigger(patronButton);
-        });
     }
 
     /**
