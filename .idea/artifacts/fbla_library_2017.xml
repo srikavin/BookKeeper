@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="fbla-library-2017">
+    <output-path>$PROJECT_DIR$/out/artifacts/fbla_library_2017</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="library.fx.FXInitializer" />
+        <option name="convertCss2Bin" value="true" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="nativeBundle" value="image" />
+        <option name="title" value="BookKeeper" />
+        <option name="vendor" value="Srikavin Ramkumar" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="fbla_library_2017.jar">
+        <element id="module-output" name="fbla-library-2017" />
+      </element>
+    </root>
+  </artifact>
+</component>

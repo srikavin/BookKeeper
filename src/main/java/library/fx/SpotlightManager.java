@@ -5,7 +5,6 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -33,33 +32,22 @@ public class SpotlightManager {
         container.getChildren().add(canvas);
         context = canvas.getGraphicsContext2D();
 
-        final int MARGIN = 20;
-
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                canvas.setBlendMode(BlendMode.OVERLAY);
-                context.setFill(Color.TRANSPARENT);
                 context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                 if (currentTarget == null || currentBounds == null) {
                     return;
                 }
 
-                context.setFill(Color.ANTIQUEWHITE);
+                context.setFill(Color.BLACK.deriveColor(1, 1, 1, 0.39));
                 context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-                context.setFill(Color.BLACK);
-                context.fillRect(currentBounds.getMinX(),
+                context.clearRect(currentBounds.getMinX(),
                         currentBounds.getMinY(),
                         currentBounds.getWidth(),
                         currentBounds.getHeight());
-
-//                context.fillOval(
-//                        currentBounds.getMinX() + offsetX - 0.5 * MARGIN,
-//                        currentBounds.getMinY() + offsetY - 0.5 * MARGIN,
-//                        currentBounds.getWidth() + 2 * MARGIN,
-//                        currentBounds.getHeight() + 2.25 * MARGIN);
             }
         };
         animationTimer.start();

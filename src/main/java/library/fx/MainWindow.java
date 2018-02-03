@@ -9,8 +9,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -33,7 +33,7 @@ public class MainWindow extends BaseController implements Initializable {
     @FXML
     private Pane headerBackground;
     @FXML
-    private AnchorPane patronButton;
+    private Rectangle patronButton;
 
     /**
      * An event handler called when books is clicked

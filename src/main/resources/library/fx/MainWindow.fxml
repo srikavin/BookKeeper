@@ -55,11 +55,11 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </AnchorPane>
-        <AnchorPane fx:id="patronButton" layoutX="36.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity"
-                    onMouseClicked="#patrons" prefHeight="99.0" prefWidth="107.0" styleClass="main-selection-container"
+        <AnchorPane layoutX="36.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#patrons"
+                    prefHeight="99.0" prefWidth="107.0" styleClass="main-selection-container"
                     AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="14.0">
-            <Rectangle arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#c3c3c3" strokeType="INSIDE"
-                       styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
+            <Rectangle fx:id="patronButton" arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#c3c3c3"
+                       strokeType="INSIDE" styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
             <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patrons"
                   textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
                 <font>
