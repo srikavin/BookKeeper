@@ -2,7 +2,6 @@ package library.fx;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -12,12 +11,10 @@ import javafx.scene.web.WebView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-public class Help extends BaseController implements Initializable {
+public class Help extends BaseController {
     @FXML
     public Label help;
     @FXML
@@ -28,7 +25,7 @@ public class Help extends BaseController implements Initializable {
     private Map<String, String> categoryFileMap = new HashMap<>();
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initializeData() {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(Help.class.getResourceAsStream("help/help.txt")))) {
 

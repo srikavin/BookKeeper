@@ -8,7 +8,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import library.data.Identifier;
@@ -24,7 +23,7 @@ import java.util.function.Predicate;
  *
  * @param <T> The data type represented by this controller
  */
-public abstract class DataViewController<T extends LibraryData> extends BaseController implements Initializable {
+public abstract class DataViewController<T extends LibraryData> extends BaseController {
     @FXML
     protected TableView<T> table;
     @FXML
@@ -73,6 +72,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         setupColumns(table);
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

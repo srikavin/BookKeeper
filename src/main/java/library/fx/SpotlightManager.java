@@ -22,16 +22,40 @@ import java.util.List;
 public class SpotlightManager {
     private final List<Spotlight> spotlights = new ArrayList<>();
     private int currentSpotlightIndex = -1;
-    private Pane container;
+    private Pane spotlightContainer;
     private Shape curShape;
-    private VBox curPane;
-    private Button nextButton = new Button("Next");
+    private VBox tooltipContainer;
+    private Text descriptionLabel;
+    private TitledPane titlePane;
+    private Button nextButton;
     private boolean isActive = false;
     private final ChangeListener<? super Transform> changeListener = (observable, oldValue, newValue) -> draw();
 
-    public SpotlightManager(Pane container) {
-        this.container = container;
+    public SpotlightManager(Pane spotlightContainer) {
+        this.spotlightContainer = spotlightContainer;
+        //Create next button
+        nextButton = new Button("Next");
         nextButton.setOnAction(event -> next());
+        //Create the text label displaying the description
+        descriptionLabel = new Text();
+        //Create and customize the pane displaying the title and containing the description and button nodes
+        titlePane = new TitledPane();
+        titlePane.setCollapsible(false);
+        titlePane.setPrefHeight(60);
+        titlePane.setPrefWidth(80);
+        titlePane.setContent(descriptionLabel);
+        titlePane.setFocusTraversable(false);
+        //Create the container of the tooltip and add the children to it
+        tooltipContainer = new VBox();
+        tooltipContainer.setSpacing(5.0);
+        tooltipContainer.setAlignment(Pos.CENTER_RIGHT);
+        tooltipContainer.getChildren().add(titlePane);
+        tooltipContainer.getChildren().add(nextButton);
+
+        tooltipContainer.setVisible(false);
+
+        spotlightContainer.getChildren().add(tooltipContainer);
+
     }
 
     public void registerSpotlight(Node node, String title, String description) {
@@ -45,12 +69,14 @@ public class SpotlightManager {
         currentSpotlightIndex = 0;
         addListenerToCurrentSpotlight();
         isActive = true;
+        draw();
     }
 
     public void disable() {
         removeListenerFromCurrentSpotlight();
         currentSpotlightIndex = 0;
         isActive = false;
+        draw();
     }
 
     /**
@@ -80,6 +106,7 @@ public class SpotlightManager {
         if (spotlights.size() - 1 > currentSpotlightIndex) {
             currentSpotlightIndex++;
             addListenerToCurrentSpotlight();
+            draw();
         } else {
             disable();
             draw();
@@ -92,17 +119,17 @@ public class SpotlightManager {
 
     private void draw(Spotlight spotlight) {
         if (!isActive) {
-            container.getChildren().remove(curShape);
-            container.getChildren().remove(curPane);
+            tooltipContainer.setVisible(false);
+            spotlightContainer.getChildren().remove(curShape);
             return;
         }
         //Calculate bounds of object
         Bounds currentBounds = spotlight.node.getBoundsInParent();
-        final Point2D pt = container.sceneToLocal(spotlight.node.getParent().localToScene(currentBounds.getMinX(), currentBounds.getMinY()));
+        final Point2D pt = spotlightContainer.sceneToLocal(spotlight.node.getParent().localToScene(currentBounds.getMinX(), currentBounds.getMinY()));
         Bounds bounds = new BoundingBox(pt.getX(), pt.getY(), currentBounds.getWidth(), currentBounds.getHeight());
 
         //Create rectangle for entire container
-        Rectangle base = new Rectangle(container.getWidth(), container.getHeight());
+        Rectangle base = new Rectangle(spotlightContainer.getWidth(), spotlightContainer.getHeight());
         //Create rectangle and set properties to only cover the currentTarget
         Rectangle rect = new Rectangle();
         rect.setLayoutX(bounds.getMinX());
@@ -117,33 +144,33 @@ public class SpotlightManager {
         shape.setFill(Color.BLACK);
         shape.setOpacity(0.7);
         //Remove the shape if it exists and add it to the container
-        container.getChildren().remove(curShape);
-        container.getChildren().add(shape);
+        spotlightContainer.getChildren().remove(curShape);
+        spotlightContainer.getChildren().add(shape);
         //Set the current shape
         this.curShape = shape;
 
         //Create container for information about the current node
-        VBox vBox = new VBox();
-        TitledPane pane = new TitledPane();
-        pane.setCollapsible(false);
-        pane.setText(spotlight.title);
-        pane.setPrefHeight(60);
-        pane.setPrefWidth(80);
-        Text label = new Text();
-        label.setText(spotlight.description);
-        pane.setContent(label);
-        pane.setFocusTraversable(false);
+        titlePane.setText(spotlight.title);
+        tooltipContainer.setMaxWidth(titlePane.getWidth());
+        descriptionLabel.setText(spotlight.description);
 
-        vBox.getChildren().add(pane);
-        vBox.setSpacing(5.0);
-        vBox.setAlignment(Pos.CENTER_RIGHT);
-        vBox.getChildren().add(nextButton);
+        double layoutX = bounds.getMaxX() + (titlePane.getWidth() / 5);
+        //Put the tooltip on the left if the tooltip is too big to fit on the right
+        if (layoutX > spotlightContainer.getWidth()) {
+            layoutX = bounds.getMinX() - (titlePane.getWidth() * 1.2);
+        }
+        //Make sure the tooltip stays within the range of the window on the left
+        if (layoutX < 5) {
+            layoutX = 5;
+        }
 
-        vBox.setLayoutX(bounds.getMaxX() + (bounds.getWidth() / 4));
-        vBox.setLayoutY(bounds.getMinY() + (bounds.getHeight() / 2) - pane.getPrefHeight());
-        container.getChildren().remove(curPane);
-        container.getChildren().add(vBox);
-        curPane = vBox;
+        tooltipContainer.setLayoutX(layoutX);
+        tooltipContainer.setLayoutY(bounds.getMinY() + (bounds.getHeight() / 2) - titlePane.getPrefHeight());
+
+        tooltipContainer.setVisible(true);
+        //Set tooltip container to front of overlay
+        spotlightContainer.getChildren().remove(tooltipContainer);
+        spotlightContainer.getChildren().add(tooltipContainer);
     }
 
     private static class Spotlight {
