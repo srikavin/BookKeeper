@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="624.0"
-            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.111"
+            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.141"
             fx:controller="library.fx.MainWindow">
 
     <AnchorPane fx:id="container" layoutX="-1.0" layoutY="96.0" prefHeight="301.0" prefWidth="624.0"
@@ -58,8 +59,8 @@
         <AnchorPane layoutX="36.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#patrons"
                     prefHeight="99.0" prefWidth="107.0" styleClass="main-selection-container"
                     AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="14.0">
-            <Rectangle arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#c3c3c3" strokeType="INSIDE"
-                       styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
+            <Rectangle fx:id="patronButton" arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#c3c3c3"
+                       strokeType="INSIDE" styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
             <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patrons"
                   textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
                 <font>
@@ -138,7 +139,7 @@
         </AnchorPane>
     </AnchorPane>
     <AnchorPane fx:id="headerBackground" prefHeight="91.0" prefWidth="624.0" style="-fx-background-color: #1565c0;"
-                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-0.5" AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="header" prefHeight="98.0" prefWidth="624.0" AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Text fill="#003b8e" layoutX="14.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book"
@@ -160,12 +161,17 @@
                 </font>
             </Text>
             <Text fill="WHITE" layoutX="506.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Robinson High School" AnchorPane.bottomAnchor="6.826171875"
-                  AnchorPane.rightAnchor="7.2080078125">
+                  text="Robinson High School" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="7.0">
                 <font>
                     <Font name="Roboto Condensed Light" size="13.0"/>
                 </font>
             </Text>
+            <Label layoutX="562.0" layoutY="14.0" onMouseClicked="#onSpotlightHelp" text="" textFill="WHITE"
+                   AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
+                <font>
+                    <Font name="Material Icons" size="40.0"/>
+                </font>
+            </Label>
         </AnchorPane>
     </AnchorPane>
 </AnchorPane>
