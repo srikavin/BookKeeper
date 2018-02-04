@@ -9,13 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
 
 public class MainWindow extends BaseController implements Initializable {
     @FXML
@@ -30,6 +29,8 @@ public class MainWindow extends BaseController implements Initializable {
     private Pane dateContainer;
     @FXML
     private Pane headerBackground;
+    @FXML
+    private Rectangle patronButton;
 
     /**
      * An event handler called when books is clicked
@@ -86,11 +87,17 @@ public class MainWindow extends BaseController implements Initializable {
         getInitializer().setContent("Checkout.fxml");
     }
 
+    @Override
+    protected void registerSpotlightItems(SpotlightManager manager) {
+        manager.registerSpotlight(patronButton, "Patrons", "View and manage all patrons\nIt is possible to add, create, and delete patrons.");
+        manager.registerSpotlight(dateContainer, "Date", "The current date is shown here");
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initializeData() {
         //Set the date in the UI to the formatted date right now when it is initialized
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
         currentDate.setText(formatter.format(LocalDate.now()));

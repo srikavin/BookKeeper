@@ -9,16 +9,21 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import library.data.Library;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * This class serves as a base for other GUI's to implement. This class is abstract and cannot be instantiated.
  *
  * @author Srikavin Ramkumar
  */
-public abstract class BaseController {
+public abstract class BaseController implements Initializable {
     /**
      * Should be used for animating the in animations. Used in {@link #animateIn(EventHandler)}
      */
@@ -27,7 +32,15 @@ public abstract class BaseController {
      * Should be used for animating the in animations. Used in {@link #animateOut(EventHandler)}
      */
     protected final Timeline animateOutTimeline = new Timeline();
+    /**
+     * Used for highlighting fields as incorrect or containing an error
+     */
     protected final PseudoClass errorClass = PseudoClass.getPseudoClass("invalid-input");
+    protected SpotlightManager spotlightManager;
+    @FXML
+    protected Pane container;
+    @FXML
+    protected Pane rootPane;
     private FXInitializer initializer;
     private Library library;
     @FXML
@@ -36,8 +49,12 @@ public abstract class BaseController {
     private Pane headerBackground;
     @FXML
     private Pane contentBackground;
-    @FXML
-    private Pane container;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.spotlightManager = new SpotlightManager(rootPane);
+        registerSpotlightItems(spotlightManager);
+    }
 
     /**
      * Sets a {@link FXInitializer}. This is used to open new windows and change currently displayed content.
@@ -45,7 +62,8 @@ public abstract class BaseController {
      *
      * @param initializer The FXInitializer object to use.
      * @param library     The Library object to use.
-     * @throws IllegalArgumentException If the argument passed is null
+     *
+     * @throws IllegalArgumentException If the arguments passed are null
      */
     public void initialize(FXInitializer initializer, Library library) {
         //Check for null before setting
@@ -104,6 +122,20 @@ public abstract class BaseController {
 
         //Start the animation
         timeline.play();
+    }
+
+    @FXML
+    protected void onSpotlightHelp(MouseEvent event) {
+        spotlightManager.trigger();
+    }
+
+    /**
+     * Used to register any desired nodes in the scene with the spotlight manager
+     *
+     * @param spotlightManager The spotlight manager to register nodes with
+     */
+    protected void registerSpotlightItems(SpotlightManager spotlightManager) {
+
     }
 
     protected Library getLibrary() {
