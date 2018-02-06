@@ -68,7 +68,7 @@ public class FXInitializer extends Application {
 
         //Set FXInitializer to this object
         controller.initialize(this, library);
-
+        controller.initializeData();
 
         //Set the center of the pane to the content
         borderPane.setCenter(parent);
@@ -82,7 +82,10 @@ public class FXInitializer extends Application {
         controller.animateIn((e) -> primaryStage.show());
 
         //Initialize the help window
-        Parent root = loadFile("Help.fxml").parent;
+        FXMLInfoHolder help = loadFile("Help.fxml");
+        help.controller.initialize(this, library);
+        help.controller.initializeData();
+        Parent root = help.parent;
         helpStage = new Stage();
         helpStage.setTitle("Help");
         helpStage.setScene(new Scene(root, 450, 450));
@@ -90,7 +93,7 @@ public class FXInitializer extends Application {
         helpStage.setMinWidth(500);
 
         primaryStage.setMinWidth(700);
-        primaryStage.setMinHeight(400);
+        primaryStage.setMinHeight(450);
     }
 
     public void loadFile(Path path) throws IOException {
@@ -174,6 +177,7 @@ public class FXInitializer extends Application {
 
     /**
      * Enable and disables whether or not transitions will be used when moving from one stage to another
+     *
      * @param useTransitions True if transitions should be used; false otherwise
      */
     public void setUseTransitions(boolean useTransitions) {
