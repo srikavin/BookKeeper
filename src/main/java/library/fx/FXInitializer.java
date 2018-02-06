@@ -89,7 +89,7 @@ public class FXInitializer extends Application {
         helpStage.setMinHeight(600);
         helpStage.setMinWidth(500);
 
-        primaryStage.setMinWidth(600);
+        primaryStage.setMinWidth(700);
         primaryStage.setMinHeight(400);
     }
 

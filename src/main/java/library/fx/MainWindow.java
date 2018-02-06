@@ -101,6 +101,12 @@ public class MainWindow extends BaseController implements Initializable {
         //Set the date in the UI to the formatted date right now when it is initialized
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
         currentDate.setText(formatter.format(LocalDate.now()));
+
+        container.getChildren().forEach((e) -> {
+            container.widthProperty().addListener((observable, oldValue, newValue) -> {
+                e.setScaleX(container.getPrefWidth() / newValue.doubleValue());
+            });
+        });
     }
 
     /**
@@ -177,4 +183,6 @@ public class MainWindow extends BaseController implements Initializable {
         //Start the animation
         animateOutTimeline.play();
     }
+
+
 }
