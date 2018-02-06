@@ -6,13 +6,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="624.0"
-            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.141"
+            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.111"
             fx:controller="library.fx.MainWindow">
 
     <AnchorPane fx:id="container" layoutX="-1.0" layoutY="96.0" prefHeight="301.0" prefWidth="624.0"
-                AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="103.0">
+                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="103.0">
         <AnchorPane layoutX="36.0" layoutY="152.0" onMouseClicked="#checkout" prefHeight="99.0" prefWidth="107.0"
                     styleClass="main-selection-container" AnchorPane.leftAnchor="31.0">
             <cursor>
