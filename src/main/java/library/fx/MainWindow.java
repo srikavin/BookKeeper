@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -26,11 +26,21 @@ public class MainWindow extends BaseController implements Initializable {
     @FXML
     private Pane header;
     @FXML
+    private TilePane tiles;
+    @FXML
     private Pane dateContainer;
     @FXML
     private Pane headerBackground;
     @FXML
-    private Rectangle patronButton;
+    private Pane patronsTile;
+    @FXML
+    private Pane typesTile;
+    @FXML
+    private Pane booksTile;
+    @FXML
+    private Pane reportsTile;
+    @FXML
+    private Pane checkoutTile;
 
     /**
      * An event handler called when books is clicked
@@ -89,7 +99,7 @@ public class MainWindow extends BaseController implements Initializable {
 
     @Override
     protected void registerSpotlightItems(SpotlightManager manager) {
-        manager.registerSpotlight(patronButton, "Patrons", "View and manage all patrons\nIt is possible to add, create, and delete patrons.");
+        manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons\nIt is possible to add, create, and delete patrons.");
         manager.registerSpotlight(dateContainer, "Date", "The current date is shown here");
     }
 

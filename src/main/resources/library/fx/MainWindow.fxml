@@ -4,103 +4,123 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="624.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="670.0"
             style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.141"
             fx:controller="library.fx.MainWindow">
 
     <AnchorPane fx:id="container" layoutX="-1.0" layoutY="96.0" prefHeight="301.0" prefWidth="624.0"
-                AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="103.0">
-        <AnchorPane layoutX="36.0" layoutY="152.0" onMouseClicked="#checkout" prefHeight="99.0" prefWidth="107.0"
-                    styleClass="main-selection-container" AnchorPane.leftAnchor="31.0">
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-            <Rectangle arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#d0d0d0" strokeType="INSIDE"
-                       styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
-            <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Checkout &amp; Return" textAlignment="CENTER" wrappingWidth="116.99999570846558"
-                  AnchorPane.bottomAnchor="7.0">
-                <font>
-                    <Font name="Roboto Condensed Light" size="22.0"/>
-                </font>
-            </Text>
-            <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
-                  textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <font>
-                    <Font name="Material Icons" size="76.0"/>
-                </font>
-            </Text>
-        </AnchorPane>
-        <AnchorPane layoutX="188.0" layoutY="14.0" onMouseClicked="#types" prefHeight="99.0" prefWidth="107.0"
-                    styleClass="main-selection-container" AnchorPane.leftAnchor="179.0">
-            <Rectangle arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#d0d0d0" strokeType="INSIDE"
-                       styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
-            <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Types"
-                  textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
-                <font>
-                    <Font name="Roboto Condensed Light" size="27.0"/>
-                </font>
-            </Text>
-            <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
-                  textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <font>
-                    <Font name="Material Icons" size="76.0"/>
-                </font>
-            </Text>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </AnchorPane>
-        <AnchorPane layoutX="36.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#patrons"
-                    prefHeight="99.0" prefWidth="107.0" styleClass="main-selection-container"
-                    AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="14.0">
-            <Rectangle fx:id="patronButton" arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#c3c3c3"
-                       strokeType="INSIDE" styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
-            <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patrons"
-                  textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
-                <font>
-                    <Font name="Roboto Condensed Light" size="27.0"/>
-                </font>
-            </Text>
-            <Text fill="#003b8e" layoutX="7.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER"
-                  wrappingWidth="116.99999570846558" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                  AnchorPane.topAnchor="0.0">
-                <font>
-                    <Font name="Material Icons" size="76.0"/>
-                </font>
-            </Text>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </AnchorPane>
-        <AnchorPane layoutX="340.0" layoutY="14.0" onMouseClicked="#books" prefHeight="99.0" prefWidth="107.0"
-                    styleClass="main-selection-container" AnchorPane.leftAnchor="327.0">
-            <Rectangle arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#d0d0d0" strokeType="INSIDE"
-                       styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
-            <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books"
-                  textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
-                <font>
-                    <Font name="Roboto Condensed Light" size="27.0"/>
-                </font>
-            </Text>
-            <Text fill="#003b8e" layoutX="-6.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER"
-                  wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0"
-                  AnchorPane.topAnchor="0.0">
-                <font>
-                    <Font name="Material Icons" size="76.0"/>
-                </font>
-            </Text>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </AnchorPane>
-        <AnchorPane fx:id="dateContainer" layoutX="188.0" layoutY="152.0" prefHeight="117.0" prefWidth="413.0"
-                    rotate="-2.5" AnchorPane.rightAnchor="0.0">
+                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="103.0">
+        <TilePane fx:id="tiles" hgap="35.0" vgap="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="31.0"
+                  AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="14.0">
+            <children>
+                <AnchorPane fx:id="patronsTile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            onMouseClicked="#patrons" prefHeight="117.0" prefWidth="118.0" styleClass="main-selection">
+                    <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patrons"
+                          textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0"
+                          AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
+                        <font>
+                            <Font name="Roboto Condensed Light" size="27.0"/>
+                        </font>
+                    </Text>
+                    <Text fill="#003b8e" layoutX="7.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                          textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <font>
+                            <Font name="Material Icons" size="76.0"/>
+                        </font>
+                    </Text>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </AnchorPane>
+                <AnchorPane fx:id="typesTile" onMouseClicked="#types" prefHeight="117.0" prefWidth="118.0"
+                            styleClass="main-selection">
+                    <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                          text="Types" textAlignment="CENTER" wrappingWidth="116.99999570846558"
+                          AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
+                        <font>
+                            <Font name="Roboto Condensed Light" size="27.0"/>
+                        </font>
+                    </Text>
+                    <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                          textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <font>
+                            <Font name="Material Icons" size="76.0"/>
+                        </font>
+                    </Text>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </AnchorPane>
+                <AnchorPane fx:id="booksTile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            onMouseClicked="#books" prefHeight="117.0" prefWidth="118.0" styleClass="main-selection">
+                    <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books"
+                          textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0"
+                          AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
+                        <font>
+                            <Font name="Roboto Condensed Light" size="27.0"/>
+                        </font>
+                    </Text>
+                    <Text fill="#003b8e" layoutX="-6.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                          textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                        <font>
+                            <Font name="Material Icons" size="76.0"/>
+                        </font>
+                    </Text>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </AnchorPane>
+                <AnchorPane fx:id="reportsTile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            onMouseClicked="#reports" prefHeight="117.0" prefWidth="118.0" styleClass="main-selection">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                    <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports"
+                          textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
+                        <font>
+                            <Font name="Roboto Condensed Light" size="27.0"/>
+                        </font>
+                    </Text>
+                    <Text fill="#003b8e" layoutX="-6.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                          textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                        <font>
+                            <Font name="Material Icons" size="76.0"/>
+                        </font>
+                    </Text>
+                </AnchorPane>
+                <AnchorPane fx:id="checkoutTile" onMouseClicked="#checkout" prefHeight="117.0" prefWidth="118.0"
+                            styleClass="main-selection">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                    <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                          text="Checkout &amp; Return" textAlignment="CENTER" wrappingWidth="116.99999570846558"
+                          AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <font>
+                            <Font name="Roboto Condensed Light" size="22.0"/>
+                        </font>
+                    </Text>
+                    <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                          textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <font>
+                            <Font name="Material Icons" size="76.0"/>
+                        </font>
+                    </Text>
+                </AnchorPane>
+            </children>
+        </TilePane>
+        <AnchorPane fx:id="dateContainer" layoutX="188.0" layoutY="152.0" maxHeight="1.7976931348623157E308"
+                    maxWidth="1.7976931348623157E308" rotate="-2.5" AnchorPane.bottomAnchor="28.0"
+                    AnchorPane.rightAnchor="0.0">
             <Rectangle fill="#1564bf" focusTraversable="true" height="76.0" layoutX="1.0" layoutY="19.0" stroke="BLACK"
                        strokeType="INSIDE" strokeWidth="0.0" width="443.0" AnchorPane.bottomAnchor="22.0"
                        AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="19.0">
@@ -113,27 +133,6 @@
                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="32.0">
                 <font>
                     <Font name="Roboto Condensed Bold" size="44.0"/>
-                </font>
-            </Text>
-        </AnchorPane>
-        <AnchorPane layoutX="479.0" layoutY="14.0" onMouseClicked="#reports" prefHeight="99.0" prefWidth="107.0"
-                    styleClass="main-selection-container" AnchorPane.leftAnchor="475.0">
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-            <Rectangle arcHeight="5.0" fill="#d8ebff" height="117.0" stroke="#d0d0d0" strokeType="INSIDE"
-                       styleClass="main-selection" width="117.0" AnchorPane.leftAnchor="0.0"/>
-            <Text fill="#003b8e" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports"
-                  textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0">
-                <font>
-                    <Font name="Roboto Condensed Light" size="27.0"/>
-                </font>
-            </Text>
-            <Text fill="#003b8e" layoutX="-6.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER"
-                  wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0"
-                  AnchorPane.topAnchor="0.0">
-                <font>
-                    <Font name="Material Icons" size="76.0"/>
                 </font>
             </Text>
         </AnchorPane>
