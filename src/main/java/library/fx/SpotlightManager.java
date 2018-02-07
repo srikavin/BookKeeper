@@ -55,7 +55,6 @@ public class SpotlightManager {
         tooltipContainer.setVisible(false);
 
         spotlightContainer.getChildren().add(tooltipContainer);
-
     }
 
     public void registerSpotlight(Node node, String title, String description) {
@@ -139,7 +138,7 @@ public class SpotlightManager {
         //Get the difference between the two shapes; this is everything but the current target
         Shape shape = Shape.subtract(base, rect);
         //Make the shape ignore clicks
-        shape.setMouseTransparent(true);
+        shape.setMouseTransparent(false);
         //Set the color and opacity
         shape.setFill(Color.BLACK);
         shape.setOpacity(0.7);
