@@ -3,10 +3,12 @@
     -fx-fill: #bcdfff;
 }
 
-.main-selection-container:hover .main-selection {
-    -fx-background-color: #bcdfff;
-    -fx-fill: #bcdfff;
+.main-selection {
+    -fx-background-color: #d8ebff;
+    -fx-fill: #d8ebff;
     -fx-cursor: hand;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1px;
 }
 
 /*
