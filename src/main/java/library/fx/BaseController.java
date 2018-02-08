@@ -62,7 +62,6 @@ public abstract class BaseController implements Initializable {
      *
      * @param initializer The FXInitializer object to use.
      * @param library     The Library object to use.
-     *
      * @throws IllegalArgumentException If the arguments passed are null
      */
     public void initialize(FXInitializer initializer, Library library) {
@@ -154,19 +153,16 @@ public abstract class BaseController implements Initializable {
 
         //Set starting point of the animation - currently set to off-screen
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
-                new KeyValue(container.opacityProperty(), 1, Interpolator.EASE_IN),
                 new KeyValue(headerBackground.scaleYProperty(), 1, Interpolator.EASE_IN),
                 new KeyValue(header.translateYProperty(), 0, Interpolator.EASE_IN)));
 
         //Run the animation
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(150),
-                new KeyValue(container.opacityProperty(), 0),
                 new KeyValue(header.translateYProperty(), -150),
                 new KeyValue(headerBackground.scaleYProperty(), 90.0 / 47.0, Interpolator.EASE_IN)
         ));
 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(250),
-                callback,
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(250), callback,
                 new KeyValue(headerBackground.translateYProperty(), 23, Interpolator.EASE_IN)));
 
         //Start the animation
