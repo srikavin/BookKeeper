@@ -48,7 +48,7 @@ public class Books extends DataViewController<Book> {
         ObservableList<TableColumn<Book, ?>> columns = table.getColumns();
 
         TableColumn<Book, String> idColumn = new TableColumn<>("ID");
-        TableColumn<Book, String> titleColumn = new TableColumn<>("Name");
+        TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
         TableColumn<Book, String> isbnColumn = new TableColumn<>("ISBN");
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         TableColumn<Book, BookStatus> statusColumn = new TableColumn<>("Status");
