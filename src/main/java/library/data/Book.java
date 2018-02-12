@@ -3,7 +3,9 @@ package library.data;
 import java.time.Instant;
 
 /**
- * Represents a single library book.
+ * Represents a single library book. Includes a title, author, and ISBN.
+ * Also stores the patron currently holding this book, the current status of this book,
+ * and the checkout date (if this book is checked out).
  *
  * @author Srikavin Ramkumar
  */
@@ -51,22 +53,48 @@ public class Book implements LibraryData {
         }
     }
 
+    /**
+     * Gets the {@link Patron} currently holding this book, or null if no patron has this book currently checked out
+     *
+     * @return The patron that currently has this book checked out; will be null if it is not checked out
+     */
     public Patron getCurrentPatron() {
         return currentPatron;
     }
 
+    /**
+     * Sets the patron that has this book checked out.
+     * Can be set to null to indicate that nobody has this book checked out
+     *
+     * @param currentPatron The patron this book should be checked out to
+     */
     public void setCurrentPatron(Patron currentPatron) {
         this.currentPatron = currentPatron;
     }
 
+    /**
+     * Get the time and date this book was checked out.
+     * This value may be null.
+     *
+     * @return An {@link Instant} object indicating the time and date this book was checked out; may be null
+     */
     public Instant getCheckOutDate() {
         return checkOutDate;
     }
 
+    /**
+     * Get the time and date this book was checked out.
+     * This value may be null.
+     *
+     * @param checkOutDate An {@link Instant} object indicating the time and date this book was checked out; may be null
+     */
     public void setCheckOutDate(Instant checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Identifier getIdentifier() {
         return identifier;
     }
@@ -75,6 +103,10 @@ public class Book implements LibraryData {
         this.identifier = identifier;
     }
 
+    /**
+     * The output from this can be used in {@link #Book(String[], Library)} to create a book instance
+     * {@inheritDoc}
+     */
     @Override
     public String[] asData() {
         return new String[]{
@@ -88,6 +120,11 @@ public class Book implements LibraryData {
         };
     }
 
+    /**
+     * Get the ISBN that represents this book instance
+     *
+     * @return An Valid 10 or 13 digit ISBN number matching this book
+     */
     public String getIsbn() {
         return isbn;
     }
@@ -110,26 +147,57 @@ public class Book implements LibraryData {
         this.isbn = isbn;
     }
 
+    /**
+     * Get the current status of this book
+     *
+     * @return A {@link BookStatus} representing the current status of this book
+     */
     public BookStatus getStatus() {
         return status;
     }
 
+    /**
+     * Set the current status of this book
+     *
+     * @param status A {@link BookStatus} value indicating the new state of this book
+     */
     public void setStatus(BookStatus status) {
         this.status = status;
     }
 
+    /**
+     * Get the title of this book
+     *
+     * @return The title of this book
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * Get the title of this book
+     *
+     * @param name The title of the book this object represents
+     */
 
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get the author of the book
+     *
+     * @return The name of the author of the book represented by this object
+     */
     public String getAuthor() {
         return author;
     }
 
+    /**
+     * Set the author's name of this book
+     *
+     * @param author The author's name as a {@link String}
+     */
     public void setAuthor(String author) {
         this.author = author;
     }
