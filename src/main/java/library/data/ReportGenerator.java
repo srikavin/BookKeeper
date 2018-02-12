@@ -57,7 +57,7 @@ public class ReportGenerator {
                 int daysTillDue = getDayTillDue(book);
 
                 Instant dueDate = book.getCheckOutDate().plus(maxCheckoutTime);
-                formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getName(), book.getAuthor(),
+                formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getTitle(), book.getAuthor(),
                         dateTimeFormatter.format(dueDate), getDaysTillDue(daysTillDue));
             }
             formatter.format("\n\n");
@@ -104,7 +104,7 @@ public class ReportGenerator {
             int daysLeft = getDayTillDue(e);
 
             Instant dueDate = e.getCheckOutDate().plus(maxCheckoutTime);
-            formatter.format(BOOK_CONTENT_FORMAT, e.getIdentifier().getId(), e.getName(), e.getAuthor(),
+            formatter.format(BOOK_CONTENT_FORMAT, e.getIdentifier().getId(), e.getTitle(), e.getAuthor(),
                     dateTimeFormatter.format(dueDate), getDaysTillDue(daysLeft));
 
         }
@@ -150,7 +150,7 @@ public class ReportGenerator {
 
                 Instant dueDate = book.getCheckOutDate().plus(maxCheckoutTime);
 
-                formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getName(), book.getAuthor(),
+                formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getTitle(), book.getAuthor(),
                         dateTimeFormatter.format(dueDate), fine);
             }
             formatter.format("\n\n");

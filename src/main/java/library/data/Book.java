@@ -12,7 +12,7 @@ import java.time.Instant;
 public class Book implements LibraryData {
     private Identifier identifier;
     private String isbn;
-    private String name;
+    private String title;
     private String author;
     private BookStatus status;
     private Patron currentPatron;
@@ -22,18 +22,18 @@ public class Book implements LibraryData {
      * Creates an instance of this class.
      *
      * @param identifier    Identifier representing this object
-     * @param name          The title of the book
+     * @param title         The title of the book
      * @param author        The author's name
      * @param isbn          The ISBN of this book
      * @param status        The current status of this book
      * @param checkOutDate  The checked out date of this book, can be null if it is not currently checked out
      * @param currentPatron The current patron holding this book
      */
-    public Book(Identifier identifier, String name, String author, String isbn, BookStatus status, Patron currentPatron, Instant checkOutDate) {
+    public Book(Identifier identifier, String title, String author, String isbn, BookStatus status, Patron currentPatron, Instant checkOutDate) {
         this.identifier = identifier;
         this.isbn = isbn;
         this.status = status;
-        this.name = name;
+        this.title = title;
         this.author = author;
         this.currentPatron = currentPatron;
         this.checkOutDate = checkOutDate;
@@ -111,7 +111,7 @@ public class Book implements LibraryData {
     public String[] asData() {
         return new String[]{
                 identifier.getId(),
-                name,
+                title,
                 author,
                 isbn,
                 status.name(),
@@ -170,18 +170,18 @@ public class Book implements LibraryData {
      *
      * @return The title of this book
      */
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     /**
      * Get the title of this book
      *
-     * @param name The title of the book this object represents
+     * @param title The title of the book this object represents
      */
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
