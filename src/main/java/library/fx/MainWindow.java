@@ -100,6 +100,13 @@ public class MainWindow extends BaseController implements Initializable {
     @Override
     protected void registerSpotlightItems(SpotlightManager manager) {
         manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons\nIt is possible to add, create, and delete patrons.");
+        manager.registerSpotlight(typesTile, "Patron Types", "View and manage all patron types.\n" +
+                "It is possible to add, create, and delete patrons.\n" +
+                "Patron types can be applied to patrons to \n" +
+                "set book checkout limits and time limits.");
+        manager.registerSpotlight(booksTile, "Books", "View and manage all books\nIt is possible to add, create, and delete books.");
+        manager.registerSpotlight(reportsTile, "Reports", "View reports on patrons and current fines.");
+        manager.registerSpotlight(checkoutTile, "Checkout & Return", "Manage books and checkout books to patrons.");
         manager.registerSpotlight(dateContainer, "Date", "The current date is shown here");
     }
 
@@ -124,13 +131,9 @@ public class MainWindow extends BaseController implements Initializable {
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
                 callback, // Call the callback after the initial state has been set
                 new KeyValue(container.translateYProperty(), 500),
-                new KeyValue(dateContainer.translateXProperty(), 500),
+                new KeyValue(dateContainer.translateXProperty(), container.getWidth() + 5),
                 new KeyValue(header.translateXProperty(), -500),
-                new KeyValue(rootPane.opacityProperty(), 0),
                 new KeyValue(dateContainer.rotateProperty(), 0)));
-
-        animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(450), "Animate Date Container Rotation",
-                new KeyValue(rootPane.opacityProperty(), 1, Interpolator.EASE_IN)));
 
         //Run the animation
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(700),
@@ -173,16 +176,13 @@ public class MainWindow extends BaseController implements Initializable {
                 new KeyValue(header.translateYProperty(), -750, Interpolator.EASE_IN)));
 
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
-                new KeyValue(container.translateXProperty(), 1000, Interpolator.EASE_IN)));
+                new KeyValue(container.translateXProperty(), container.getWidth() + 5, Interpolator.EASE_IN)));
 
         //Run the animation
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(550),
                 callback,
                 new KeyValue(headerBackground.scaleYProperty(), 47.0 / 90.0, Interpolator.EASE_IN),
                 new KeyValue(headerBackground.translateYProperty(), -27, Interpolator.EASE_IN)));
-
-        //Delay for 25 ms
-        animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(575)));
 
         //Start the animation
         animateOutTimeline.play();

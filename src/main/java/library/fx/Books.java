@@ -3,7 +3,6 @@ package library.fx;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -26,7 +25,7 @@ import java.util.function.Predicate;
  *
  * @author Srikavin Ramkumar
  */
-public class Books extends DataViewController<Book> implements Initializable {
+public class Books extends DataViewController<Book> {
     @FXML
     private ChoiceBox<BookStatus> status;
     @FXML
@@ -40,7 +39,12 @@ public class Books extends DataViewController<Book> implements Initializable {
     @FXML
     private TextField currentPatron;
 
-    public static void initializeTable(TableView<Book> table) {
+    /**
+     * Used to initialize the table with the necessary columns to display the books in it.
+     *
+     * @param table
+     */
+    static void initializeTable(TableView<Book> table) {
         ObservableList<TableColumn<Book, ?>> columns = table.getColumns();
 
         TableColumn<Book, String> idColumn = new TableColumn<>("ID");

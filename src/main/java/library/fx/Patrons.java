@@ -5,7 +5,6 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -28,7 +27,7 @@ import java.util.function.Predicate;
  *
  * @author Srikavin Ramkumar
  */
-public class Patrons extends DataViewController<Patron> implements Initializable {
+public class Patrons extends DataViewController<Patron> {
     @FXML
     private ChoiceBox<PatronType> patronTypes;
     @FXML
@@ -160,7 +159,7 @@ public class Patrons extends DataViewController<Patron> implements Initializable
 
         //Set the available patron types into the select box
         patronTypes.setItems(FXCollections.observableList(getLibrary().getPatronTypes()));
-
+        //Update the table after everything has been added to it
         Platform.runLater(() -> table.refresh());
     }
 

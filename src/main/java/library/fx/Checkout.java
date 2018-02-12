@@ -30,14 +30,10 @@ public class Checkout extends DataViewController<Book> {
 
     @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
-        return book -> {
-            System.out.println(book.getName().toLowerCase() + " : " + filter);
-
-            return book.getIdentifier().getId().toLowerCase().contains(filter)
-                    || book.getName().toLowerCase().contains(filter)
-                    || book.getIsbn().toLowerCase().contains(filter)
-                    || book.getAuthor().toLowerCase().contains(filter);
-        };
+        return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
+                || book.getName().toLowerCase().contains(filter)
+                || book.getIsbn().toLowerCase().contains(filter)
+                || book.getAuthor().toLowerCase().contains(filter);
     }
 
     @Override
@@ -155,6 +151,7 @@ public class Checkout extends DataViewController<Book> {
         Patron patron = library.getPatronFromID(patronID);
         ObservableList<Book> books = getCheckedOutBooks(patronID);
         setData(books);
+
         int currentlyCheckedOut = books.size();
         int maxCheckedOut = patron.getPatronType().getMaxCheckedOutBooks();
         booksCheckedOut.setText(currentlyCheckedOut + "/" + maxCheckedOut);
@@ -223,6 +220,7 @@ public class Checkout extends DataViewController<Book> {
         book.setCurrentPatron(patron);
         book.setStatus(BookStatus.CHECKED_OUT);
         updateTable();
+        setCurrentState(book);
     }
 
     @Override

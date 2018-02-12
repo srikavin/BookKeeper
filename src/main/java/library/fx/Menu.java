@@ -3,7 +3,6 @@ package library.fx;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -22,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class Menu extends BaseController implements Initializable {
+public class Menu extends BaseController {
     public CheckMenuItem useAnimations;
 
     @Override

@@ -4,7 +4,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import library.data.Identifier;
@@ -22,7 +21,7 @@ import java.util.function.Predicate;
  *
  * @author Srikavin Ramkumar
  */
-public class PatronTypes extends DataViewController<PatronType> implements Initializable {
+public class PatronTypes extends DataViewController<PatronType> {
     @FXML
     private Spinner<Integer> maxCheckedOutBooks;
     @FXML

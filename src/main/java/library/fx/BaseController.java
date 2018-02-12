@@ -19,7 +19,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * This class serves as a base for other GUI's to implement. This class is abstract and cannot be instantiated.
+ * This class serves as a base for other GUI's to implement.
+ * The class is made to be extremely generic and should be extended to include custom functionality.
+ * This class is abstract and cannot be instantiated.
  *
  * @author Srikavin Ramkumar
  */
@@ -36,7 +38,7 @@ public abstract class BaseController implements Initializable {
      * Used for highlighting fields as incorrect or containing an error
      */
     protected final PseudoClass errorClass = PseudoClass.getPseudoClass("invalid-input");
-    protected SpotlightManager spotlightManager;
+    private SpotlightManager spotlightManager;
     @FXML
     protected Pane container;
     @FXML
@@ -47,8 +49,6 @@ public abstract class BaseController implements Initializable {
     private Pane header;
     @FXML
     private Pane headerBackground;
-    @FXML
-    private Pane contentBackground;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +62,7 @@ public abstract class BaseController implements Initializable {
      *
      * @param initializer The FXInitializer object to use.
      * @param library     The Library object to use.
+     *
      * @throws IllegalArgumentException If the arguments passed are null
      */
     public void initialize(FXInitializer initializer, Library library) {
@@ -76,9 +77,14 @@ public abstract class BaseController implements Initializable {
         this.library = library;
     }
 
+    /**
+     * Returns to the mainwindow.
+     * Any currently active spotlights will be disabled and the {@link SpotlightManager} will be cleared of all registered spotlights.
+     */
     @FXML
     protected void goHome(Event event) {
         getInitializer().setContent("MainWindow.fxml");
+        spotlightManager.disable();
     }
 
     /**
@@ -88,14 +94,6 @@ public abstract class BaseController implements Initializable {
      */
     protected FXInitializer getInitializer() {
         return initializer;
-    }
-
-    /**
-     * Stops all animations currently running
-     */
-    public void stopAnimation() {
-        animateInTimeline.stop();
-        animateOutTimeline.stop();
     }
 
     /**
@@ -124,12 +122,12 @@ public abstract class BaseController implements Initializable {
     }
 
     @FXML
-    protected void onSpotlightHelp(MouseEvent event) {
+    private void onSpotlightHelp(MouseEvent event) {
         spotlightManager.trigger();
     }
 
     /**
-     * Used to register any desired nodes in the scene with the spotlight manager
+     * Used to register any desired nodes in the scene with the current {@link SpotlightManager}
      *
      * @param spotlightManager The spotlight manager to register nodes with
      */
@@ -137,6 +135,11 @@ public abstract class BaseController implements Initializable {
 
     }
 
+    /**
+     * Get the {@link Library} instance this controller is tied to
+     *
+     * @return The library instance this controller is tied to
+     */
     protected Library getLibrary() {
         return library;
     }
