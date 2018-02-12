@@ -38,17 +38,24 @@ public abstract class BaseController implements Initializable {
      * Used for highlighting fields as incorrect or containing an error
      */
     protected final PseudoClass errorClass = PseudoClass.getPseudoClass("invalid-input");
-    private SpotlightManager spotlightManager;
+    /**
+     * The container holding all of the content of this controller
+     * Excludes headers and other non-unique elements of this view
+     */
     @FXML
     protected Pane container;
+    /**
+     * The root pane of this view. Includes all nodes in the view, including headers.
+     */
     @FXML
     protected Pane rootPane;
-    private FXInitializer initializer;
-    private Library library;
-    @FXML
-    private Pane header;
     @FXML
     private Pane headerBackground;
+    @FXML
+    private Pane header;
+    private FXInitializer initializer;
+    private Library library;
+    private SpotlightManager spotlightManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,7 +85,7 @@ public abstract class BaseController implements Initializable {
     }
 
     /**
-     * Returns to the mainwindow.
+     * Returns to the main window.
      * Any currently active spotlights will be disabled and the {@link SpotlightManager} will be cleared of all registered spotlights.
      */
     @FXML
