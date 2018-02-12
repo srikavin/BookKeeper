@@ -48,19 +48,19 @@ public class Books extends DataViewController<Book> {
         ObservableList<TableColumn<Book, ?>> columns = table.getColumns();
 
         TableColumn<Book, String> idColumn = new TableColumn<>("ID");
-        TableColumn<Book, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Book, String> titleColumn = new TableColumn<>("Name");
         TableColumn<Book, String> isbnColumn = new TableColumn<>("ISBN");
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         TableColumn<Book, BookStatus> statusColumn = new TableColumn<>("Status");
 
         idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier().getId()));
-        nameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getName()));
+        titleColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getTitle()));
         isbnColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIsbn()));
         authorColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAuthor()));
         statusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getStatus()));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        columns.addAll(idColumn, nameColumn, isbnColumn, authorColumn, statusColumn);
+        columns.addAll(idColumn, titleColumn, isbnColumn, authorColumn, statusColumn);
     }
 
     @FXML
@@ -68,7 +68,7 @@ public class Books extends DataViewController<Book> {
         Library library = getLibrary();
 
         book.setAuthor(author.getText());
-        book.setName(bookName.getText());
+        book.setTitle(bookName.getText());
         book.setIdentifier(new Identifier(identifier.getText()));
         book.setIsbn(isbn.getText());
         book.setStatus(status.getValue());
@@ -78,7 +78,7 @@ public class Books extends DataViewController<Book> {
     @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
         return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
-                || book.getName().contains(filter)
+                || book.getTitle().contains(filter)
                 || book.getIsbn().toLowerCase().contains(filter)
                 || book.getAuthor().toLowerCase().contains(filter);
     }
@@ -160,7 +160,7 @@ public class Books extends DataViewController<Book> {
         identifier.setText(book.getIdentifier().getId());
         author.setText(book.getAuthor());
         isbn.setText(book.getIsbn());
-        bookName.setText(book.getName());
+        bookName.setText(book.getTitle());
         status.getSelectionModel().select(book.getStatus());
         //Make sure the current patron value does not cause a null pointer exception
         Patron currentPatronValue = book.getCurrentPatron();

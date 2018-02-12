@@ -31,7 +31,7 @@ public class Checkout extends DataViewController<Book> {
     @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
         return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
-                || book.getName().toLowerCase().contains(filter)
+                || book.getTitle().toLowerCase().contains(filter)
                 || book.getIsbn().toLowerCase().contains(filter)
                 || book.getAuthor().toLowerCase().contains(filter);
     }
@@ -101,7 +101,7 @@ public class Checkout extends DataViewController<Book> {
         Library library = getLibrary();
         Book book = library.getBookFromID(id);
         currentBook.setText(book.getIdentifier().getId());
-        bookTitle.setText(book.getName());
+        bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthor());
         bookStatus.getSelectionModel().select(book.getStatus());
         bookStatus.pseudoClassStateChanged(errorClass, false);
