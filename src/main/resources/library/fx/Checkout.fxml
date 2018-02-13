@@ -200,15 +200,13 @@
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <children>
-                        <Text fx:id="booksCheckedOut" strokeType="OUTSIDE" strokeWidth="0.0" text="0/0"
-                              wrappingWidth="28.61328125" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
-                            <GridPane.margin>
-                                <Insets left="6.0"/>
-                            </GridPane.margin>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books Checked Out:" GridPane.hgrow="ALWAYS"/>
-                    </children>
+                    <Text fx:id="booksCheckedOut" strokeType="OUTSIDE" strokeWidth="0.0" text="0/0"
+                          wrappingWidth="28.61328125" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <GridPane.margin>
+                            <Insets left="6.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books Checked Out:" GridPane.hgrow="ALWAYS"/>
                 </GridPane>
             </AnchorPane>
         </AnchorPane>
