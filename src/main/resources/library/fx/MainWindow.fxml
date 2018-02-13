@@ -7,13 +7,13 @@
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="670.0"
-            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.141"
+            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.111"
             fx:controller="library.fx.MainWindow">
 
     <AnchorPane fx:id="container" layoutX="-1.0" layoutY="96.0" prefHeight="301.0" prefWidth="624.0"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="103.0">
-        <TilePane fx:id="tiles" hgap="35.0" vgap="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="31.0"
+        <TilePane fx:id="tiles" hgap="40.0" vgap="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="31.0"
                   AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="14.0">
             <AnchorPane fx:id="patronsTile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                         onMouseClicked="#patrons" prefHeight="117.0" prefWidth="118.0" styleClass="main-selection">
@@ -37,9 +37,9 @@
             </AnchorPane>
             <AnchorPane fx:id="typesTile" onMouseClicked="#types" prefHeight="117.0" prefWidth="118.0"
                         styleClass="main-selection">
-                <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                      text="Types" textAlignment="CENTER" wrappingWidth="116.99999570846558"
-                      AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
+                <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Types"
+                      textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0"
+                      AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
                     <font>
                         <Font name="Roboto Condensed Light" size="27.0"/>
                     </font>
@@ -116,15 +116,16 @@
             </AnchorPane>
         </TilePane>
         <AnchorPane fx:id="dateContainer" layoutX="188.0" layoutY="152.0" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" rotate="-2.5" AnchorPane.bottomAnchor="28.0"
-                    AnchorPane.rightAnchor="0.0">
-            <Rectangle fill="#1564bf" focusTraversable="true" height="76.0" layoutX="1.0" layoutY="19.0" stroke="BLACK"
-                       strokeType="INSIDE" strokeWidth="0.0" width="443.0" AnchorPane.bottomAnchor="22.0"
-                       AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="19.0">
+                    maxWidth="1.7976931348623157E308" prefHeight="117.0" prefWidth="454.0"
+                    AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="0.0">
+            <Rectangle fill="#1564bf" focusTraversable="true" height="76.0" layoutY="20.0" stroke="BLACK"
+                       strokeType="INSIDE" strokeWidth="0.0" width="486.0" AnchorPane.bottomAnchor="21.0"
+                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="20.0">
             </Rectangle>
-            <Text fx:id="currentDate" fill="WHITE" layoutX="-4.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            <Text fx:id="currentDate" fill="WHITE" layoutX="28.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0"
                   text="November 3rd, 2017" textAlignment="CENTER" wrappingWidth="430.98780515789986"
-                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="32.0">
+                  AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="18.012194842100143"
+                  AnchorPane.topAnchor="32.1796875">
                 <font>
                     <Font name="Roboto Condensed Bold" size="44.0"/>
                 </font>

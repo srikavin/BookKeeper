@@ -90,10 +90,17 @@ public class FXInitializer extends Application {
         helpStage.setMinHeight(600);
         helpStage.setMinWidth(500);
 
-        primaryStage.setMinWidth(700);
+        primaryStage.setMinWidth(685);
+        primaryStage.setWidth(685);
         primaryStage.setMinHeight(450);
     }
 
+    /**
+     * Load the specified data file and reset the application window to the main screen
+     *
+     * @param path The data file path to load
+     * @throws IOException If the path does not exist, an IOException may be thrown
+     */
     public void loadFile(Path path) throws IOException {
         this.library = new Library(path);
         setContent("MainWindow.fxml");
@@ -106,7 +113,6 @@ public class FXInitializer extends Application {
      * @param fxFile             The fx file to load
      * @param controllerInstance The controller to set on the loaded fx file
      * @param <T>                The type of the controller
-     *
      * @return The stage the fx file was loaded on to
      */
     public <T> Stage getDialog(String fxFile, T controllerInstance) {
@@ -196,9 +202,7 @@ public class FXInitializer extends Application {
      * Loads the content specified in the file if it has not been cached.
      *
      * @param fileName .fxml file to load
-     *
      * @return The content contained in the file. The same as the result of {@link FXMLLoader#load()}.
-     *
      * @throws IOException If an error occurs when opening the file.
      */
     private FXMLInfoHolder loadFile(String fileName) throws IOException {
@@ -214,16 +218,21 @@ public class FXInitializer extends Application {
      * Opens the help window containing user help/documentation.
      */
     public void loadHelp() {
-        //Open the window if it isn't open
-        helpStage.show();
         //Un-minimize the window
         helpStage.setIconified(false);
         //Maximize window
         helpStage.setMaximized(true);
+        //Open the window if it isn't open
+        helpStage.show();
         //Bring the window to the front of all other windows
         helpStage.toFront();
     }
 
+    /**
+     * Gets the stage containing the main window content
+     *
+     * @return The stage containing the main window content
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }

@@ -138,7 +138,7 @@ public class SpotlightManager {
             addListenerToCurrentSpotlight();
         } else {
             //Set the current status to inactive
-            currentSpotlightIndex = 1;
+            currentSpotlightIndex = 0;
             isActive = false;
         }
         //Draw the current state to the screen
@@ -205,20 +205,20 @@ public class SpotlightManager {
         spotlightContainer.layout();
 
         double layoutX = bounds.getMaxX() + CONTAINER_MARGIN;
+        double layoutY = bounds.getMinY();
 
         //Put the tooltip on the left if the tooltip is too big to fit on the right
         if (layoutX + tooltipContainer.getWidth() > spotlightContainer.getWidth()) {
             layoutX = bounds.getMinX() - (CONTAINER_MARGIN + tooltipContainer.getWidth());
-        }
-
-        //Make sure the tooltip stays within the range of the window on the left
-        if (layoutX < 5) {
-            layoutX = 5;
+            if (layoutX < 5 || layoutX > spotlightContainer.getWidth() - tooltipContainer.getWidth()) {
+                layoutX = bounds.getMinX() + CONTAINER_MARGIN + 550;
+                layoutY += 64 + CONTAINER_MARGIN;
+            }
         }
 
         //Set the layout to the layout calculated above
         tooltipContainer.setLayoutX(layoutX);
-        tooltipContainer.setLayoutY(bounds.getMinY());
+        tooltipContainer.setLayoutY(layoutY);
 
         //Sets the title pane and spotlight information to be in front of the backdrop
         tooltipContainer.toFront();

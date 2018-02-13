@@ -107,7 +107,6 @@ public class MainWindow extends BaseController implements Initializable {
         manager.registerSpotlight(booksTile, "Books", "View and manage all books\nIt is possible to add, create, and delete books.");
         manager.registerSpotlight(reportsTile, "Reports", "View reports on patrons and current fines.");
         manager.registerSpotlight(checkoutTile, "Checkout & Return", "Manage books and checkout books to patrons.");
-        manager.registerSpotlight(dateContainer, "Date", "The current date is shown here");
     }
 
     /**
@@ -133,7 +132,7 @@ public class MainWindow extends BaseController implements Initializable {
                 new KeyValue(container.translateYProperty(), 500),
                 new KeyValue(dateContainer.translateXProperty(), container.getWidth() + 5),
                 new KeyValue(header.translateXProperty(), -500),
-                new KeyValue(dateContainer.rotateProperty(), 0)));
+                new KeyValue(dateContainer.rotateProperty(), -3)));
 
         //Run the animation
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(700),
@@ -144,7 +143,7 @@ public class MainWindow extends BaseController implements Initializable {
                 new KeyValue(dateContainer.translateXProperty(), 0, Interpolator.EASE_IN)));
 
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1200), "Animate Date Container Rotation",
-                new KeyValue(dateContainer.rotateProperty(), -2, Interpolator.EASE_IN)));
+                new KeyValue(dateContainer.rotateProperty(), 0, Interpolator.EASE_IN)));
 
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1200), "Animate Date Container Rotation",
                 new KeyValue(header.translateXProperty(), 0, Interpolator.EASE_IN)));
@@ -158,7 +157,7 @@ public class MainWindow extends BaseController implements Initializable {
         animateOutTimeline.setCycleCount(1);
 
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
-                new KeyValue(dateContainer.rotateProperty(), -2),
+                new KeyValue(dateContainer.rotateProperty(), 0),
                 new KeyValue(dateContainer.translateXProperty(), 0),
                 new KeyValue(header.translateYProperty(), 0),
                 new KeyValue(container.translateXProperty(), 0),
@@ -167,7 +166,7 @@ public class MainWindow extends BaseController implements Initializable {
         ));
 
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(300),
-                new KeyValue(dateContainer.rotateProperty(), 0, Interpolator.EASE_IN)));
+                new KeyValue(dateContainer.rotateProperty(), 5, Interpolator.EASE_IN)));
 
         animateOutTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(350),
                 new KeyValue(dateContainer.translateXProperty(), 500, Interpolator.EASE_IN)));

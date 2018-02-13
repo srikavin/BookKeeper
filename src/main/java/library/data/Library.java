@@ -23,7 +23,6 @@ public class Library {
      * Used to identify when changes are made to this library that are not saved.
      */
     private boolean modified = false;
-
     public Library(Path dataFilePath) throws IOException {
         if (dataFilePath == null) {
             return;
@@ -87,6 +86,10 @@ public class Library {
         reportGenerator = new ReportGenerator(this);
     }
 
+    public Path getDataFile() {
+        return dataFile;
+    }
+
     public ReportGenerator getReportGenerator() {
         //Lazily create a report generator if one hasn't been generated yet
         if (reportGenerator == null) {
@@ -111,7 +114,6 @@ public class Library {
      * Resolves a {@link PatronType} from a specified identifier
      *
      * @param id The identifier to resolve
-     *
      * @return The {@linkplain PatronType} object represented by the specified identifier or null, if not found
      */
     public PatronType getPatronTypeFromId(Identifier id) {
@@ -127,7 +129,6 @@ public class Library {
      * Resolves a {@link PatronType} from a specified name
      *
      * @param name Name of the PatronType
-     *
      * @return The {@linkplain PatronType} object represented by the specified name or null, if not found
      */
     public PatronType getPatronTypeFromName(String name) {
@@ -143,7 +144,6 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
-     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Patron getPatronFromID(Identifier identifier) {
@@ -159,7 +159,6 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
-     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Book getBookFromID(Identifier identifier) {

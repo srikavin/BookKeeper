@@ -22,18 +22,34 @@ import java.util.function.Predicate;
  * This is an abstract class for controllers with {@link TableView}s in it.
  *
  * @param <T> The data type represented by this controller
- *
  * @author Srikavin Ramkumar
  */
 public abstract class DataViewController<T extends LibraryData> extends BaseController {
+    /**
+     * The table that contains the data of this controller
+     */
     @FXML
     protected TableView<T> table;
+    /**
+     * The original datasource of this object
+     */
     @FXML
     protected ObservableList<T> dataSource;
+    /**
+     * The filtered list that wraps the original datasource
+     * Only displays items that match the predicate
+     */
     @FXML
     protected FilteredList<T> filteredList;
+    /**
+     * The sorted list that wraps the filtered list
+     * Displays items in the specified sort order
+     */
     @FXML
     protected SortedList<T> sortedList;
+    /**
+     * The textfield that users can enter a filter into
+     */
     @FXML
     protected TextField filter;
     private T currentlyCreating;
@@ -42,7 +58,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * Returns a predicate that can be used for filtering large sets of data efficiently.
      *
      * @param filterText The text to be filtered on
-     *
      * @return A {@link Predicate} that accepts the specified data type and returns a boolean
      */
     protected abstract Predicate<T> getFilterPredicate(String filterText);
@@ -98,7 +113,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * The object should contain the default values in all of its fields.
      *
      * @param identifier The {@link Identifier} to use when creating the object
-     *
      * @return An object of Type {@link T} created using the given identifier
      */
     protected abstract T createNewItem(Identifier identifier);
@@ -215,10 +229,9 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
     }
 
     /**
-     * Gets the next unique identifer not present in the given list of {@link LibraryData} objects
+     * Gets the next unique identifier not present in the given list of {@link LibraryData} objects
      *
      * @param list The list to traverse to provide an identifier unique to it
-     *
      * @return An identifier unique to the given list
      */
     private Identifier getNextIdentifier(List<? extends LibraryData> list) {

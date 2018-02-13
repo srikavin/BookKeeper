@@ -20,6 +20,11 @@ public class ReportGenerator {
     private double fineRate = 1.5;
     private double fineLimit = 60;
 
+    /**
+     * Creates an instance of a ReportGenerator using the given {@link Library} object as a data source.
+     *
+     * @param library The library to gather data from
+     */
     public ReportGenerator(Library library) {
         this.library = library;
     }
@@ -43,6 +48,14 @@ public class ReportGenerator {
         return bookStatusTotals;
     }
 
+    /**
+     * Returns a string representation of the books and their status in this library.
+     * Groups the books by the patron who has them checked out. This is helpful when creating printable reports that can
+     * be handed out to groups of patrons easily.
+     *
+     * @param books The list of books to format
+     * @return A string representation of the books in this library grouped by patron
+     */
     public String formatByPatron(List<Book> books) {
         if (books.isEmpty()) {
             return "No Books.";
@@ -86,6 +99,13 @@ public class ReportGenerator {
         return formatter.out().toString();
     }
 
+    /**
+     * Returns a string representation of the books and their status in this library.
+     * Groups the books by the patron who has them checked out.
+     *
+     * @param books The list of books to format
+     * @return A string representation of the books in this library with no grouping
+     */
     public String formatByItems(List<Book> books) {
         if (books.isEmpty()) {
             return "No Books.";
@@ -124,11 +144,10 @@ public class ReportGenerator {
     }
 
     /**
-     * Formats
+     * Formats the number of days left as a string
      *
-     * @param daysLeft
-     *
-     * @return
+     * @param daysLeft An integer number of days until the book is due. A negative number indicates that it is overdue.
+     * @return A string containing the number of days left or the string "overdue".
      */
     private String getDaysTillDue(int daysLeft) {
         if (daysLeft > 0) {
@@ -138,6 +157,12 @@ public class ReportGenerator {
         }
     }
 
+    /**
+     * Returns the fines formatted as a String.
+     * Uses the fee rate and fee limit set using {@link #setFineRate(double)} and {@link #setFineLimit(double)} respectively
+     *
+     * @return A string representation of the fines of each patron.
+     */
     public String getFines() {
         List<Book> books = getOverdueBooks();
         if (books.isEmpty()) {
@@ -196,6 +221,11 @@ public class ReportGenerator {
         return checkedOutBooks;
     }
 
+    /**
+     * Gets all overdue books in this library
+     *
+     * @return A list of overdue books currently in this library
+     */
     public List<Book> getOverdueBooks() {
         List<Book> overDueBooks = new ArrayList<>();
         for (Book e : getCheckedOutBooks()) {

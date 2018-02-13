@@ -97,16 +97,7 @@ public class Menu extends BaseController {
         unsavedChanges(Platform::exit);
     }
 
-    @FXML
-    void save(ActionEvent event) {
-        try {
-            Library library = getLibrary();
-            library.save();
-        } catch (IOException e) {
-            //Display an error message if an exception occurs when saving
-            showError("saving the library", e);
-        }
-    }
+    private boolean isTempSampleData;
 
     @FXML
     private void newLibrary(ActionEvent event) {
@@ -147,6 +138,21 @@ public class Menu extends BaseController {
         try {
             library.saveTo(path);
         } catch (IOException e) {
+            showError("saving the library", e);
+        }
+    }
+
+    @FXML
+    void save(ActionEvent event) {
+        try {
+            Library library = getLibrary();
+            if (Files.isRegularFile(library.getDataFile())) {
+                library.save();
+            } else {
+                saveAs(event);
+            }
+        } catch (IOException e) {
+            //Display an error message if an exception occurs when saving
             showError("saving the library", e);
         }
     }

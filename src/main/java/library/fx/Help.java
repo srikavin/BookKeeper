@@ -45,7 +45,6 @@ public class Help extends BaseController {
 
                         //Add the category name to the list
                         list.add(split[0].trim());
-
                     });
         } catch (IOException e) {
             //Display an error message after catching an exception
