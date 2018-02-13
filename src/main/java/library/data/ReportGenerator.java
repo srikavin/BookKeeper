@@ -10,16 +10,15 @@ import java.time.temporal.TemporalAmount;
 import java.util.*;
 
 public class ReportGenerator {
-    private static final double FINE_RATE = 1.5;
-    private static final double FINE_LIMIT = 60;
     private static final String BOOK_HEADER_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";
     private static final String BOOK_CONTENT_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";
     private static final String SEPARATOR = "---------------------------------------------------------------------------------------------\n";
-
     private final Library library;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
             .withLocale(Locale.US)
             .withZone(ZoneId.systemDefault());
+    private double fineRate = 1.5;
+    private double fineLimit = 60;
 
     public ReportGenerator(Library library) {
         this.library = library;
@@ -54,6 +53,7 @@ public class ReportGenerator {
         Formatter formatter = new Formatter(report);
 
         Map<Patron, List<Book>> patronBookMap = new HashMap<>();
+        //Get all books checked out by a patron
         for (Book e : books) {
             Patron patron = e.getCurrentPatron();
 
@@ -61,6 +61,7 @@ public class ReportGenerator {
             patronBookMap.get(patron).add(e);
         }
 
+        //Print out the generated map of books checked out by each patron
         for (Map.Entry<Patron, List<Book>> e : patronBookMap.entrySet()) {
             List<Book> booksOwned = e.getValue();
             Patron patron = e.getKey();
@@ -79,27 +80,10 @@ public class ReportGenerator {
                 formatter.format(BOOK_CONTENT_FORMAT, book.getIdentifier().getId(), book.getTitle(), book.getAuthor(),
                         dateTimeFormatter.format(dueDate), getDaysTillDue(daysTillDue));
             }
-            formatter.format("\n\n");
+            report.append('\n').append('\n');
         }
 
         return formatter.out().toString();
-    }
-
-    private int getDayTillDue(Book e) {
-        Patron patron = e.getCurrentPatron();
-        PatronType patronType = patron.getPatronType();
-        TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
-
-        Instant dueDate = e.getCheckOutDate().plus(maxCheckoutTime);
-        return (int) ChronoUnit.DAYS.between(Instant.now(), dueDate);
-    }
-
-    private String getDaysTillDue(int daysLeft) {
-        if (daysLeft > 0) {
-            return String.format("%-8.2s", daysLeft);
-        } else {
-            return "Overdue";
-        }
     }
 
     public String formatByItems(List<Book> books) {
@@ -128,6 +112,30 @@ public class ReportGenerator {
 
         }
         return formatter.out().toString();
+    }
+
+    private int getDayTillDue(Book e) {
+        Patron patron = e.getCurrentPatron();
+        PatronType patronType = patron.getPatronType();
+        TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
+
+        Instant dueDate = e.getCheckOutDate().plus(maxCheckoutTime);
+        return (int) ChronoUnit.DAYS.between(Instant.now(), dueDate);
+    }
+
+    /**
+     * Formats
+     *
+     * @param daysLeft
+     *
+     * @return
+     */
+    private String getDaysTillDue(int daysLeft) {
+        if (daysLeft > 0) {
+            return String.format("%-8.2s", daysLeft);
+        } else {
+            return "Overdue";
+        }
     }
 
     public String getFines() {
@@ -162,9 +170,9 @@ public class ReportGenerator {
                 TemporalAmount maxCheckoutTime = Duration.ofDays(patronType.getMaxCheckoutDays());
 
                 int daysLeft = -getDayTillDue(book);
-                double fine = daysLeft * FINE_RATE;
-                if (fine > FINE_LIMIT) {
-                    fine = FINE_LIMIT;
+                double fine = daysLeft * fineRate;
+                if (fine > fineLimit) {
+                    fine = fineLimit;
                 }
 
                 Instant dueDate = book.getCheckOutDate().plus(maxCheckoutTime);
@@ -208,5 +216,41 @@ public class ReportGenerator {
         return e.getStatus() == BookStatus.CHECKED_OUT && e.getCurrentPatron() != null &&
                 !e.getCurrentPatron().getIdentifier().getId().equals("null")
                 && e.getCheckOutDate() != null;
+    }
+
+    /**
+     * Get the currently set fine rate in dollars per day overdue
+     *
+     * @return The current fine rate ($/day)
+     */
+    public double getFineRate() {
+        return fineRate;
+    }
+
+    /**
+     * Sets the current fine rate in dollars per day overdue
+     *
+     * @param fineRate The new fine rate ($/day)
+     */
+    public void setFineRate(double fineRate) {
+        this.fineRate = fineRate;
+    }
+
+    /**
+     * Gets the currently set maximum fine in dollars
+     *
+     * @return The current fine limit ($)
+     */
+    public double getFineLimit() {
+        return fineLimit;
+    }
+
+    /**
+     * Sets the current maximum fine in dollars
+     *
+     * @param fineLimit The new fine limit ($)
+     */
+    public void setFineLimit(double fineLimit) {
+        this.fineLimit = fineLimit;
     }
 }

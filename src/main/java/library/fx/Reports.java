@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.print.*;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -23,6 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Reports extends BaseController {
+    @FXML
+    private Spinner<Double> fineLimit;
+    @FXML
+    private Spinner<Double> fineRate;
     @FXML
     private TextArea reportView;
     @FXML
@@ -41,6 +47,9 @@ public class Reports extends BaseController {
     private void setReportContent() {
         Library library = getLibrary();
         ReportGenerator reportGenerator = library.getReportGenerator();
+
+        reportGenerator.setFineLimit(fineLimit.getValue());
+        reportGenerator.setFineRate(fineRate.getValue());
 
         List<Book> bookList = new ArrayList<>();
         switch (currentView) {
@@ -101,14 +110,17 @@ public class Reports extends BaseController {
 
     @FXML
     private void print(ActionEvent event) {
+        //Copy the text to an offscreen print area
         Text reportText = new Text(reportView.getText());
         reportText.setFont(Font.font("monospaced"));
         TextFlow printArea = new TextFlow(reportText);
 
+        //Layout the page and format it with the correct size and orientation
         Printer printer = Printer.getDefaultPrinter();
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         PageLayout pageLayout = printer.createPageLayout(Paper.NA_LETTER, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
 
+        //Calculate the scaling to match the paper size
         double maxRatio = (pageLayout.getPrintableWidth() / pageLayout.getPrintableHeight());
         double scaleX = maxRatio * printArea.getBoundsInParent().getWidth();
         double scaleY = maxRatio * printArea.getBoundsInParent().getHeight();
@@ -136,12 +148,32 @@ public class Reports extends BaseController {
     @Override
     public void initializeData() {
         super.initializeData();
+        //Define how the spinners increment and decrement
+        fineLimit.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(1, Double.MAX_VALUE, 60));
+        fineRate.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, Double.MAX_VALUE, 1.5));
+
+        //Make the reports update when the value of the fee spinners change
+        fineLimit.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            fineLimit.increment(0);
+            setReportContent();
+        });
+        fineRate.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            fineRate.increment(0);
+            setReportContent();
+        });
+
         setReportContent();
     }
 
     @FXML
     private void viewFines(ActionEvent event) {
         currentView = Views.FINES;
+        setReportContent();
+    }
+
+    @FXML
+    private void refreshReports(ActionEvent actionEvent) {
+        reportView.clear();
         setReportContent();
     }
 
