@@ -24,6 +24,7 @@ import java.nio.file.Path;
  */
 public class FXInitializer extends Application {
     private Stage helpStage;
+    private Stage primaryStage;
     private BorderPane borderPane = new BorderPane();
     private BaseController currentController;
     private BaseController menuController;
@@ -36,6 +37,7 @@ public class FXInitializer extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         library = new Library(null);
 
         //Load all fonts before initializing the program
@@ -220,6 +222,10 @@ public class FXInitializer extends Application {
         helpStage.setMaximized(true);
         //Bring the window to the front of all other windows
         helpStage.toFront();
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     /**

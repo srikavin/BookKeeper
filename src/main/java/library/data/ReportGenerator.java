@@ -25,6 +25,25 @@ public class ReportGenerator {
         this.library = library;
     }
 
+    /**
+     * Calculates the total number of {@link Book}s with each {@link BookStatus} and returns it as a map.
+     * The map is defined as follows:
+     * AVAILABLE -> 15
+     * CHECKED_OUT -> 25
+     * That is, one key for each BookStatus and an Integer object as the value.
+     *
+     * @return A map with a BookStatus as the key, with Integer values. Using any given BookStatus will return a Integer of the number of items with that status.
+     */
+    public Map<BookStatus, Integer> getBookStatusTotals() {
+        Map<BookStatus, Integer> bookStatusTotals = new HashMap<>();
+
+        for (Book e : library.getBooks()) {
+            //Set the value to 1 if it does not currently exist; else increment it by 1
+            bookStatusTotals.merge(e.getStatus(), 1, Integer::sum);
+        }
+        return bookStatusTotals;
+    }
+
     public String formatByPatron(List<Book> books) {
         if (books.isEmpty()) {
             return "No Books.";

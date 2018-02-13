@@ -1,27 +1,40 @@
 package library.fx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.print.PageLayout;
-import javafx.print.PrinterJob;
+import javafx.print.*;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
 import library.data.Book;
+import library.data.BookStatus;
 import library.data.Library;
 import library.data.ReportGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Reports extends BaseController {
-    public TextArea reportView;
-    public RadioButton checkedOutItems;
-    public RadioButton overDueItems;
-    public RadioButton itemSort;
-    public RadioButton patronSort;
+    @FXML
+    private TextArea reportView;
+    @FXML
+    private RadioButton checkedOutItems;
+    @FXML
+    private RadioButton overDueItems;
+    @FXML
+    private RadioButton itemSort;
+    @FXML
+    private RadioButton patronSort;
+    @FXML
+    private PieChart bookStatusChart;
     private boolean sortByItem = false;
     private Views currentView = Views.CHECKED_OUT;
 
@@ -52,6 +65,14 @@ public class Reports extends BaseController {
         } else {
             reportView.setText(reportGenerator.formatByPatron(bookList));
         }
+
+        Map<BookStatus, Integer> bookStatusTotals = reportGenerator.getBookStatusTotals();
+        ObservableList<PieChart.Data> bookStatusData = FXCollections.observableArrayList();
+
+        //For each entry in the map, create a new data entry and add it to the list
+        bookStatusTotals.forEach((bookStatus, amount) -> bookStatusData.add(new PieChart.Data(bookStatus.toString(), amount)));
+        //Set the data into the PieChart
+        bookStatusChart.setData(bookStatusData);
     }
 
     @FXML
@@ -83,21 +104,35 @@ public class Reports extends BaseController {
         Text reportText = new Text(reportView.getText());
         reportText.setFont(Font.font("monospaced"));
         TextFlow printArea = new TextFlow(reportText);
+
+        Printer printer = Printer.getDefaultPrinter();
         PrinterJob printerJob = PrinterJob.createPrinterJob();
+        PageLayout pageLayout = printer.createPageLayout(Paper.NA_LETTER, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+
+        double maxRatio = (pageLayout.getPrintableWidth() / pageLayout.getPrintableHeight());
+        double scaleX = maxRatio * printArea.getBoundsInParent().getWidth();
+        double scaleY = maxRatio * printArea.getBoundsInParent().getHeight();
+        Scale scale = new Scale(scaleX, scaleY);
+        printArea.getTransforms().add(scale);
+
+        int pages = (int) (Screen.getPrimary().getDpi() * (printArea.getHeight() / pageLayout.getPrintableHeight()) + 1);
 
         //Make sure user wants to print
-        if (printerJob != null && printerJob.showPrintDialog(null)) {
+        if (printerJob != null && printerJob.showPrintDialog(getInitializer().getPrimaryStage())) {
             //Set page layout and other settings
-            PageLayout pageLayout = printerJob.getJobSettings().getPageLayout();
             printArea.setMaxWidth(pageLayout.getPrintableWidth());
-            //Print page
-            if (printerJob.printPage(printArea)) {
-                //Finish printing
-                printerJob.endJob();
+            //Print all pages in the node
+            for (int page = 0; page <= pages; page++) {
+                printerJob.printPage(pageLayout, printArea);
+                printArea.setTranslateX(-1 * page * pageLayout.getPrintableHeight());
             }
+            printerJob.endJob();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initializeData() {
         super.initializeData();
@@ -110,7 +145,10 @@ public class Reports extends BaseController {
         setReportContent();
     }
 
-    enum Views {
+    /**
+     * Used to maintain internal state about the current checked item
+     */
+    private enum Views {
         CHECKED_OUT,
         OVERDUE,
         FINES
