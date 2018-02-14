@@ -8,6 +8,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import library.data.Identifier;
@@ -21,7 +22,8 @@ import java.util.function.Predicate;
 /**
  * This is an abstract class for controllers with {@link TableView}s in it.
  *
- * @param <T> The data type represented by this controller
+ * @param <T> The data type of the records represented by this controller.
+ *
  * @author Srikavin Ramkumar
  */
 public abstract class DataViewController<T extends LibraryData> extends BaseController {
@@ -52,12 +54,41 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      */
     @FXML
     protected TextField filter;
+
+    @FXML
+    private Button newItemButton;
+    @FXML
+    private Button deleteItemButton;
+    @FXML
+    private Button updateItemButton;
     private T currentlyCreating;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void registerSpotlightItems(SpotlightManager manager) {
+        manager.registerSpotlight(filter, "Filter", "Can be used to search the records based on entered keywords.");
+        manager.registerSpotlight(table, "Records", "View the current records. Records can be sorted by clicking on the column name. Rows can be selected.");
+        registerSpotlightFields(manager);
+        manager.registerSpotlight(newItemButton, "New Record", "Can be used to create new records. " +
+                "After entering the values into the fields above, update should be selected to add the new entry to the library.");
+        manager.registerSpotlight(deleteItemButton, "Delete Record", "Deletes the currently selected record from the library.");
+        manager.registerSpotlight(updateItemButton, "Update Record", "Updates the currently selected record from the library based on the value of the fields above.");
+    }
+
+    /**
+     * Registers the fields specific to this controller to the spotlight manager
+     *
+     * @param manager The manager to register the fields to
+     */
+    protected abstract void registerSpotlightFields(SpotlightManager manager);
 
     /**
      * Returns a predicate that can be used for filtering large sets of data efficiently.
      *
      * @param filterText The text to be filtered on
+     *
      * @return A {@link Predicate} that accepts the specified data type and returns a boolean
      */
     protected abstract Predicate<T> getFilterPredicate(String filterText);
@@ -113,6 +144,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * The object should contain the default values in all of its fields.
      *
      * @param identifier The {@link Identifier} to use when creating the object
+     *
      * @return An object of Type {@link T} created using the given identifier
      */
     protected abstract T createNewItem(Identifier identifier);
@@ -232,6 +264,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * Gets the next unique identifier not present in the given list of {@link LibraryData} objects
      *
      * @param list The list to traverse to provide an identifier unique to it
+     *
      * @return An identifier unique to the given list
      */
     private Identifier getNextIdentifier(List<? extends LibraryData> list) {

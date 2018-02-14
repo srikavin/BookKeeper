@@ -99,12 +99,12 @@ public class MainWindow extends BaseController implements Initializable {
 
     @Override
     protected void registerSpotlightItems(SpotlightManager manager) {
-        manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons\nIt is possible to add, create, and delete patrons.");
-        manager.registerSpotlight(typesTile, "Patron Types", "View and manage all patron types.\n" +
-                "It is possible to add, create, and delete patrons.\n" +
-                "Patron types can be applied to patrons to \n" +
+        manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons. \nIt is possible to add, create, and delete patrons.");
+        manager.registerSpotlight(typesTile, "Patron Types", "View and manage all patron types. \n" +
+                "It is possible to add, create, and delete patrons. " +
+                "Patron types can be applied to patrons to " +
                 "set book checkout limits and time limits.");
-        manager.registerSpotlight(booksTile, "Books", "View and manage all books\nIt is possible to add, create, and delete books.");
+        manager.registerSpotlight(booksTile, "Books", "View and manage all books. \nIt is possible to add, create, and delete books.");
         manager.registerSpotlight(reportsTile, "Reports", "View reports on patrons and current fines.");
         manager.registerSpotlight(checkoutTile, "Checkout & Return", "Manage books and checkout books to patrons.");
     }

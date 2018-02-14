@@ -29,6 +29,11 @@ public class Checkout extends DataViewController<Book> {
     private Books books = new Books();
 
     @Override
+    protected void registerSpotlightFields(SpotlightManager manager) {
+
+    }
+
+    @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
         return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
                 || book.getTitle().toLowerCase().contains(filter)

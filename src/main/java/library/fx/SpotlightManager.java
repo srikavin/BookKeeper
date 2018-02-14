@@ -88,6 +88,10 @@ public class SpotlightManager {
      * All of the registered spotlights will be shown in the order of registration.
      */
     public void trigger() {
+        //Ignore if no spotlights are registered
+        if (spotlights.isEmpty()) {
+            return;
+        }
         currentSpotlightIndex = 0;
         addListenerToCurrentSpotlight();
         isActive = true;
@@ -114,7 +118,9 @@ public class SpotlightManager {
      */
     private void removeListenerFromCurrentSpotlight() {
         Spotlight current = spotlights.get(currentSpotlightIndex);
-        current.node.localToSceneTransformProperty().removeListener(changeListener);
+        if (current.node != null) {
+            current.node.localToSceneTransformProperty().removeListener(changeListener);
+        }
     }
 
     /**
@@ -123,7 +129,9 @@ public class SpotlightManager {
      */
     private void addListenerToCurrentSpotlight() {
         Spotlight current = spotlights.get(currentSpotlightIndex);
-        current.node.localToSceneTransformProperty().addListener(changeListener);
+        if (current.node != null) {
+            current.node.localToSceneTransformProperty().addListener(changeListener);
+        }
     }
 
     /**
@@ -193,10 +201,13 @@ public class SpotlightManager {
         //Set the current shape
         this.curShape = shape;
 
+        curShape.setOnMouseClicked((e) -> this.next());
+
         //Create container for information about the current node
         titlePane.setText(spotlight.title);
-        tooltipContainer.setMaxWidth(titlePane.getWidth());
+//        tooltipContainer.setMaxWidth(titlePane.getWidth());
         descriptionLabel.setText(spotlight.description);
+        descriptionLabel.setWrappingWidth(250);
 
         // Used for calculating the position to place the tooltip container
         final double CONTAINER_MARGIN = 16;
@@ -211,9 +222,14 @@ public class SpotlightManager {
         if (layoutX + tooltipContainer.getWidth() > spotlightContainer.getWidth()) {
             layoutX = bounds.getMinX() - (CONTAINER_MARGIN + tooltipContainer.getWidth());
             if (layoutX < 5 || layoutX > spotlightContainer.getWidth() - tooltipContainer.getWidth()) {
-                layoutX = bounds.getMinX() + CONTAINER_MARGIN + 550;
-                layoutY += 64 + CONTAINER_MARGIN;
+                //Fallbacks in case the layout cannot be calculated properly
+                layoutX = CONTAINER_MARGIN;
+                layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 5);
             }
+        }
+
+        if (layoutY + tooltipContainer.getHeight() > spotlightContainer.getHeight() + 5) {
+            layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 5);
         }
 
         //Set the layout to the layout calculated above
@@ -221,7 +237,8 @@ public class SpotlightManager {
         tooltipContainer.setLayoutY(layoutY);
 
         //Sets the title pane and spotlight information to be in front of the backdrop
-        tooltipContainer.toFront();
+        spotlightContainer.getChildren().remove(tooltipContainer);
+        spotlightContainer.getChildren().add(tooltipContainer);
     }
 
     /**

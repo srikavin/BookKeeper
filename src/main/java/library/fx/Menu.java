@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class Menu extends BaseController {
     public CheckMenuItem useAnimations;
+    private boolean isTempData = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +63,7 @@ public class Menu extends BaseController {
         Path path = file.toPath();
         unsavedChanges(() -> {
             try {
+                isTempData = false;
                 getInitializer().loadFile(path);
             } catch (IOException e) {
                 showError("opening the data file", e);
@@ -97,12 +99,11 @@ public class Menu extends BaseController {
         unsavedChanges(Platform::exit);
     }
 
-    private boolean isTempSampleData;
-
     @FXML
     private void newLibrary(ActionEvent event) {
         unsavedChanges(() -> {
             try {
+                isTempData = true;
                 getInitializer().loadFile(null);
             } catch (IOException e) {
                 //Display an error message if an exception occurs when saving
@@ -140,15 +141,17 @@ public class Menu extends BaseController {
         } catch (IOException e) {
             showError("saving the library", e);
         }
+        isTempData = false;
     }
 
     @FXML
     void save(ActionEvent event) {
         try {
             Library library = getLibrary();
-            if (Files.isRegularFile(library.getDataFile())) {
+            if (!isTempData) {
                 library.save();
             } else {
+                //Show the save as dialog if the user tries to save the sample data
                 saveAs(event);
             }
         } catch (IOException e) {
@@ -160,6 +163,7 @@ public class Menu extends BaseController {
     @FXML
     private void loadSampleData(ActionEvent event) {
         try {
+            isTempData = true;
             Path temp = Files.createTempDirectory("sampleData");
             Files.copy(getClass().getResourceAsStream("data.txt"), temp.resolve("data.txt"));
             getInitializer().loadFile(temp);

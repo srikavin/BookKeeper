@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -23,6 +25,15 @@ public class Library {
      * Used to identify when changes are made to this library that are not saved.
      */
     private boolean modified = false;
+
+    /**
+     * Creates a library object from the saved data in the provided file path. The file will be parsed and loaded into
+     * this Library instance. Path can be null to create an in-memory library instance that will not be saved to disk.
+     *
+     * @param dataFilePath The file to load library data from; can be null to create an in-memory instance
+     *
+     * @throws IOException If an error occurs while reading the file, an IOException will be thrown
+     */
     public Library(Path dataFilePath) throws IOException {
         if (dataFilePath == null) {
             return;
@@ -114,6 +125,7 @@ public class Library {
      * Resolves a {@link PatronType} from a specified identifier
      *
      * @param id The identifier to resolve
+     *
      * @return The {@linkplain PatronType} object represented by the specified identifier or null, if not found
      */
     public PatronType getPatronTypeFromId(Identifier id) {
@@ -129,6 +141,7 @@ public class Library {
      * Resolves a {@link PatronType} from a specified name
      *
      * @param name Name of the PatronType
+     *
      * @return The {@linkplain PatronType} object represented by the specified name or null, if not found
      */
     public PatronType getPatronTypeFromName(String name) {
@@ -144,6 +157,7 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
+     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Patron getPatronFromID(Identifier identifier) {
@@ -159,6 +173,7 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
+     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Book getBookFromID(Identifier identifier) {
@@ -171,11 +186,16 @@ public class Library {
     }
 
     public void save() throws IOException {
+        if (Files.isRegularFile(dataFile) && modified) {
+            final DateTimeFormatter saveFileFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-SS");
+            Files.move(dataFile, dataFile.resolveSibling("data-" + LocalDateTime.now().format(saveFileFormatter) + ".txt"));
+        }
         saveTo(dataFile.getParent());
     }
 
     public void saveTo(Path path) throws IOException {
-        BufferedWriter writer = Files.newBufferedWriter(path.resolve("data.txt"));
+        dataFile = path.resolve("data.txt");
+        BufferedWriter writer = Files.newBufferedWriter(dataFile);
         save(writer);
         writer.close();
     }

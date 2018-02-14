@@ -32,6 +32,11 @@ public class PatronTypes extends DataViewController<PatronType> {
     private TextField identifier;
 
     @Override
+    protected void registerSpotlightFields(SpotlightManager manager) {
+
+    }
+
+    @Override
     protected Predicate<PatronType> getFilterPredicate(String filter) {
         return e -> e.getName().toLowerCase().contains(filter)
                 || e.getIdentifier().getId().toLowerCase().contains(filter);

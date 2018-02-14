@@ -126,6 +126,11 @@ public class Patrons extends DataViewController<Patron> {
     }
 
     @Override
+    protected void registerSpotlightFields(SpotlightManager manager) {
+
+    }
+
+    @Override
     protected Predicate<Patron> getFilterPredicate(String filter) {
         return (e) -> {
             String lowerCaseValue = filter.toLowerCase();
