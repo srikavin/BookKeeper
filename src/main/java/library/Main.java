@@ -1,7 +1,7 @@
 package library;
 
 import javafx.application.Application;
-import library.fx.FXInitializer;
+import library.ui.FXInitializer;
 
 /**
  * The starting point of the application

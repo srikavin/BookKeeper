@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>BookKeeper README</title>
-    <link rel="stylesheet" href="src/main/resources/library/fx/help/css/main.css">
-    <link rel="stylesheet" href="src/main/resources/library/fx/help/css/normalize.css">
-    <link rel="stylesheet" href="src/main/resources/library/fx/help/css/raleway.css">
-    <link rel="stylesheet" href="src/main/resources/library/fx/help/css/skeleton.css">
+    <link rel="stylesheet" href="src/main/resources/library/ui/help/css/main.css">
+    <link rel="stylesheet" href="src/main/resources/library/ui/help/css/normalize.css">
+    <link rel="stylesheet" href="src/main/resources/library/ui/help/css/raleway.css">
+    <link rel="stylesheet" href="src/main/resources/library/ui/help/css/skeleton.css">
 </head>
 <body>
 <div class="container">
@@ -60,7 +60,7 @@
         <div class="twelve columns">
             <h4>Generating Executable</h4>
             <pre><code>javapackager -deploy -native image -Bruntime="C:\Program Files\Java\jdk1.8.0_131\jre" -outdir building -outfile BookKeeper -srcfiles
-                application.jar -appclass library.fx.FXInitializer -name BookKeeper -title "BookKeeper - Library Management System"</code></pre>
+                application.jar -appclass library.ui.FXInitializer -name BookKeeper -title "BookKeeper - Library Management System"</code></pre>
             <p style="margin-top: -1%">Used for creating a executable file with a bundled-JVM using the JDK-bundled
                 <code>javapackager</code> tool.</p>
         </div>
