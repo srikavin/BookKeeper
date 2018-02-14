@@ -1,4 +1,4 @@
-package library.fx;
+package library.ui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.BoundingBox;

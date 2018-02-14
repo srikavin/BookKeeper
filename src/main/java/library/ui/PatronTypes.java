@@ -1,4 +1,4 @@
-package library.fx;
+package library.ui;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;

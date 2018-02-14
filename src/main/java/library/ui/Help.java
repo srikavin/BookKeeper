@@ -1,4 +1,4 @@
-package library.fx;
+package library.ui;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

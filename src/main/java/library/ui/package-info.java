@@ -4,4 +4,4 @@
  * It also handles displaying help, animations, and the GUI.
  * The model layer is contained inside of {@link library.data}
  */
-package library.fx;
+package library.ui;

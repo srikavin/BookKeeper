@@ -1,4 +1,4 @@
-package library.fx;
+package library.ui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
