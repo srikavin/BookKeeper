@@ -1,5 +1,8 @@
 package library.data;
 
+/**
+ *
+ */
 public class PatronType implements LibraryData {
     private Identifier identifier;
     private String name;

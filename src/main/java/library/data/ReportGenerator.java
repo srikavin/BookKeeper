@@ -9,6 +9,11 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAmount;
 import java.util.*;
 
+/**
+ * Generates reports from a Library data source. These reports are dynamically generated with the method calls.
+ *
+ * @author Srikavin Ramkumar
+ */
 public class ReportGenerator {
     private static final String BOOK_HEADER_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";
     private static final String BOOK_CONTENT_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";

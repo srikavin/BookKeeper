@@ -91,10 +91,20 @@ public class Patron implements LibraryData {
         this.identifier = id;
     }
 
+    /**
+     * Gets the first name of this patron object
+     *
+     * @return The first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Sets the first name of this patron object
+     *
+     * @param firstName The new first name; may not be null
+     */
     public void setFirstName(String firstName) {
         if (firstName == null) {
             throw new IllegalArgumentException("First name cannot be null");
@@ -102,10 +112,20 @@ public class Patron implements LibraryData {
         this.firstName = firstName;
     }
 
+    /**
+     * Gets the last name of this patron object
+     *
+     * @return The last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Sets the last name of this patron object
+     *
+     * @param lastName The new last name; may not be null
+     */
     public void setLastName(String lastName) {
         if (lastName == null) {
             throw new IllegalArgumentException("Last name cannot be null");
@@ -124,10 +144,19 @@ public class Patron implements LibraryData {
         return obj instanceof Patron && identifier.equals(((Patron) obj).identifier);
     }
 
+    /**
+     * Gets the {@link PatronType} attached to this instance of this object
+     *
+     * @return The patron type with the checkout limits associated with this instance
+     */
     public PatronType getPatronType() {
         return patronType;
     }
 
+    /**
+     * Sets the {@link PatronType} attached with this instance
+     * @param patronType The new patron type to be associated with this instance
+     */
     public void setPatronType(PatronType patronType) {
         this.patronType = patronType;
     }

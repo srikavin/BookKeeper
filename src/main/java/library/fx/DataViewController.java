@@ -23,7 +23,6 @@ import java.util.function.Predicate;
  * This is an abstract class for controllers with {@link TableView}s in it.
  *
  * @param <T> The data type of the records represented by this controller.
- *
  * @author Srikavin Ramkumar
  */
 public abstract class DataViewController<T extends LibraryData> extends BaseController {
@@ -88,7 +87,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * Returns a predicate that can be used for filtering large sets of data efficiently.
      *
      * @param filterText The text to be filtered on
-     *
      * @return A {@link Predicate} that accepts the specified data type and returns a boolean
      */
     protected abstract Predicate<T> getFilterPredicate(String filterText);
@@ -144,7 +142,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * The object should contain the default values in all of its fields.
      *
      * @param identifier The {@link Identifier} to use when creating the object
-     *
      * @return An object of Type {@link T} created using the given identifier
      */
     protected abstract T createNewItem(Identifier identifier);
@@ -264,7 +261,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * Gets the next unique identifier not present in the given list of {@link LibraryData} objects
      *
      * @param list The list to traverse to provide an identifier unique to it
-     *
      * @return An identifier unique to the given list
      */
     private Identifier getNextIdentifier(List<? extends LibraryData> list) {

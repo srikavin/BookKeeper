@@ -25,7 +25,6 @@ import java.util.function.Consumer;
  * The select dialog includes items of the specified type and calls the specified callback when an item is chosen by the user.
  *
  * @param <T> The type of the selectable object. Should extend {@link LibraryData}
- *
  * @author Srikavin Ramkumar
  */
 abstract class AbstractSelect<T extends LibraryData> {
@@ -112,7 +111,6 @@ abstract class AbstractSelect<T extends LibraryData> {
      *
      * @param filterText The text to filter the current object on
      * @param current    The current object being checked by the filter
-     *
      * @return True if the current object matches the filter text; otherwise, false
      */
     protected abstract boolean filterPredicate(String filterText, T current);
@@ -126,16 +124,25 @@ public class Select {
      * Allows for easy selection of a Patron object from the given dataset
      */
     public static class PatronSelect extends AbstractSelect<Patron> {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void initTable(TableView<Patron> table) {
             Patrons.initializeTable(table);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected String getTitle() {
             return "Select a Patron";
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected boolean filterPredicate(String filterText, Patron current) {
             String lowerCaseValue = filterText.toLowerCase();
@@ -149,16 +156,25 @@ public class Select {
      * Allows for easy selection of a Book object from the given dataset
      */
     public static class BookSelect extends AbstractSelect<Book> {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void initTable(TableView<Book> table) {
             Books.initializeTable(table);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected String getTitle() {
             return "Select a Book";
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected boolean filterPredicate(String filterText, Book current) {
             return current.getIdentifier().getId().toLowerCase().contains(filterText)

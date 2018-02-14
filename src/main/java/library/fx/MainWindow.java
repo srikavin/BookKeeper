@@ -92,11 +92,19 @@ public class MainWindow extends BaseController implements Initializable {
         getInitializer().setContent("PatronTypes.fxml");
     }
 
+    /**
+     * An event handler called when checkout is clicked
+     *
+     * @param event Mouse Event of the click triggering this event handler
+     */
     @FXML
     private void checkout(MouseEvent event) {
         getInitializer().setContent("Checkout.fxml");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void registerSpotlightItems(SpotlightManager manager) {
         manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons. \nIt is possible to add, create, and delete patrons.");
@@ -152,6 +160,9 @@ public class MainWindow extends BaseController implements Initializable {
         animateInTimeline.play();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void animateOut(EventHandler<ActionEvent> callback) {
         animateOutTimeline.setCycleCount(1);

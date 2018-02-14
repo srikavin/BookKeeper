@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Base class that contains all of the {@link LibraryData} objects including {@link Patron}s, {@link PatronType}s, and
+ * {@link Book}s. This class also manages saving and loading library data from a data file. {@link ReportGenerator}s can
+ * be created using an instance of this class.
+ */
 public class Library {
     /**
      * Used to separate different data types (patrons, books, etc.) in the data file.
@@ -31,7 +36,6 @@ public class Library {
      * this Library instance. Path can be null to create an in-memory library instance that will not be saved to disk.
      *
      * @param dataFilePath The file to load library data from; can be null to create an in-memory instance
-     *
      * @throws IOException If an error occurs while reading the file, an IOException will be thrown
      */
     public Library(Path dataFilePath) throws IOException {
@@ -97,10 +101,29 @@ public class Library {
         reportGenerator = new ReportGenerator(this);
     }
 
+    /**
+     * Gets the data file that this Library is saving to.
+     *
+     * @return The data file path this Library saves t
+     */
     public Path getDataFile() {
         return dataFile;
     }
 
+    /**
+     * Gets all the patrons stored in this library instance
+     *
+     * @return A list of all {@link Patron}s in this library
+     */
+    public List<Patron> getPatrons() {
+        return patrons;
+    }
+
+    /**
+     * Gets the report generator associated with this library instance's data
+     *
+     * @return A {@link ReportGenerator} linked to this library instance's data
+     */
     public ReportGenerator getReportGenerator() {
         //Lazily create a report generator if one hasn't been generated yet
         if (reportGenerator == null) {
@@ -109,14 +132,18 @@ public class Library {
         return reportGenerator;
     }
 
+    /**
+     * Sets the status of the library to modified. The library has had changes made that have not been saved to disk yet.
+     */
     public void modify() {
         this.modified = true;
     }
 
-    public List<Patron> getPatrons() {
-        return patrons;
-    }
-
+    /**
+     * Gets all the patron types stored in this library instance
+     *
+     * @return A list of all {@link PatronType}s in this library
+     */
     public List<PatronType> getPatronTypes() {
         return patronTypes;
     }
@@ -125,7 +152,6 @@ public class Library {
      * Resolves a {@link PatronType} from a specified identifier
      *
      * @param id The identifier to resolve
-     *
      * @return The {@linkplain PatronType} object represented by the specified identifier or null, if not found
      */
     public PatronType getPatronTypeFromId(Identifier id) {
@@ -141,7 +167,6 @@ public class Library {
      * Resolves a {@link PatronType} from a specified name
      *
      * @param name Name of the PatronType
-     *
      * @return The {@linkplain PatronType} object represented by the specified name or null, if not found
      */
     public PatronType getPatronTypeFromName(String name) {
@@ -157,7 +182,6 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
-     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Patron getPatronFromID(Identifier identifier) {
@@ -173,7 +197,6 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
-     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Book getBookFromID(Identifier identifier) {
@@ -185,6 +208,11 @@ public class Library {
         return null;
     }
 
+    /**
+     * Saves this library to the data file that this library was loaded from
+     *
+     * @throws IOException If the file cannot be accessed, an IOException will be thrown
+     */
     public void save() throws IOException {
         if (Files.isRegularFile(dataFile) && modified) {
             final DateTimeFormatter saveFileFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-SS");
@@ -193,6 +221,12 @@ public class Library {
         saveTo(dataFile.getParent());
     }
 
+    /**
+     * Saves this library to the specified data file path
+     *
+     * @param path The path at which to store the file; Must be a directory. A file "data.txt" is created inside of this directory
+     * @throws IOException If the file cannot be accessed or written to, an IOException will be thrown
+     */
     public void saveTo(Path path) throws IOException {
         dataFile = path.resolve("data.txt");
         BufferedWriter writer = Files.newBufferedWriter(dataFile);
@@ -236,6 +270,11 @@ public class Library {
         return modified;
     }
 
+    /**
+     * Gets all the books stored in this library instance
+     *
+     * @return A list of all {@link Book}s in this library
+     */
     public List<Book> getBooks() {
         return books;
     }
