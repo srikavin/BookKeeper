@@ -14,10 +14,12 @@ import library.data.Library;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * Implements the controller for the FileMenu. This controller is responsible for delegating calls to the
@@ -31,7 +33,7 @@ public class Menu extends BaseController {
     /**
      * {@inheritDoc}
      */
-    public void initializeData() {
+    public void initialize(URL location, ResourceBundle resources) {
         //Update use of animations when the option is toggled
         useAnimations.setSelected(true);
         useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->

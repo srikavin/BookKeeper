@@ -55,7 +55,7 @@ public class FXInitializer extends Application {
         icons.add(new Image(getClass().getResourceAsStream("icons/icon@4x.png")));
 
         //Load the menu items separately from the main content
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+        FXMLLoader menuLoader = new FXMLLoader(FXInitializer.class.getResource("Menu.fxml"));
         menuBar = menuLoader.load();
         menuController = menuLoader.getController();
         menuController.initialize(this, library);

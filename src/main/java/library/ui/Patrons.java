@@ -159,7 +159,8 @@ public class Patrons extends DataViewController<Patron> {
             String lowerCaseValue = filter.toLowerCase();
             return e.getFirstName().toLowerCase().contains(lowerCaseValue) ||
                     e.getLastName().toLowerCase().contains(lowerCaseValue) ||
-                    e.getIdentifier().getId().toLowerCase().contains(lowerCaseValue);
+                    e.getIdentifier().getId().toLowerCase().contains(lowerCaseValue) ||
+                    e.getPatronType().getName().toLowerCase().contains(lowerCaseValue);
         };
     }
 
