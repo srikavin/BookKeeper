@@ -27,7 +27,7 @@ public class FXInitializer extends Application {
     private Stage primaryStage;
     private BorderPane borderPane = new BorderPane();
     private BaseController currentController;
-    private BaseController menuController;
+    private Menu menuController;
     private MenuBar menuBar;
     private Library library;
     private boolean useTransitions = true;
@@ -59,6 +59,7 @@ public class FXInitializer extends Application {
         menuBar = menuLoader.load();
         menuController = menuLoader.getController();
         menuController.initialize(this, library);
+        menuController.initialize(primaryStage);
 
         //Load the default content
         FXMLInfoHolder cacheHolder = loadFile("MainWindow.fxml");
@@ -102,6 +103,7 @@ public class FXInitializer extends Application {
      * Load the specified data file and reset the application window to the main screen
      *
      * @param path The data file path to load
+     *
      * @throws IOException If the path does not exist, an IOException may be thrown
      */
     public void loadFile(Path path) throws IOException {
@@ -116,6 +118,7 @@ public class FXInitializer extends Application {
      * @param fxFile             The fx file to load
      * @param controllerInstance The controller to set on the loaded fx file
      * @param <T>                The type of the controller
+     *
      * @return The stage the fx file was loaded on to
      */
     public <T> Stage getDialog(String fxFile, T controllerInstance) {
@@ -205,7 +208,9 @@ public class FXInitializer extends Application {
      * Loads the content specified in the file if it has not been cached.
      *
      * @param fileName .fxml file to load
+     *
      * @return The content contained in the file. The same as the result of {@link FXMLLoader#load()}.
+     *
      * @throws IOException If an error occurs when opening the file.
      */
     private FXMLInfoHolder loadFile(String fileName) throws IOException {

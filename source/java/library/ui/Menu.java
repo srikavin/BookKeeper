@@ -2,6 +2,7 @@ package library.ui;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -14,12 +15,10 @@ import library.data.Library;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Implements the controller for the FileMenu. This controller is responsible for delegating calls to the
@@ -31,13 +30,17 @@ public class Menu extends BaseController {
     private boolean isTempData = true;
 
     /**
-     * {@inheritDoc}
+     *  Initializes the menu with the specified stage. This stage is used to detect close requests.
+     *
+     * @param stage The main window stage
      */
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(Stage stage) {
         //Update use of animations when the option is toggled
         useAnimations.setSelected(true);
         useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
                 getInitializer().setUseTransitions(newValue));
+        //When the user tries to close the window, make sure they intended to not save any changes
+        stage.setOnCloseRequest(this::quit);
     }
 
     @FXML
@@ -102,7 +105,7 @@ public class Menu extends BaseController {
     }
 
     @FXML
-    private void quit(ActionEvent event) {
+    private void quit(Event event) {
         unsavedChanges(Platform::exit);
     }
 

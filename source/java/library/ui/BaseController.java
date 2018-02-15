@@ -57,10 +57,16 @@ public abstract class BaseController implements Initializable {
     private Library library;
     private SpotlightManager spotlightManager;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.spotlightManager = new SpotlightManager(rootPane);
-        registerSpotlightItems(spotlightManager);
+        //Make sure the javafx view file includes the root pane id; if not, this prevents null pointer exceptions
+        if (rootPane != null) {
+            this.spotlightManager = new SpotlightManager(rootPane);
+            registerSpotlightItems(spotlightManager);
+        }
     }
 
     /**
@@ -164,7 +170,8 @@ public abstract class BaseController implements Initializable {
         //Set starting point of the animation - currently set to off-screen
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
                 new KeyValue(headerBackground.scaleYProperty(), 1, Interpolator.EASE_IN),
-                new KeyValue(header.translateYProperty(), 0, Interpolator.EASE_IN)));
+                new KeyValue(header.translateYProperty(), 0, Interpolator.EASE_IN),
+                new KeyValue(container.opacityProperty(), 1, Interpolator.EASE_IN)));
 
         //Run the animation
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(150),
@@ -173,7 +180,9 @@ public abstract class BaseController implements Initializable {
         ));
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(250), callback,
-                new KeyValue(headerBackground.translateYProperty(), 23, Interpolator.EASE_IN)));
+                new KeyValue(headerBackground.translateYProperty(), 23, Interpolator.EASE_IN),
+                new KeyValue(container.opacityProperty(), 0, Interpolator.EASE_IN),
+                new KeyValue(container.translateYProperty(), 150, Interpolator.EASE_IN)));
 
         //Start the animation
         timeline.play();
