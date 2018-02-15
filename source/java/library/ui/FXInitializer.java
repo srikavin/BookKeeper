@@ -90,13 +90,12 @@ public class FXInitializer extends Application {
         Parent root = help.parent;
         helpStage = new Stage();
         helpStage.setTitle("Help");
-        helpStage.setScene(new Scene(root, 450, 450));
+        helpStage.setScene(new Scene(root, 450, 455));
         helpStage.setMinHeight(600);
         helpStage.setMinWidth(500);
 
         primaryStage.setMinWidth(685);
-        primaryStage.setWidth(685);
-        primaryStage.setMinHeight(450);
+        primaryStage.setMinHeight(460);
     }
 
     /**

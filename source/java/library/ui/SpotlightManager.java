@@ -248,7 +248,6 @@ public class SpotlightManager {
 
         //Create container for information about the current node
         titlePane.setText(spotlight.title);
-//        tooltipContainer.setMaxWidth(titlePane.getWidth());
         descriptionLabel.setText(spotlight.description);
         descriptionLabel.setWrappingWidth(250);
 
