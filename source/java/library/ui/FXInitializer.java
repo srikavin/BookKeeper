@@ -49,10 +49,10 @@ public class FXInitializer extends Application {
 
         //Add app icons
         ObservableList<Image> icons = primaryStage.getIcons();
-        icons.add(new Image(getClass().getResourceAsStream("icons/icon@0.5x.png")));
-        icons.add(new Image(getClass().getResourceAsStream("icons/icon@2x.png")));
-        icons.add(new Image(getClass().getResourceAsStream("icons/icon@3x.png")));
-        icons.add(new Image(getClass().getResourceAsStream("icons/icon@4x.png")));
+        icons.add(new Image(FXInitializer.class.getResourceAsStream("icons/icon@0.5x.png")));
+        icons.add(new Image(FXInitializer.class.getResourceAsStream("icons/icon@2x.png")));
+        icons.add(new Image(FXInitializer.class.getResourceAsStream("icons/icon@3x.png")));
+        icons.add(new Image(FXInitializer.class.getResourceAsStream("icons/icon@4x.png")));
 
         //Load the menu items separately from the main content
         FXMLLoader menuLoader = new FXMLLoader(FXInitializer.class.getResource("Menu.fxml"));
