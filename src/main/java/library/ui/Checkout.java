@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * The UI View for checkouts. Implements {@link DataViewController<Book>}. Holds a {@link Patron} and a {@link Book}
+ * instance to update. Uses event-driven operations to maintain state abd update the model layer.
+ */
 public class Checkout extends DataViewController<Book> {
     public TextField patronName;
     public Text booksCheckedOut;
@@ -28,11 +32,17 @@ public class Checkout extends DataViewController<Book> {
     public TextField currentPatron;
     private Books books = new Books();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void registerSpotlightFields(SpotlightManager manager) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
         return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
@@ -41,31 +51,49 @@ public class Checkout extends DataViewController<Book> {
                 || book.getAuthor().toLowerCase().contains(filter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected List<Book> getDataSource() {
         return FXCollections.observableList(new ArrayList<>());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean validate() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupColumns(TableView<Book> table) {
         books.setupColumns(table);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setCurrentState(Book current) {
         updateBook(current.getIdentifier());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Book createNewItem(Identifier identifier) {
         return books.createNewItem(identifier);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void update(Book toUpdate) {
 
@@ -228,6 +256,9 @@ public class Checkout extends DataViewController<Book> {
         setCurrentState(book);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initializeData() {
         super.initializeData();

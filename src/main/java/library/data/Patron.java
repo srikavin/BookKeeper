@@ -55,6 +55,8 @@ public class Patron implements LibraryData {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Converts this patron's data into a format represented by a String Array. This is the inverse function of
      * {@link #Patron(String[], Library)}.
      *

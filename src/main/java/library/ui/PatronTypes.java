@@ -31,23 +31,26 @@ public class PatronTypes extends DataViewController<PatronType> {
     @FXML
     private TextField identifier;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void registerSpotlightFields(SpotlightManager manager) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Predicate<PatronType> getFilterPredicate(String filter) {
         return e -> e.getName().toLowerCase().contains(filter)
                 || e.getIdentifier().getId().toLowerCase().contains(filter);
     }
 
-    @Override
-    protected List<PatronType> getDataSource() {
-        Library library = getLibrary();
-        return library.getPatronTypes();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     protected boolean validate() {
         //Set all fields to the valid state to reset error states
         name.pseudoClassStateChanged(errorClass, false);
@@ -81,6 +84,9 @@ public class PatronTypes extends DataViewController<PatronType> {
         return errors.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupColumns(TableView<PatronType> table) {
         //Create Columns
@@ -113,6 +119,18 @@ public class PatronTypes extends DataViewController<PatronType> {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<PatronType> getDataSource() {
+        Library library = getLibrary();
+        return library.getPatronTypes();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setCurrentState(PatronType patronType) {
         //Set the name
@@ -125,11 +143,17 @@ public class PatronTypes extends DataViewController<PatronType> {
         identifier.setText(patronType.getIdentifier().toString());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PatronType createNewItem(Identifier identifier) {
         return new PatronType(identifier, "", 1, 1);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void update(PatronType type) {
         type.setMaxCheckedOutBooks(maxCheckedOutBooks.getValue());

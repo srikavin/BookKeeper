@@ -14,19 +14,24 @@ import library.data.Library;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
+/**
+ * Implements the controller for the FileMenu. This controller is responsible for delegating calls to the
+ * {@link FXInitializer} and the {@link Library} object. Handles all of the operations within the file menu, including
+ * File, Preferences, and Help
+ */
 public class Menu extends BaseController {
     public CheckMenuItem useAnimations;
     private boolean isTempData = true;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    /**
+     * {@inheritDoc}
+     */
+    public void initializeData() {
         //Update use of animations when the option is toggled
         useAnimations.setSelected(true);
         useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
@@ -34,7 +39,7 @@ public class Menu extends BaseController {
     }
 
     @FXML
-    void about(ActionEvent event) {
+    private void about(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About BookKeeper");
         alert.setHeaderText("About");
@@ -43,12 +48,12 @@ public class Menu extends BaseController {
     }
 
     @FXML
-    void documentation(ActionEvent event) {
+    private void documentation(ActionEvent event) {
         getInitializer().loadHelp();
     }
 
     @FXML
-    void open(ActionEvent event) {
+    private void open(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(Paths.get("").toAbsolutePath().toFile());
         directoryChooser.setTitle("Open library data file");
@@ -95,7 +100,7 @@ public class Menu extends BaseController {
     }
 
     @FXML
-    void quit(ActionEvent event) {
+    private void quit(ActionEvent event) {
         unsavedChanges(Platform::exit);
     }
 
@@ -145,7 +150,7 @@ public class Menu extends BaseController {
     }
 
     @FXML
-    void save(ActionEvent event) {
+    private void save(ActionEvent event) {
         try {
             Library library = getLibrary();
             if (!isTempData) {

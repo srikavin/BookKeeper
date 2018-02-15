@@ -6,7 +6,6 @@ import javafx.animation.KeyValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -16,7 +15,11 @@ import javafx.util.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class MainWindow extends BaseController implements Initializable {
+/**
+ * The controller for the MainWindow view. Includes links to other controllers and uses an event-driven design to
+ * maintain performance and code designs.
+ */
+public class MainWindow extends BaseController {
     @FXML
     private Text currentDate;
     @FXML

@@ -37,6 +37,11 @@ public class Patrons extends DataViewController<Patron> {
     @FXML
     private TextField firstName;
 
+    /**
+     * Used to initialize the table with the necessary columns to display patron objects in it.
+     *
+     * @param tableView The table to configure with the needed columns
+     */
     public static void initializeTable(TableView<Patron> tableView) {
         //Create all columns
         ObservableList<TableColumn<Patron, ?>> columns = tableView.getColumns();
@@ -55,6 +60,9 @@ public class Patrons extends DataViewController<Patron> {
         columns.setAll(idColumn, firstNameColumn, lastNameColumn, patronTypeColumn);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected boolean validate() {
         //Set all fields to the valid state to reset error states
         firstName.pseudoClassStateChanged(errorClass, false);
@@ -92,12 +100,18 @@ public class Patrons extends DataViewController<Patron> {
         return errors.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setupColumns(TableView table) {
         //Initialize the table with default columns
         initializeTable(this.table);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setCurrentState(Patron patron) {
         //Set the lastname
@@ -110,6 +124,9 @@ public class Patrons extends DataViewController<Patron> {
         patronTypes.getSelectionModel().select(patron.getPatronType());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Patron createNewItem(Identifier identifier) {
         List<PatronType> patronTypes = getLibrary().getPatronTypes();
@@ -125,11 +142,17 @@ public class Patrons extends DataViewController<Patron> {
         return new Patron(identifier, "", "", patronType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void registerSpotlightFields(SpotlightManager manager) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Predicate<Patron> getFilterPredicate(String filter) {
         return (e) -> {
@@ -140,12 +163,18 @@ public class Patrons extends DataViewController<Patron> {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected List<Patron> getDataSource() {
         Library library = getLibrary();
         return library.getPatrons();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initializeData() {
         super.initializeData();
@@ -168,6 +197,9 @@ public class Patrons extends DataViewController<Patron> {
         Platform.runLater(() -> table.refresh());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void update(Patron patron) {
         patron.setFirstName(firstName.getText());

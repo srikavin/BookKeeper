@@ -40,6 +40,8 @@ public class Library {
      */
     public Library(Path dataFilePath) throws IOException {
         if (dataFilePath == null) {
+            PatronType patronType = new PatronType(new Identifier(1), "default", 25, 3);
+            patronTypes.add(patronType);
             return;
         }
         //Load the data file

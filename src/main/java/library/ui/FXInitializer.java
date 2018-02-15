@@ -32,6 +32,10 @@ public class FXInitializer extends Application {
     private Library library;
     private boolean useTransitions = true;
 
+    public static void main(String[] args) {
+        Application.launch();
+    }
+
     /**
      * {@inheritDoc}
      */

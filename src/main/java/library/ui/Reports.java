@@ -43,8 +43,8 @@ public class Reports extends BaseController {
     private PieChart bookStatusChart;
     private boolean sortByItem = false;
     private Views currentView = Views.CHECKED_OUT;
-
     private void setReportContent() {
+
         Library library = getLibrary();
         ReportGenerator reportGenerator = library.getReportGenerator();
 

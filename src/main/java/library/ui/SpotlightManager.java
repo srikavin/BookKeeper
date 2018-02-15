@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -36,6 +37,7 @@ public class SpotlightManager {
     private VBox tooltipContainer;
     private Text descriptionLabel = new Text();
     private TitledPane titlePane = new TitledPane();
+    private Button prevButton;
     private boolean isActive = false;
     private final ChangeListener<? super Transform> changeListener = (observable, oldValue, newValue) -> draw();
 
@@ -49,18 +51,34 @@ public class SpotlightManager {
         //Create next button
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> next());
+
+        prevButton = new Button("Previous");
+        prevButton.setOnAction(event -> previous());
+
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(event -> reset());
         //Create and customize the pane displaying the title and containing the description and button nodes
         titlePane.setCollapsible(false);
         titlePane.setPrefHeight(Region.USE_COMPUTED_SIZE);
         titlePane.setPrefWidth(Region.USE_COMPUTED_SIZE);
         titlePane.setContent(descriptionLabel);
         titlePane.setFocusTraversable(false);
+        AnchorPane buttonPane = new AnchorPane();
+        buttonPane.getChildren().add(prevButton);
+        buttonPane.getChildren().add(exitButton);
+        buttonPane.getChildren().add(nextButton);
+        nextButton.setPrefWidth(50d);
+        AnchorPane.setLeftAnchor(exitButton, 0d);
+        AnchorPane.setRightAnchor(prevButton, 65d);
+        AnchorPane.setRightAnchor(nextButton, 0d);
         //Create the container of the tooltip and add the children to it
         tooltipContainer = new VBox();
         tooltipContainer.setSpacing(5.0);
         tooltipContainer.setAlignment(Pos.CENTER_RIGHT);
         tooltipContainer.getChildren().add(titlePane);
-        tooltipContainer.getChildren().add(nextButton);
+        tooltipContainer.getChildren().add(buttonPane);
+
+        buttonPane.minWidthProperty().bind(tooltipContainer.widthProperty());
 
         tooltipContainer.setVisible(false);
 
@@ -84,6 +102,34 @@ public class SpotlightManager {
     }
 
     /**
+     * Goes to the previous spotlight and updates the listeners
+     * Updating the listeners improves performance as the overlay will only be drawn when the scene changes
+     */
+    public void previous() {
+        if (currentSpotlightIndex - 1 >= 0) {
+            removeListenerFromCurrentSpotlight();
+            //Increment the spotlight index
+            currentSpotlightIndex--;
+            addListenerToCurrentSpotlight();
+            //Draw the current state to the screen
+            draw();
+        }
+    }
+
+    /**
+     * Resets the status of this spotlight to the starting position and removes the current overlay.
+     * Registered spotlights will not be removed nor cleared.
+     */
+    public void reset() {
+        if (currentSpotlightIndex != -1) {
+            removeListenerFromCurrentSpotlight();
+        }
+        currentSpotlightIndex = 0;
+        isActive = false;
+        draw();
+    }
+
+    /**
      * Trigger the spotlight help UI
      * All of the registered spotlights will be shown in the order of registration.
      */
@@ -100,15 +146,12 @@ public class SpotlightManager {
 
     /**
      * Disables the spotlight by immediately removing the overlay and resetting to the default state.
-     * Registered spotlights will be removed and cleared
+     * Registered spotlights will be removed and cleared.
+     * <p>
+     * Use {@link #reset()} to simply remove the overlay and reset to the starting positions.
      */
     public void disable() {
-        if (currentSpotlightIndex != -1) {
-            removeListenerFromCurrentSpotlight();
-        }
-        currentSpotlightIndex = 0;
-        isActive = false;
-        draw();
+        reset();
         spotlights.clear();
     }
 
@@ -239,6 +282,12 @@ public class SpotlightManager {
         //Sets the title pane and spotlight information to be in front of the backdrop
         spotlightContainer.getChildren().remove(tooltipContainer);
         spotlightContainer.getChildren().add(tooltipContainer);
+
+        //If we are on the first item in the spotlight, we can disable the previous button
+        prevButton.setDisable(false);
+        if (currentSpotlightIndex == 0) {
+            prevButton.setDisable(true);
+        }
     }
 
     /**

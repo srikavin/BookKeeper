@@ -14,9 +14,13 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The controller for the help class. This controller is responsible for loading the information from the help file into
+ * the list view and the web view. Includes implementation for comments with '#' as the first character in the line.
+ */
 public class Help extends BaseController {
     @FXML
-    public Label help;
+    private Label help;
     @FXML
     private ListView<String> helpList;
     @FXML
@@ -24,6 +28,9 @@ public class Help extends BaseController {
 
     private Map<String, String> categoryFileMap = new HashMap<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initializeData() {
         try (BufferedReader reader = new BufferedReader(
@@ -33,7 +40,7 @@ public class Help extends BaseController {
 
 
             reader.lines()
-                    // Filter out comments specified in the file
+                    // Filter out lines starting with the comment string
                     .filter((e) -> !e.startsWith("#"))
                     .forEach((e) -> {
 
