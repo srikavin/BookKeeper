@@ -6,3 +6,4 @@ Managing Patron Types --- types.html
 Managing Books --- books.html
 Generating Reports --- reports.html
 Checkout and Return --- checkout.html
+Viewing Interactive Help --- interactive.html
