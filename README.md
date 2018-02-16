@@ -1,5 +1,9 @@
+
+
 ## BookKeeper - Library Management System
 BookKeeper was designed for the management of large scale libraries from the ground up. 
+
+> #### This file may be outdated, view README.html
 
 ### Usage
 BookKeeper requires Java 8. If java 8 is not installed, the program will use a bundled JVM to execute.
