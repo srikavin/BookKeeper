@@ -9,14 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import library.data.Library;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * This class serves as a base for other GUI's to implement.
@@ -25,7 +21,7 @@ import java.util.ResourceBundle;
  *
  * @author Srikavin Ramkumar
  */
-public abstract class BaseController implements Initializable {
+public abstract class BaseController {
     /**
      * Should be used for animating the in animations. Used in {@link #animateIn(EventHandler)}
      */
@@ -58,18 +54,6 @@ public abstract class BaseController implements Initializable {
     private SpotlightManager spotlightManager;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //Make sure the javafx view file includes the root pane id; if not, this prevents null pointer exceptions
-        if (rootPane != null) {
-            this.spotlightManager = new SpotlightManager(rootPane);
-            registerSpotlightItems(spotlightManager);
-        }
-    }
-
-    /**
      * Sets a {@link FXInitializer}. This is used to open new windows and change currently displayed content.
      * Must not be called with null.
      *
@@ -88,6 +72,11 @@ public abstract class BaseController implements Initializable {
         }
         this.initializer = initializer;
         this.library = library;
+        //Make sure the javafx view file includes the root pane id; if not, this prevents null pointer exceptions
+        if (rootPane != null) {
+            this.spotlightManager = new SpotlightManager(initializer, rootPane);
+            registerSpotlightItems(spotlightManager);
+        }
     }
 
     /**

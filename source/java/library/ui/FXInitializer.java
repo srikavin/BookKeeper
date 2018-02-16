@@ -112,6 +112,16 @@ public class FXInitializer extends Application {
         menuController.initialize(this, library);
     }
 
+    public Node loadNode(String fxFile, Object controllerInstance) {
+        try {
+            FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fxFile));
+            loader.setController(controllerInstance);
+            return loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Load a JavaFX file and return the stage it is on
      *

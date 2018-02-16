@@ -8,6 +8,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -25,7 +26,7 @@ import java.util.function.Predicate;
  * @param <T> The data type of the records represented by this controller.
  * @author Srikavin Ramkumar
  */
-public abstract class DataViewController<T extends LibraryData> extends BaseController {
+public abstract class DataViewController<T extends LibraryData> extends BaseController implements Initializable {
     /**
      * The table that contains the data of this controller
      */
@@ -171,7 +172,6 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.initialize(location, resources);
         setupColumns(table);
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,6 +1,8 @@
 package library.ui;
 
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 public class SpotlightManager {
     private final List<Spotlight> spotlights = new ArrayList<>();
+    private final ContainerController containerController = new ContainerController();
     private int currentSpotlightIndex = -1;
     private Pane spotlightContainer;
     private Shape curShape;
@@ -46,7 +49,9 @@ public class SpotlightManager {
      *
      * @param spotlightContainer The container the backdrop should be limited to
      */
-    public SpotlightManager(Pane spotlightContainer) {
+    public SpotlightManager(FXInitializer initializer, Pane spotlightContainer) {
+        Node node = initializer.loadNode("SpotlightContainer.fxml", containerController);
+        spotlightContainer.getChildren().add(node);
         this.spotlightContainer = spotlightContainer;
         //Create next button
         Button nextButton = new Button("Next");
@@ -91,13 +96,17 @@ public class SpotlightManager {
 
     /**
      * Registers a spotlight with this manager. Spotlights will be shown in the order of registration when
-     * {@link #trigger()} is called.
+     * {@link #trigger()} is called. If node is null, the request is ignored without throwing an exception.
      *
      * @param node        The node to highlight when this spotlight is displayed
      * @param title       The title to show on the title pane of this spotlight
      * @param description The description of the node highlighted and any important, helpful information
      */
     public void registerSpotlight(Node node, String title, String description) {
+        //Ignore request if node is null
+        if (node == null) {
+            return;
+        }
         spotlights.add(new Spotlight(node, title, description));
     }
 
@@ -301,6 +310,46 @@ public class SpotlightManager {
             this.node = node;
             this.title = title;
             this.description = description;
+        }
+    }
+
+    private class ContainerController {
+        @FXML
+        private Button previous;
+        @FXML
+        private Button next;
+        @FXML
+        private Button exit;
+        @FXML
+        private Text description;
+        @FXML
+        private TitledPane titledPane;
+
+        @FXML
+        void onNext(ActionEvent event) {
+            next();
+        }
+
+        @FXML
+        void onPrevious(ActionEvent event) {
+            previous();
+        }
+
+        @FXML
+        void onExit(ActionEvent event) {
+            reset();
+        }
+
+        void setDescription(String descriptionString) {
+            description.setText(descriptionString);
+        }
+
+        void setDisablePrevious(boolean disable) {
+            previous.setDisable(disable);
+        }
+
+        void setTitle(String title) {
+            titledPane.setText(title);
         }
     }
 }

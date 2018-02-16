@@ -202,13 +202,14 @@
                 </font>
             </Text>
             <Text fill="WHITE" layoutX="561.0" layoutY="32.0" onMousePressed="#goHome" strokeType="OUTSIDE"
-                  strokeWidth="0.0" text="" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.5">
+                  strokeWidth="0.0" styleClass="selectable" text="" AnchorPane.rightAnchor="8.0"
+                  AnchorPane.topAnchor="2.5">
                 <font>
                     <Font name="Material Icons" size="31.0"/>
                 </font>
             </Text>
-            <Label layoutX="360.0" layoutY="1.0" onMouseClicked="#onSpotlightHelp" text="" textFill="WHITE"
-                   AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="2.5">
+            <Label layoutX="360.0" layoutY="1.0" onMouseClicked="#onSpotlightHelp" styleClass="selectable" text=""
+                   textFill="WHITE" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="2.5">
                 <font>
                     <Font name="Material Icons" size="31.0"/>
                 </font>

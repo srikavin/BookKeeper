@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,14 +31,49 @@ public class Checkout extends DataViewController<Book> {
     public TextField bookTitle;
     public TextField currentBook;
     public TextField currentPatron;
+    @FXML
+    private Button checkoutButton;
+    @FXML
+    private Button returnButton;
+    @FXML
+    private Pane booksCheckedOutContainer;
     private Books books = new Books();
+
+    /**
+     * {@inheritDoc}
+     * Overrides {@link DataViewController#registerSpotlightItems(SpotlightManager)} to register custom buttons in the
+     * Checkout view.
+     */
+    @Override
+    protected void registerSpotlightItems(SpotlightManager manager) {
+        manager.registerSpotlight(filter, "Filter", "Can be used to search the records based on entered keywords.");
+        manager.registerSpotlight(table, "Records", "View the current records. Records can be sorted by clicking on the column name. Rows can be selected.");
+        registerSpotlightFields(manager);
+        manager.registerSpotlight(checkoutButton, "Delete Record", "Deletes the currently selected record from the library.");
+        manager.registerSpotlight(returnButton, "Update Record", "Updates the currently selected record from the library based on the value of the fields above.");
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void registerSpotlightFields(SpotlightManager manager) {
-
+        manager.registerSpotlight(currentPatron, "Patron Identifier", "The patron to show books for. " +
+                "Must be a valid Patron Identifier. Valid values can be selected by clicking the search icon.");
+        manager.registerSpotlight(patronName, "Current Patron Name", "The name of the current patron. " +
+                "This field can not modifiable. To modify this information, go the Patrons view.");
+        manager.registerSpotlight(currentBook, "Book Identifier", "The book to checkout or return. " +
+                "Must be a valid Book Identifier. Valid values can be selected by clicking the search icon.");
+        manager.registerSpotlight(bookTitle, "Current Book Title", "The title of the current book. " +
+                "This field can not be modified. To edit this information, go to the the Books view.");
+        manager.registerSpotlight(bookAuthor, "Current Book Author", "The author of the current book. " +
+                "This field can not be modified. To edit this information, go to the the Books view.");
+        manager.registerSpotlight(bookStatus, "Current Book Status", "The status of the current book. " +
+                "If it is checked out or lost, a librarian override is required. This field will automatically be set to " +
+                "Checked Out if the book is checked out.");
+        manager.registerSpotlight(booksCheckedOutContainer, "Number of Checked out Books",
+                "The number of books currently checked out by the patron. If the number is highlighted in red, " +
+                        "a librarian override is required.");
     }
 
     /**
