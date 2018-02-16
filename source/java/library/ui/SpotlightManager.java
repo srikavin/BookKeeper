@@ -224,7 +224,6 @@ public class SpotlightManager {
         final double CONTAINER_MARGIN = 16;
 
         tooltipContainer.setVisible(true);
-        spotlightContainer.layout();
 
         double layoutX = bounds.getMaxX() + CONTAINER_MARGIN;
         double layoutY = bounds.getMinY();
