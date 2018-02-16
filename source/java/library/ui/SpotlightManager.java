@@ -6,14 +6,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -34,13 +30,10 @@ import java.util.List;
 public class SpotlightManager {
     private final List<Spotlight> spotlights = new ArrayList<>();
     private final ContainerController containerController = new ContainerController();
+    private TitledPane tooltipContainer;
     private int currentSpotlightIndex = -1;
     private Pane spotlightContainer;
     private Shape curShape;
-    private VBox tooltipContainer;
-    private Text descriptionLabel = new Text();
-    private TitledPane titlePane = new TitledPane();
-    private Button prevButton;
     private boolean isActive = false;
     private final ChangeListener<? super Transform> changeListener = (observable, oldValue, newValue) -> draw();
 
@@ -50,40 +43,8 @@ public class SpotlightManager {
      * @param spotlightContainer The container the backdrop should be limited to
      */
     public SpotlightManager(FXInitializer initializer, Pane spotlightContainer) {
-        Node node = initializer.loadNode("SpotlightContainer.fxml", containerController);
-        spotlightContainer.getChildren().add(node);
+        tooltipContainer = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
         this.spotlightContainer = spotlightContainer;
-        //Create next button
-        Button nextButton = new Button("Next");
-        nextButton.setOnAction(event -> next());
-
-        prevButton = new Button("Previous");
-        prevButton.setOnAction(event -> previous());
-
-        Button exitButton = new Button("Exit");
-        exitButton.setOnAction(event -> reset());
-        //Create and customize the pane displaying the title and containing the description and button nodes
-        titlePane.setCollapsible(false);
-        titlePane.setPrefHeight(Region.USE_COMPUTED_SIZE);
-        titlePane.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        titlePane.setContent(descriptionLabel);
-        titlePane.setFocusTraversable(false);
-        AnchorPane buttonPane = new AnchorPane();
-        buttonPane.getChildren().add(prevButton);
-        buttonPane.getChildren().add(exitButton);
-        buttonPane.getChildren().add(nextButton);
-        nextButton.setPrefWidth(50d);
-        AnchorPane.setLeftAnchor(exitButton, 0d);
-        AnchorPane.setRightAnchor(prevButton, 65d);
-        AnchorPane.setRightAnchor(nextButton, 0d);
-        //Create the container of the tooltip and add the children to it
-        tooltipContainer = new VBox();
-        tooltipContainer.setSpacing(5.0);
-        tooltipContainer.setAlignment(Pos.CENTER_RIGHT);
-        tooltipContainer.getChildren().add(titlePane);
-        tooltipContainer.getChildren().add(buttonPane);
-
-        buttonPane.minWidthProperty().bind(tooltipContainer.widthProperty());
 
         tooltipContainer.setVisible(false);
 
@@ -256,9 +217,8 @@ public class SpotlightManager {
         curShape.setOnMouseClicked((e) -> this.next());
 
         //Create container for information about the current node
-        titlePane.setText(spotlight.title);
-        descriptionLabel.setText(spotlight.description);
-        descriptionLabel.setWrappingWidth(250);
+        containerController.setTitle(spotlight.title);
+        containerController.setDescription(spotlight.description);
 
         // Used for calculating the position to place the tooltip container
         final double CONTAINER_MARGIN = 16;
@@ -288,13 +248,12 @@ public class SpotlightManager {
         tooltipContainer.setLayoutY(layoutY);
 
         //Sets the title pane and spotlight information to be in front of the backdrop
-        spotlightContainer.getChildren().remove(tooltipContainer);
-        spotlightContainer.getChildren().add(tooltipContainer);
+        tooltipContainer.toFront();
 
         //If we are on the first item in the spotlight, we can disable the previous button
-        prevButton.setDisable(false);
+        containerController.setDisablePrevious(false);
         if (currentSpotlightIndex == 0) {
-            prevButton.setDisable(true);
+            containerController.setDisablePrevious(true);
         }
     }
 
@@ -316,10 +275,6 @@ public class SpotlightManager {
     private class ContainerController {
         @FXML
         private Button previous;
-        @FXML
-        private Button next;
-        @FXML
-        private Button exit;
         @FXML
         private Text description;
         @FXML

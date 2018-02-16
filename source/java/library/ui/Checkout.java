@@ -49,8 +49,8 @@ public class Checkout extends DataViewController<Book> {
         manager.registerSpotlight(filter, "Filter", "Can be used to search the records based on entered keywords.");
         manager.registerSpotlight(table, "Records", "View the current records. Records can be sorted by clicking on the column name. Rows can be selected.");
         registerSpotlightFields(manager);
-        manager.registerSpotlight(checkoutButton, "Delete Record", "Deletes the currently selected record from the library.");
         manager.registerSpotlight(returnButton, "Update Record", "Updates the currently selected record from the library based on the value of the fields above.");
+        manager.registerSpotlight(checkoutButton, "Delete Record", "Deletes the currently selected record from the library.");
     }
 
     /**
