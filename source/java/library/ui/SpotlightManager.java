@@ -234,12 +234,12 @@ public class SpotlightManager {
             if (layoutX < 5 || layoutX > spotlightContainer.getWidth() - tooltipContainer.getWidth()) {
                 //Fallbacks in case the layout cannot be calculated properly
                 layoutX = CONTAINER_MARGIN;
-                layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 5);
+                layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 15);
             }
         }
 
-        if (layoutY + tooltipContainer.getHeight() > spotlightContainer.getHeight() + 5) {
-            layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 5);
+        if (layoutY + tooltipContainer.getHeight() > spotlightContainer.getHeight() - 15) {
+            layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 15);
         }
 
         //Set the layout to the layout calculated above

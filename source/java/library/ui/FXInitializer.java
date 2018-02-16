@@ -62,11 +62,11 @@ public class FXInitializer extends Application {
         menuController.initialize(primaryStage);
 
         //Load the default content
-        FXMLInfoHolder cacheHolder = loadFile("MainWindow.fxml");
-        Parent parent = cacheHolder.parent;
+        FXMLInfoHolder mainWindow = loadFile("MainWindow.fxml");
+        Parent parent = mainWindow.parent;
 
         //Make sure to load the fxml file before requesting the controller
-        MainWindow controller = (MainWindow) cacheHolder.controller;
+        MainWindow controller = (MainWindow) mainWindow.controller;
         this.currentController = controller;
 
         //Set FXInitializer to this object
@@ -83,6 +83,9 @@ public class FXInitializer extends Application {
         primaryStage.setTitle("Library Management - BookKeeper");
         //Show the window after the animation has begun
         controller.animateIn((e) -> primaryStage.show());
+
+        borderPane.maxWidthProperty().bind(primaryStage.widthProperty());
+        borderPane.maxHeightProperty().bind(primaryStage.heightProperty());
 
         //Initialize the help window
         FXMLInfoHolder help = loadFile("Help.fxml");
