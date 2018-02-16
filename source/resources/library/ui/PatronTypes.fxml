@@ -4,21 +4,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" prefHeight="336.0" prefWidth="600.0"
-            stylesheets="@css/main.css"
-            xmlns="http://javafx.com/javafx/8.0.111" fx:controller="library.ui.PatronTypes">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="336.0" prefWidth="600.0" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.141"
+            fx:controller="library.ui.PatronTypes">
     <AnchorPane fx:id="contentBackground" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f0f0f0;"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="45.0">
         <AnchorPane fx:id="container" prefHeight="291.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <TableView fx:id="table" editable="true" maxHeight="1.7976931348623157E308" prefHeight="241.0"
-                       prefWidth="600.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="0.0"
-                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <columnResizePolicy>
-                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-                </columnResizePolicy>
-            </TableView>
             <GridPane prefHeight="93.0" prefWidth="600.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="15.0"
                       AnchorPane.rightAnchor="15.0">
                 <columnConstraints>
@@ -113,14 +106,21 @@
                     </Spinner>
                 </GridPane>
             </GridPane>
+            <TableView fx:id="table" editable="true" maxHeight="1.7976931348623157E308" prefHeight="241.0"
+                       prefWidth="600.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
             <AnchorPane prefHeight="39.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                         AnchorPane.rightAnchor="0.0">
-                <Button layoutX="465.0" layoutY="7.0" mnemonicParsing="false" onAction="#delete" text="Delete"
-                        AnchorPane.rightAnchor="84.0"/>
-                <Button layoutX="545.0" layoutY="7.0" mnemonicParsing="false" onAction="#update" text="Update"
-                        AnchorPane.rightAnchor="14.0"/>
-                <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#newItem" text="New Patron Type"
-                        AnchorPane.leftAnchor="14.0"/>
+                <Button fx:id="deleteItemButton" layoutX="465.0" layoutY="7.0" mnemonicParsing="false"
+                        onAction="#delete" text="Delete" AnchorPane.rightAnchor="84.0"/>
+                <Button fx:id="updateItemButton" layoutX="545.0" layoutY="7.0" mnemonicParsing="false"
+                        onAction="#update" text="Update" AnchorPane.rightAnchor="14.0"/>
+                <Button fx:id="newItemButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#newItem"
+                        text="New Patron Type" AnchorPane.leftAnchor="14.0"/>
             </AnchorPane>
         </AnchorPane>
     </AnchorPane>
@@ -141,10 +141,10 @@
                     <Font name="Roboto Condensed Bold" size="33.0"/>
                 </font>
             </Text>
-            <TextField fx:id="filter" layoutX="389.0" layoutY="2.0" promptText="Filter" AnchorPane.rightAnchor="50.0"
+            <TextField fx:id="filter" layoutX="389.0" layoutY="2.0" promptText="Filter" AnchorPane.rightAnchor="92.0"
                        AnchorPane.topAnchor="6.0"/>
             <Text fill="#868686" layoutX="536.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
-                  AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="12.0">
+                  AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="12.0">
                 <font>
                     <Font name="Material Icons" size="14.0"/>
                 </font>
@@ -155,6 +155,12 @@
                     <Font name="Material Icons" size="31.0"/>
                 </font>
             </Text>
+            <Label onMouseClicked="#onSpotlightHelp" styleClass="selectable" text="" textFill="WHITE"
+                   AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="2.5">
+                <font>
+                    <Font name="Material Icons" size="31.0"/>
+                </font>
+            </Label>
         </AnchorPane>
     </AnchorPane>
 </AnchorPane>
