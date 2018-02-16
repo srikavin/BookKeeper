@@ -43,8 +43,9 @@ public class SpotlightManager {
      * @param spotlightContainer The container the backdrop should be limited to
      */
     public SpotlightManager(FXInitializer initializer, Pane spotlightContainer) {
-        tooltipContainer = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
         this.spotlightContainer = spotlightContainer;
+
+        tooltipContainer = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
 
         tooltipContainer.setVisible(false);
 
@@ -220,10 +221,10 @@ public class SpotlightManager {
         containerController.setTitle(spotlight.title);
         containerController.setDescription(spotlight.description);
 
+        tooltipContainer.setVisible(true);
+
         // Used for calculating the position to place the tooltip container
         final double CONTAINER_MARGIN = 16;
-
-        tooltipContainer.setVisible(true);
 
         double layoutX = bounds.getMaxX() + CONTAINER_MARGIN;
         double layoutY = bounds.getMinY();
@@ -234,17 +235,16 @@ public class SpotlightManager {
             if (layoutX < 5 || layoutX > spotlightContainer.getWidth() - tooltipContainer.getWidth()) {
                 //Fallbacks in case the layout cannot be calculated properly
                 layoutX = CONTAINER_MARGIN;
-                layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 15);
             }
         }
 
         if (layoutY + tooltipContainer.getHeight() > spotlightContainer.getHeight() - 15) {
-            layoutY = spotlightContainer.getHeight() - (tooltipContainer.getHeight() + 15);
+            //Fsllback incase the calculate layout is out of bounds; prevent the buttons from being offscreen
+            layoutY = CONTAINER_MARGIN + 200;
         }
 
         //Set the layout to the layout calculated above
-        tooltipContainer.setLayoutX(layoutX);
-        tooltipContainer.setLayoutY(layoutY);
+        tooltipContainer.relocate(layoutX, layoutY);
 
         //Sets the title pane and spotlight information to be in front of the backdrop
         tooltipContainer.toFront();
@@ -281,6 +281,7 @@ public class SpotlightManager {
         private Button previous;
         @FXML
         private Text description;
+
         @FXML
         private TitledPane titledPane;
 
