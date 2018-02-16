@@ -37,8 +37,8 @@ public class ReportGenerator {
     /**
      * Calculates the total number of {@link Book}s with each {@link BookStatus} and returns it as a map.
      * The map is defined as follows:
-     * AVAILABLE -> 15
-     * CHECKED_OUT -> 25
+     * AVAILABLE  {@literal ->} 15
+     * CHECKED_OUT {@literal ->} 25
      * That is, one key for each BookStatus and an Integer object as the value.
      *
      * @return A map with a BookStatus as the key, with Integer values. Using any given BookStatus will return a Integer of the number of items with that status.

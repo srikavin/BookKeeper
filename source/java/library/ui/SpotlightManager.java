@@ -40,6 +40,7 @@ public class SpotlightManager {
     /**
      * Creates a spotlight manager that creates "spotlight" interactive help menus.
      *
+     * @param initializer An instance of {@link FXInitializer} to load fxml files from
      * @param spotlightContainer The container the backdrop should be limited to
      */
     public SpotlightManager(FXInitializer initializer, Pane spotlightContainer) {

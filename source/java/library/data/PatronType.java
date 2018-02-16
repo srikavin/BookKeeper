@@ -34,6 +34,7 @@ public class PatronType implements LibraryData {
      *  arr[3] {@literal ->} maximum checked-out books
      * </pre>
      *
+     * @param data A string array in the format above, or given from {@link #asData()}
      * @throws IllegalArgumentException if the data format given is invalid.
      */
     public PatronType(String[] data) {

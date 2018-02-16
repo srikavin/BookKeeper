@@ -42,6 +42,7 @@ public class Book implements LibraryData {
     /**
      * Initialize this object using saved data from {@link #asData()}.
      *
+     * @param library A library to resolve the PatronType {@link Identifier} to a {@link PatronType}
      * @param data A string array in the same format as returned by {@link #asData()}
      */
     public Book(String[] data, Library library) {

@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * The UI View for checkouts. Implements {@link DataViewController<Book>}. Holds a {@link Patron} and a {@link Book}
+ * The UI View for checkouts. Implements {@link DataViewController}. Holds a {@link Patron} and a {@link Book}
  * instance to update. Uses event-driven operations to maintain state abd update the model layer.
  */
 public class Checkout extends DataViewController<Book> {
