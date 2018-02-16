@@ -1,7 +1,7 @@
 --------TYPES
-000001,Student,15,20
-000002,Teacher,20,3
-000003,Administrator,250,100
+000001,Student,25,3
+000002,Teacher,45,10
+000003,Administrator,70,15
 --------PATRONS
 000000,Johnathan,Lapow,000001
 000001,Allin,Verdun,000001
