@@ -272,7 +272,12 @@ public class SpotlightManager {
         }
     }
 
-    private class ContainerController {
+    /**
+     * The controller of the spotlight titled pane fxml. Delegates events to the parent class, {@link SpotlightManager},
+     * which is then able to call {@link #setDescription(String)}, {@link #setTitle(String)}, and {@link #setDisablePrevious(boolean)}
+     * on this instance. These method calls update the contents of the view.
+     */
+    protected class ContainerController {
         @FXML
         private Button previous;
         @FXML
@@ -280,29 +285,53 @@ public class SpotlightManager {
         @FXML
         private TitledPane titledPane;
 
+        /**
+         * Event handler; called when the next button is clicked
+         */
         @FXML
-        void onNext(ActionEvent event) {
+        private void onNext(ActionEvent event) {
             next();
         }
 
+        /**
+         * Event handler; called when the previous button is clicked
+         */
         @FXML
-        void onPrevious(ActionEvent event) {
+        private void onPrevious(ActionEvent event) {
             previous();
         }
 
+        /**
+         * Event handler; called when the exit button is clicked
+         */
         @FXML
-        void onExit(ActionEvent event) {
+        private void onExit(ActionEvent event) {
             reset();
         }
 
-        void setDescription(String descriptionString) {
+        /**
+         * Sets the description in the view to the given description
+         *
+         * @param descriptionString The new description to show
+         */
+        public void setDescription(String descriptionString) {
             description.setText(descriptionString);
         }
 
+        /**
+         * Sets the state of the previous button
+         *
+         * @param disable True if the button should be disabled; false otherwise
+         */
         void setDisablePrevious(boolean disable) {
             previous.setDisable(disable);
         }
 
+        /**
+         * Sets the title of the TitledPane to the specified title
+         *
+         * @param title The new title to set
+         */
         void setTitle(String title) {
             titledPane.setText(title);
         }
