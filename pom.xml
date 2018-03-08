@@ -8,6 +8,12 @@
     <artifactId>fbla-library-2017</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
+        <sourceDirectory>source/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>source/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -16,6 +22,14 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <mainClass>library.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
