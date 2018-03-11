@@ -1,5 +1,6 @@
 package library.ui;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,8 +44,8 @@ public class Reports extends BaseController {
     private PieChart bookStatusChart;
     private boolean sortByItem = false;
     private Views currentView = Views.CHECKED_OUT;
-    private void setReportContent() {
 
+    private void setReportContent() {
         Library library = getLibrary();
         ReportGenerator reportGenerator = library.getReportGenerator();
 
@@ -79,7 +80,11 @@ public class Reports extends BaseController {
         ObservableList<PieChart.Data> bookStatusData = FXCollections.observableArrayList();
 
         //For each entry in the map, create a new data entry and add it to the list
-        bookStatusTotals.forEach((bookStatus, amount) -> bookStatusData.add(new PieChart.Data(bookStatus.toString(), amount)));
+        bookStatusTotals.forEach((bookStatus, amount) -> {
+            PieChart.Data data = new PieChart.Data(bookStatus.toString(), amount);
+            data.nameProperty().bind(Bindings.concat(data.getName(), " (", (int) data.getPieValue(), ")"));
+            bookStatusData.add(data);
+        });
         //Set the data into the PieChart
         bookStatusChart.setData(bookStatusData);
     }
