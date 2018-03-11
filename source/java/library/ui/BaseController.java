@@ -157,7 +157,7 @@ public abstract class BaseController {
         final Timeline timeline = animateOutTimeline;
         timeline.setCycleCount(1);
 
-        //Set starting point of the animation - currently set to off-screen
+        //Set starting point of the animation - currently set to the current position of the items according to the layout
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
                 new KeyValue(headerBackground.scaleYProperty(), 1, Interpolator.EASE_IN),
                 new KeyValue(header.translateYProperty(), 0, Interpolator.EASE_IN),
@@ -166,13 +166,16 @@ public abstract class BaseController {
         //Run the animation
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(150),
                 new KeyValue(header.translateYProperty(), -150),
-                new KeyValue(headerBackground.scaleYProperty(), 90.0 / 47.0, Interpolator.EASE_IN)
+                new KeyValue(headerBackground.scaleYProperty(), 98.0 / 42.0, Interpolator.EASE_BOTH)
         ));
 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(250), callback,
-                new KeyValue(headerBackground.translateYProperty(), 23, Interpolator.EASE_IN),
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(350),
+                new KeyValue(headerBackground.translateYProperty(), 18, Interpolator.EASE_BOTH),
                 new KeyValue(container.opacityProperty(), 0, Interpolator.EASE_IN),
                 new KeyValue(container.translateYProperty(), 150, Interpolator.EASE_IN)));
+
+        //Call the callback to insert the new content after the animation has finished
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(450), callback));
 
         //Start the animation
         timeline.play();
