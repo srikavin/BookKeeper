@@ -12,7 +12,7 @@
 }
 
 /*
-  Used for highlighting invalid fieldss
+  Used for highlighting invalid fields
  */
 :invalid-input {
     -fx-text-box-border: red;
