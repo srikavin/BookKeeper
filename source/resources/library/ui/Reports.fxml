@@ -132,7 +132,8 @@
                     <Font name="Roboto Condensed Bold" size="33.0"/>
                 </font>
             </Text>
-            <Text fill="WHITE" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+            <Text fill="WHITE" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="selectable"
+                  text=""
                   AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.5">
                 <font>
                     <Font name="Material Icons" size="31.0"/>

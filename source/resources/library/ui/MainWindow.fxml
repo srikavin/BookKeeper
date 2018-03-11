@@ -160,7 +160,8 @@
                     <Font name="Roboto Condensed Light" size="13.0"/>
                 </font>
             </Text>
-            <Label layoutX="562.0" layoutY="14.0" onMouseClicked="#onSpotlightHelp" text="" textFill="WHITE"
+            <Label layoutX="562.0" layoutY="14.0" onMouseClicked="#onSpotlightHelp" styleClass="selectable" text=""
+                   textFill="WHITE"
                    AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
                 <font>
                     <Font name="Material Icons" size="40.0"/>
