@@ -248,7 +248,8 @@ public class SpotlightManager {
         tooltipContainer.relocate(layoutX, layoutY);
 
         //Sets the title pane and spotlight information to be in front of the backdrop
-        tooltipContainer.toFront();
+        spotlightContainer.getChildren().remove(tooltipContainer);
+        spotlightContainer.getChildren().add(tooltipContainer);
 
         //If we are on the first item in the spotlight, we can disable the previous button
         containerController.setDisablePrevious(false);
