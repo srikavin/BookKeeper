@@ -10,10 +10,11 @@
     <AnchorPane fx:id="contentBackground" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f0f0f0;"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="45.0">
-        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <TabPane fx:id="container" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="0.0">
             <Tab text="Printable Reports">
-                <AnchorPane fx:id="container" prefHeight="291.0" prefWidth="600.0">
+                <AnchorPane prefHeight="291.0" prefWidth="600.0">
                     <SplitPane dividerPositions="0.3193979933110368" prefHeight="291.0" prefWidth="600.0"
                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                                AnchorPane.topAnchor="0.0">

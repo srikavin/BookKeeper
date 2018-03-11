@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -39,7 +40,7 @@ public abstract class BaseController {
      * Excludes headers and other non-unique elements of this view
      */
     @FXML
-    protected Pane container;
+    protected Node container;
     /**
      * The root pane of this view. Includes all nodes in the view, including headers.
      */
