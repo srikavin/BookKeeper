@@ -71,21 +71,21 @@ public class PreferenceManager {
      * Stores the specified int value into the preferences file
      *
      * @param key   The name of the preference
-     * @param value The integer value to store under the specified key
+     * @param value The String value to store under the specified key
      */
-    public void setValue(String key, int value) {
-        //Convert an int primitive into a String object
-        setValue(key, Integer.toString(value));
+    public void setValue(String key, String value) {
+        preferences.put(key, value);
     }
 
     /**
      * Stores the specified int value into the preferences file
      *
      * @param key   The name of the preference
-     * @param value The String value to store under the specified key
+     * @param value The integer value to store under the specified key
      */
-    public void setValue(String key, String value) {
-        preferences.put(key, value);
+    public void setValue(String key, int value) {
+        //Convert an int primitive into a String object
+        setValue(key, Integer.toString(value));
     }
 
     /**
@@ -102,5 +102,32 @@ public class PreferenceManager {
             return defaultValue;
         }
         return Integer.parseInt(preferences.get(key));
+    }
+
+    /**
+     * Stores the specified boolean value into the preferences file
+     *
+     * @param key   The name of the preference
+     * @param value The boolean value to store under the specified key
+     */
+    public void setValue(String key, boolean value) {
+        //Convert an boolean primitive into a String object
+        setValue(key, Boolean.toString(value));
+    }
+
+    /**
+     * Stores the specified boolean value into the preferences file
+     *
+     * @param key          The name of the preference to retrieve
+     * @param defaultValue The default value to return if the specified key does not exist
+     *
+     * @return An boolean value as stored in the preferences file
+     */
+    public boolean getValueAsBoolean(String key, boolean defaultValue) {
+        //Use Boolean.parseBoolean to covert the string value into an boolean primitive
+        if (!preferences.containsKey(key)) {
+            return defaultValue;
+        }
+        return Boolean.parseBoolean(preferences.get(key));
     }
 }
