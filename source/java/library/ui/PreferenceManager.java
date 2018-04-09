@@ -1,5 +1,6 @@
 package library.ui;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,11 +15,11 @@ public class PreferenceManager {
     /**
      * The separator used between key and value pairs
      */
-    private final static String SEPARATOR = "|||";
+    private final static String SEPARATOR = " ||| ";
     private final Map<String, String> preferences = new HashMap<>();
 
     /**
-     * Creates a new instance of a PreferenceManager that stores preferences into the given path
+     * Creates a new instance of a PreferenceManager that loads preferences from the given path
      *
      * @param dataFilePath The path to store a preferences file into
      *
@@ -34,6 +35,38 @@ public class PreferenceManager {
 
         //Iterate over each line in the string and call parePreference for each of the lines
         Files.lines(preferenceFile).forEach(this::parsePreference);
+    }
+
+    /**
+     * Creates a empty preference manager. Should be called when no existing preferences exist or a new library is
+     * created.
+     */
+    public PreferenceManager() {
+        //empty constructor; used when no existing preferences exist
+    }
+
+    /**
+     * Saves the preferences file with the currently present preferences
+     *
+     * @param dataPath The path to save the preferences to
+     *
+     * @throws IOException
+     */
+    public void savePreferences(Path dataPath) throws IOException {
+        //Locate the preferences.txt file located inside the data path
+        Path preferenceFile = dataPath.resolve("preferences.txt");
+
+        //Create a writer for the preferences file
+        BufferedWriter fileWriter = Files.newBufferedWriter(preferenceFile);
+        for (Map.Entry<String, String> e : preferences.entrySet()) {
+            //Write each entry in the map with the separator between the key and value; use the system line separator to maintain cross-compatibility
+            fileWriter.write(e.getKey() + SEPARATOR + e.getValue() + System.lineSeparator());
+        }
+        fileWriter.close();
+    }
+
+    public void deletePreference(String key) {
+        preferences.remove(key);
     }
 
     /**
