@@ -241,7 +241,7 @@ public class SpotlightManager {
 
         if (layoutY + tooltipContainer.getHeight() > spotlightContainer.getHeight() - 15) {
             //Fsllback incase the calculate layout is out of bounds; prevent the buttons from being offscreen
-            layoutY = CONTAINER_MARGIN + 200;
+            layoutY = spotlightContainer.getHeight() - (15 + tooltipContainer.getHeight());
         }
 
         //Set the layout to the layout calculated above
