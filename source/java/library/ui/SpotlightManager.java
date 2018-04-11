@@ -7,6 +7,7 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
@@ -29,8 +30,7 @@ import java.util.List;
  */
 public class SpotlightManager {
     private final List<Spotlight> spotlights = new ArrayList<>();
-    private final ContainerController containerController = new ContainerController();
-    private TitledPane tooltipContainer;
+    private final FXInitializer initializer;
     private int currentSpotlightIndex = -1;
     private Pane spotlightContainer;
     private Shape curShape;
@@ -40,17 +40,12 @@ public class SpotlightManager {
     /**
      * Creates a spotlight manager that creates "spotlight" interactive help menus.
      *
-     * @param initializer An instance of {@link FXInitializer} to load fxml files from
+     * @param initializer        An instance of {@link FXInitializer} to load fxml files from
      * @param spotlightContainer The container the backdrop should be limited to
      */
     public SpotlightManager(FXInitializer initializer, Pane spotlightContainer) {
         this.spotlightContainer = spotlightContainer;
-
-        tooltipContainer = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
-
-        tooltipContainer.setVisible(false);
-
-        spotlightContainer.getChildren().add(tooltipContainer);
+        this.initializer = initializer;
 
         //Force redraws when the spotlight container is resized in order to keep the overlay over the entire bounding box
         spotlightContainer.heightProperty().addListener((observable, oldValue, newValue) -> draw());
@@ -70,7 +65,7 @@ public class SpotlightManager {
         if (node == null) {
             return;
         }
-        spotlights.add(new Spotlight(node, title, description));
+        spotlights.add(new Spotlight(node, title, description, initializer));
     }
 
     /**
@@ -134,6 +129,8 @@ public class SpotlightManager {
     private void removeListenerFromCurrentSpotlight() {
         Spotlight current = spotlights.get(currentSpotlightIndex);
         if (current.node != null) {
+            spotlightContainer.getChildren().remove(current.titledPane);
+            spotlightContainer.getChildren().remove(curShape);
             current.node.localToSceneTransformProperty().removeListener(changeListener);
         }
     }
@@ -184,9 +181,12 @@ public class SpotlightManager {
      * @param spotlight The spotlight information to be used when drawing the overlay.
      */
     private void draw(Spotlight spotlight) {
+        TitledPane tooltipContainer = spotlight.titledPane;
+        ContainerController containerController = spotlight.containerController;
+
+        spotlightContainer.getChildren().remove(curShape);
+        spotlightContainer.getChildren().remove(tooltipContainer);
         if (!isActive) {
-            tooltipContainer.setVisible(false);
-            spotlightContainer.getChildren().remove(curShape);
             return;
         }
 
@@ -211,44 +211,43 @@ public class SpotlightManager {
         shape.setFill(Color.BLACK);
         shape.setOpacity(0.7);
         //Remove the shape if it exists and add the newly calculated shape to the container
-        spotlightContainer.getChildren().remove(curShape);
         spotlightContainer.getChildren().add(shape);
         //Set the current shape
         this.curShape = shape;
 
+        //When clicking on the overlay, make it act like a next button to make it easy to go through items
         curShape.setOnMouseClicked((e) -> this.next());
 
-        //Create container for information about the current node
-        containerController.setTitle(spotlight.title);
-        containerController.setDescription(spotlight.description);
-
-        tooltipContainer.setVisible(true);
-
-        // Used for calculating the position to place the tooltip container
+        //Used for calculating the position to place the tooltip container
         final double CONTAINER_MARGIN = 16;
 
         double layoutX = bounds.getMaxX() + CONTAINER_MARGIN;
         double layoutY = bounds.getMinY();
 
+        double tooltipWidth = tooltipContainer.getWidth();
+        double tooltipHeight = tooltipContainer.getHeight();
+
+        double containerWidth = spotlightContainer.getWidth();
+        double containerHeight = spotlightContainer.getHeight();
+
         //Put the tooltip on the left if the tooltip is too big to fit on the right
-        if (layoutX + tooltipContainer.getWidth() > spotlightContainer.getWidth()) {
-            layoutX = bounds.getMinX() - (CONTAINER_MARGIN + tooltipContainer.getWidth());
-            if (layoutX < 5 || layoutX > spotlightContainer.getWidth() - tooltipContainer.getWidth()) {
-                //Fallbacks in case the layout cannot be calculated properly
+        if (layoutX + tooltipWidth + CONTAINER_MARGIN > containerWidth) {
+            layoutX = bounds.getMinX() - (CONTAINER_MARGIN + tooltipWidth);
+            if (layoutX < 5 || layoutX > containerWidth - tooltipWidth) {
+                //Fallbacks in case a proper layout cannot be found
                 layoutX = CONTAINER_MARGIN;
             }
         }
 
-        if (layoutY + tooltipContainer.getHeight() > spotlightContainer.getHeight() - 15) {
-            //Fsllback incase the calculate layout is out of bounds; prevent the buttons from being offscreen
-            layoutY = spotlightContainer.getHeight() - (15 + tooltipContainer.getHeight());
+        if (layoutY + tooltipHeight > containerHeight - 15) {
+            //Fallback incase the calculate layout is out of bounds; prevent the buttons from being offscreen
+            layoutY = containerHeight - (15 + tooltipHeight);
         }
 
         //Set the layout to the layout calculated above
         tooltipContainer.relocate(layoutX, layoutY);
 
         //Sets the title pane and spotlight information to be in front of the backdrop
-        spotlightContainer.getChildren().remove(tooltipContainer);
         spotlightContainer.getChildren().add(tooltipContainer);
 
         //If we are on the first item in the spotlight, we can disable the previous button
@@ -261,15 +260,22 @@ public class SpotlightManager {
     /**
      * Used to store the spotlights registered with the spotlight manager
      */
-    private static class Spotlight {
+    private class Spotlight {
         final Node node;
-        final String title;
-        final String description;
+        final ContainerController containerController;
+        final TitledPane titledPane;
 
-        Spotlight(Node node, String title, String description) {
+        Spotlight(Node node, String title, String description, FXInitializer initializer) {
             this.node = node;
-            this.title = title;
-            this.description = description;
+            containerController = new ContainerController();
+            titledPane = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
+            containerController.setDescription(description);
+            containerController.setTitle(title);
+            //Force the layout of the spotlight container - this works by creating a view off-screen and creating a snapshot of its layout
+            final Pane pane = new Pane();
+            pane.getChildren().add(titledPane);
+            Scene scene = new Scene(pane);
+            pane.snapshot(null, null);
         }
     }
 
@@ -283,7 +289,6 @@ public class SpotlightManager {
         private Button previous;
         @FXML
         private Text description;
-
         @FXML
         private TitledPane titledPane;
 
@@ -316,7 +321,7 @@ public class SpotlightManager {
          *
          * @param descriptionString The new description to show
          */
-        public void setDescription(String descriptionString) {
+        void setDescription(String descriptionString) {
             description.setText(descriptionString);
         }
 
