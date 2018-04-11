@@ -225,6 +225,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
             T temp = currentlyCreating;
             currentlyCreating = null;
             dataSource.remove(temp);
+            return;
         }
         T current = getCurrentlySelected();
         if (current != null) {
