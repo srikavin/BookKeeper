@@ -221,6 +221,12 @@ public class SpotlightManager {
         //Used for calculating the position to place the tooltip container
         final double CONTAINER_MARGIN = 16;
 
+        //Force the layout of the spotlight container - this works by creating a view off-screen and creating a snapshot of its layout
+        final Pane pane = new Pane();
+        pane.getChildren().add(spotlight.titledPane);
+        Scene scene = new Scene(pane);
+        pane.snapshot(null, null);
+
         double layoutX = bounds.getMaxX() + CONTAINER_MARGIN;
         double layoutY = bounds.getMinY();
 
@@ -271,11 +277,6 @@ public class SpotlightManager {
             titledPane = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
             containerController.setDescription(description);
             containerController.setTitle(title);
-            //Force the layout of the spotlight container - this works by creating a view off-screen and creating a snapshot of its layout
-            final Pane pane = new Pane();
-            pane.getChildren().add(titledPane);
-            Scene scene = new Scene(pane);
-            pane.snapshot(null, null);
         }
     }
 
