@@ -30,7 +30,7 @@ public class Menu extends BaseController {
     private boolean isTempData = true;
 
     /**
-     *  Initializes the menu with the specified stage. This stage is used to detect close requests.
+     * Initializes the menu with the specified stage. This stage is used to detect close requests.
      *
      * @param stage The main window stage
      */
@@ -81,32 +81,45 @@ public class Menu extends BaseController {
         });
     }
 
-    private void unsavedChanges(Runnable runnable) {
+    private void unsavedChanges(Runnable quitCallback) {
         Library library = getLibrary();
         if (library.isModified()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Unsaved changes");
             alert.setHeaderText("Unsaved changes exist");
+            alert.setContentText("Warning! All unsaved data will be lost if you continue without saving.");
 
-            ButtonType quit = new ButtonType("Quit", ButtonBar.ButtonData.LEFT);
-            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType quit = new ButtonType("Don't Save", ButtonBar.ButtonData.RIGHT);
+            ButtonType save = new ButtonType("Save", ButtonBar.ButtonData.RIGHT);
+            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.LEFT);
 
-            alert.getButtonTypes().setAll(quit, cancel);
+            alert.getButtonTypes().setAll(quit, save, cancel);
 
             //Get the result of the alert dialog
             Optional<ButtonType> result = alert.showAndWait();
+
+            //If the user chooses the quit button
             if (result.isPresent() && result.get() == quit) {
                 //Exit if the user chooses quit
-                runnable.run();
+                quitCallback.run();
+            }
+            //If the user chooses the save button
+            if (result.isPresent() && result.get() == save) {
+                //Reuse the save method
+                save(null);
             }
         } else {
-            runnable.run();
+            //If the library was not modified at all, simply run the quit callback
+            quitCallback.run();
         }
     }
 
     @FXML
     private void quit(Event event) {
+        //If the users clicks quit, exit
         unsavedChanges(Platform::exit);
+        //Otherwise, ignore the event
+        event.consume();
     }
 
     @FXML
