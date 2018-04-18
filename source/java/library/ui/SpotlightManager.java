@@ -221,17 +221,12 @@ public class SpotlightManager {
         //Used for calculating the position to place the tooltip container
         final double CONTAINER_MARGIN = 16;
 
-        //Force the layout of the spotlight container - this works by creating a view off-screen and creating a snapshot of its layout
-        final Pane pane = new Pane();
-        pane.getChildren().add(spotlight.titledPane);
-        Scene scene = new Scene(pane);
-        pane.snapshot(null, null);
 
         double layoutX = bounds.getMaxX() + CONTAINER_MARGIN;
         double layoutY = bounds.getMinY();
 
-        double tooltipWidth = tooltipContainer.getWidth();
-        double tooltipHeight = tooltipContainer.getHeight();
+        double tooltipWidth = spotlight.getWidth();
+        double tooltipHeight = spotlight.getHeight();
 
         double containerWidth = spotlightContainer.getWidth();
         double containerHeight = spotlightContainer.getHeight();
@@ -270,6 +265,8 @@ public class SpotlightManager {
         final Node node;
         final ContainerController containerController;
         final TitledPane titledPane;
+        private double height = -1;
+        private double width = -1;
 
         Spotlight(Node node, String title, String description, FXInitializer initializer) {
             this.node = node;
@@ -277,6 +274,31 @@ public class SpotlightManager {
             titledPane = (TitledPane) initializer.loadNode("SpotlightContainer.fxml", containerController);
             containerController.setDescription(description);
             containerController.setTitle(title);
+        }
+
+        private void calculateSize() {
+            //Make sure the calculations have not been done before
+            if (height != -1 && width != -1) {
+                return;
+            }
+            //Calculate the size of the spotlight information pane
+            final Pane pane = new Pane();
+            pane.getChildren().add(titledPane);
+            Scene scene = new Scene(pane);
+            scene.snapshot(null);
+            width = titledPane.getWidth();
+            height = titledPane.getHeight();
+            pane.getChildren().clear();
+        }
+
+        public double getHeight() {
+            calculateSize();
+            return height;
+        }
+
+        public double getWidth() {
+            calculateSize();
+            return width;
         }
     }
 
