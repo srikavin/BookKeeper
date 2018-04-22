@@ -68,9 +68,25 @@ public class PreferenceManager {
      *
      * @throws IOException If the file cannot be opened or created, an IOException will be thrown
      */
-    public void savePreferences(Path dataPath) throws IOException {
-        //Locate the preferences.txt file located inside the data path
-        Path preferenceFile = dataPath.resolve("preferences.txt");
+    public void saveTo(Path dataPath) throws IOException {
+        saveTo(dataPath, null);
+    }
+
+    /**
+     * Saves the preferences file with the currently present preferences
+     *
+     * @param dataPath The path to save the preferences to
+     * @param suffix The suffix to add to the file name
+     *
+     * @throws IOException If the file cannot be opened or created, an IOException will be thrown
+     */
+    public void saveTo(Path dataPath, String suffix) throws IOException {
+        Path preferenceFile;
+        if (suffix != null) {
+            preferenceFile = dataPath.resolve("preferences-" + suffix + ".txt");
+        } else {
+            preferenceFile = dataPath.resolve("preferences.txt");
+        }
 
         //Create a writer for the preferences file
         BufferedWriter fileWriter = Files.newBufferedWriter(preferenceFile);
@@ -84,7 +100,7 @@ public class PreferenceManager {
     }
 
     /**
-     * Removes the preference from the in-memory store. To update preferences on disk, call {@link #savePreferences(Path)}.
+     * Removes the preference from the in-memory store. To update preferences on disk, call {@link #saveTo(Path)}.
      *
      * @param key The preference key to remove.
      */
