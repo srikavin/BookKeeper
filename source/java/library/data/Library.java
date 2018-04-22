@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -25,7 +23,6 @@ public class Library {
     private List<PatronType> patronTypes = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private ReportGenerator reportGenerator;
-    private Path dataFile;
     /**
      * Used to identify when changes are made to this library that are not saved.
      */
@@ -46,7 +43,7 @@ public class Library {
             return;
         }
         //Load the data file
-        dataFile = dataFilePath.resolve("data.txt");
+        Path dataFile = dataFilePath.resolve("data.txt");
 
         //Check if the file exists
         boolean fileExists = Files.isRegularFile(dataFile);
@@ -102,15 +99,6 @@ public class Library {
         }
         //Create a report generator using this as its data source
         reportGenerator = new ReportGenerator(this);
-    }
-
-    /**
-     * Gets the data file that this Library is saving to.
-     *
-     * @return The data file path this Library saves t
-     */
-    public Path getDataFile() {
-        return dataFile;
     }
 
     /**
@@ -216,20 +204,6 @@ public class Library {
     }
 
     /**
-     * Saves this library to the data file that this library was loaded from
-     *
-     * @throws IOException If the file cannot be accessed, an IOException will be thrown
-     */
-    public void save() throws IOException {
-        if (Files.isRegularFile(dataFile) && modified) {
-            //Dynamic backup; saves last data file to a new file appended with the current timestamp
-            final DateTimeFormatter saveFileFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-SS");
-            Files.move(dataFile, dataFile.resolveSibling("data-" + LocalDateTime.now().format(saveFileFormatter) + ".txt"));
-        }
-        saveTo(dataFile.getParent());
-    }
-
-    /**
      * Saves this library to the specified data file path
      *
      * @param path The path at which to store the file; Must be a directory. A file "data.txt" is created inside of this directory
@@ -237,7 +211,7 @@ public class Library {
      * @throws IOException If the file cannot be accessed or written to, an IOException will be thrown
      */
     public void saveTo(Path path) throws IOException {
-        dataFile = path.resolve("data.txt");
+        Path dataFile = path.resolve("data.txt");
         BufferedWriter writer = Files.newBufferedWriter(dataFile);
         save(writer);
         writer.close();
