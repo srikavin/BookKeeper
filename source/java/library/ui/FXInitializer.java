@@ -32,7 +32,6 @@ public class FXInitializer extends Application {
     private MenuBar menuBar;
     private Library library;
     private Path dataFilePath;
-    private boolean useTransitions = true;
 
     public static void main(String[] args) {
         Application.launch();
@@ -199,7 +198,7 @@ public class FXInitializer extends Application {
             controller.initialize(this, library);
             controller.initializeData();
 
-            if (useTransitions) {
+            if (preferenceManager.getValueAsBoolean("use_transitions", true)) {
                 //Set a callback after the animation has finished
                 this.currentController.animateOut((e) ->
                         controller.animateIn((event) -> changeContent(content, controller)));
@@ -215,15 +214,6 @@ public class FXInitializer extends Application {
             alert.showAndWait();
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Enable and disables whether or not transitions will be used when moving from one stage to another
-     *
-     * @param useTransitions True if transitions should be used; false otherwise
-     */
-    public void setUseTransitions(boolean useTransitions) {
-        this.useTransitions = useTransitions;
     }
 
     private void changeContent(Node content, BaseController controller) {
@@ -275,6 +265,10 @@ public class FXInitializer extends Application {
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public PreferenceManager getPreferenceManager() {
+        return preferenceManager;
     }
 
     /**

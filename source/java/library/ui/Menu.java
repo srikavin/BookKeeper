@@ -36,9 +36,10 @@ public class Menu extends BaseController {
      */
     public void initialize(Stage stage) {
         //Update use of animations when the option is toggled
-        useAnimations.setSelected(true);
         useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
-                getInitializer().setUseTransitions(newValue));
+                getInitializer().getPreferenceManager().setValue("use_transitions", newValue));
+        useAnimations.setSelected(getInitializer().getPreferenceManager()
+                .getValueAsBoolean("use_transitions", true));
         //When the user tries to close the window, make sure they intended to not save any changes
         stage.setOnCloseRequest(this::quit);
     }
