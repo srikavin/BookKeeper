@@ -50,7 +50,7 @@ public class PreferenceManager {
      *
      * @param dataPath The path to save the preferences to
      *
-     * @throws IOException
+     * @throws IOException If the file cannot be opened or created, an IOException will be thrown
      */
     public void savePreferences(Path dataPath) throws IOException {
         //Locate the preferences.txt file located inside the data path
@@ -65,6 +65,11 @@ public class PreferenceManager {
         fileWriter.close();
     }
 
+    /**
+     * Removes the preference from the in-memory store. To update preferences on disk, call {@link #savePreferences(Path)}.
+     *
+     * @param key The preference key to remove.
+     */
     public void deletePreference(String key) {
         preferences.remove(key);
     }
@@ -72,7 +77,7 @@ public class PreferenceManager {
     /**
      * Parses the given line, and adds it to the preferences Map
      *
-     * @param line The line to parse
+     * @param line The line to parse, must NOT be null
      */
     private void parsePreference(String line) {
         //SeparatorIndex is the index at the start of the SEPARATOR sequence
