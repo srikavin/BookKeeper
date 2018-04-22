@@ -49,9 +49,6 @@ public class Reports extends BaseController {
         Library library = getLibrary();
         ReportGenerator reportGenerator = library.getReportGenerator();
 
-        reportGenerator.setFineLimit(fineLimit.getValue());
-        reportGenerator.setFineRate(fineRate.getValue());
-
         List<Book> bookList = new ArrayList<>();
         switch (currentView) {
             case CHECKED_OUT:
@@ -153,17 +150,28 @@ public class Reports extends BaseController {
     @Override
     public void initializeData() {
         super.initializeData();
+        ReportGenerator reportGenerator = getLibrary().getReportGenerator();
+        PreferenceManager preferenceManager = getInitializer().getPreferenceManager();
+
+        double savedFineLimit = preferenceManager.getValueAsNumber("fine_limit", 60).doubleValue();
+        double savedFineRate = preferenceManager.getValueAsNumber("fine_rate", 1.5).doubleValue();
+
+        reportGenerator.setFineLimit(savedFineLimit);
+        reportGenerator.setFineRate(savedFineRate);
+
         //Define how the spinners increment and decrement
-        fineLimit.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(1, Double.MAX_VALUE, 60));
-        fineRate.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, Double.MAX_VALUE, 1.5));
+        fineLimit.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(1, Double.MAX_VALUE, savedFineLimit));
+        fineRate.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, Double.MAX_VALUE, savedFineRate));
 
         //Make the reports update when the value of the fee spinners change
         fineLimit.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             fineLimit.increment(0);
+            getInitializer().getPreferenceManager().setValue("fine_limit", fineLimit.getValue());
             setReportContent();
         });
         fineRate.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             fineRate.increment(0);
+            getInitializer().getPreferenceManager().setValue("fine_rate", fineRate.getValue());
             setReportContent();
         });
 
