@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ public class PreferenceManager {
      */
     private final static String SEPARATOR = " ||| ";
     private final Map<String, String> preferences = new HashMap<>();
+    private boolean modified;
 
     /**
      * Creates a new instance of a PreferenceManager that loads preferences from the given path
@@ -50,6 +53,15 @@ public class PreferenceManager {
     }
 
     /**
+     * Returns if the preferences object has been changed since the last time it was saved
+     *
+     * @return True if modifications have been made that are not saved to disk; otherwise, false
+     */
+    public boolean isModified() {
+        return modified;
+    }
+
+    /**
      * Saves the preferences file with the currently present preferences
      *
      * @param dataPath The path to save the preferences to
@@ -67,6 +79,8 @@ public class PreferenceManager {
             fileWriter.write(e.getKey() + SEPARATOR + e.getValue() + System.lineSeparator());
         }
         fileWriter.close();
+
+        modified = false;
     }
 
     /**
@@ -117,33 +131,38 @@ public class PreferenceManager {
      */
     public void setValue(String key, String value) {
         preferences.put(key, value);
+        modified = true;
     }
 
     /**
-     * Stores the specified int value into the preferences file
+     * Stores the specified numerical value into the preferences file
      *
      * @param key   The name of the preference
-     * @param value The integer value to store under the specified key
+     * @param value The numerical value to store under the specified key
      */
-    public void setValue(String key, int value) {
+    public void setValue(String key, Number value) {
         //Convert an int primitive into a String object
-        setValue(key, Integer.toString(value));
+        setValue(key, value.toString());
     }
 
     /**
-     * Stores the specified int value into the preferences file
+     * Stores the specified value into the preferences file
      *
      * @param key          The name of the preference to retrieve
      * @param defaultValue The default value to return if the specified key does not exist
      *
-     * @return An integer value as stored in the preferences file
+     * @return An numerical value as stored in the preferences file
      */
-    public int getValueAsInt(String key, int defaultValue) {
+    public Number getValueAsNumber(String key, Number defaultValue) {
         //Use Integer.parseInt to covert the string value into an int primitive
         if (!preferences.containsKey(key)) {
             return defaultValue;
         }
-        return Integer.parseInt(preferences.get(key));
+        try {
+            return NumberFormat.getInstance().parse(preferences.get(key));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
