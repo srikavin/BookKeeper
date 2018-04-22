@@ -27,9 +27,11 @@ public class FXInitializer extends Application {
     private Stage primaryStage;
     private BorderPane borderPane = new BorderPane();
     private BaseController currentController;
+    private PreferenceManager preferenceManager;
     private Menu menuController;
     private MenuBar menuBar;
     private Library library;
+    private Path dataFilePath;
     private boolean useTransitions = true;
 
     public static void main(String[] args) {
@@ -43,6 +45,7 @@ public class FXInitializer extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         library = new Library(null);
+        preferenceManager = new PreferenceManager();
 
         //Load all fonts before initializing the program
         loadFonts();
@@ -111,8 +114,24 @@ public class FXInitializer extends Application {
      */
     public void loadFile(Path path) throws IOException {
         this.library = new Library(path);
+        this.preferenceManager = new PreferenceManager(path);
         setContent("MainWindow.fxml");
         menuController.initialize(this, library);
+        dataFilePath = path;
+    }
+
+    public void saveDataFile() throws IOException {
+        saveDataFileTo(dataFilePath);
+    }
+
+    public void saveDataFileTo(Path path) throws IOException {
+        dataFilePath = path;
+        library.saveTo(path);
+        savePreferences(path);
+    }
+
+    private void savePreferences(Path path) throws IOException {
+        preferenceManager.savePreferences(path);
     }
 
     public Node loadNode(String fxFile, Object controllerInstance) {

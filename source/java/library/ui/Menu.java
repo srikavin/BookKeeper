@@ -158,9 +158,9 @@ public class Menu extends BaseController {
         }
         Path path = file.toPath();
 
-        Library library = getLibrary();
+        FXInitializer initializer = getInitializer();
         try {
-            library.saveTo(path);
+            initializer.saveDataFileTo(path);
         } catch (IOException e) {
             showError("saving the library", e);
         }
@@ -170,9 +170,9 @@ public class Menu extends BaseController {
     @FXML
     private void save(ActionEvent event) {
         try {
-            Library library = getLibrary();
             if (!isTempData) {
-                library.save();
+                FXInitializer initializer = getInitializer();
+                initializer.saveDataFile();
             } else {
                 //Show the save as dialog if the user tries to save the sample data
                 saveAs(event);
