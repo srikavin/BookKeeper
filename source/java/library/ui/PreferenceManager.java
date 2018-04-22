@@ -26,6 +26,9 @@ public class PreferenceManager {
      * @throws IOException If the preferences file is unable to be read or written to, an IOException will be thrown
      */
     public PreferenceManager(Path dataFilePath) throws IOException {
+        if (dataFilePath == null) {
+            return;
+        }
         //Locate the preferences.txt file located inside the data path
         Path preferenceFile = dataFilePath.resolve("preferences.txt");
         //If the file doesn't exist, create it
@@ -41,8 +44,9 @@ public class PreferenceManager {
      * Creates a empty preference manager. Should be called when no existing preferences exist or a new library is
      * created.
      */
-    public PreferenceManager() {
+    public PreferenceManager() throws IOException {
         //empty constructor; used when no existing preferences exist
+        this(null);
     }
 
     /**
