@@ -206,15 +206,33 @@ public class Library {
     /**
      * Saves this library to the specified data file path
      *
+     * @param path   The path at which to store the file; Must be a directory. A file "data.txt" is created inside of this directory
+     * @param suffix the suffix to add to the end of the saved file
+     *
+     * @throws IOException If the file cannot be accessed or written to, an IOException will be thrown
+     */
+    public void saveTo(Path path, String suffix) throws IOException {
+        Path dataFile;
+        if (suffix != null) {
+            dataFile = path.resolve("data-" + suffix + ".txt");
+        } else {
+            dataFile = path.resolve("data.txt");
+        }
+        BufferedWriter writer = Files.newBufferedWriter(dataFile);
+        save(writer);
+        writer.close();
+    }
+
+    /**
+     * Saves this library to the specified data file path
+     *
      * @param path The path at which to store the file; Must be a directory. A file "data.txt" is created inside of this directory
      *
      * @throws IOException If the file cannot be accessed or written to, an IOException will be thrown
      */
+
     public void saveTo(Path path) throws IOException {
-        Path dataFile = path.resolve("data.txt");
-        BufferedWriter writer = Files.newBufferedWriter(dataFile);
-        save(writer);
-        writer.close();
+        saveTo(path, null);
     }
 
     private void save(Writer writer) throws IOException {

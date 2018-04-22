@@ -15,7 +15,10 @@ import javafx.stage.Stage;
 import library.data.Library;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The starting point for the JavaFX GUI. Initializes the JavaFX system and starts the program.
@@ -125,12 +128,21 @@ public class FXInitializer extends Application {
 
     public void saveDataFileTo(Path path) throws IOException {
         dataFilePath = path;
-        library.saveTo(path);
-        savePreferences(path);
-    }
 
-    private void savePreferences(Path path) throws IOException {
-        preferenceManager.savePreferences(path);
+        //If either the preference or the library data has been modified, create a backup of both before overwriting them
+        //"Dynamic Backup"
+        if (Files.isRegularFile(dataFilePath) && (library.isModified() || preferenceManager.isModified())) {
+            //Generate the timestamp
+            final DateTimeFormatter saveFileFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-SS");
+            String timestamp = LocalDateTime.now().format(saveFileFormatter);
+
+            //Dynamic backup; saves last data files to new files appended with the current timestamp
+            library.saveTo(dataFilePath, timestamp);
+            preferenceManager.saveTo(dataFilePath, timestamp);
+        }
+        //Save the current data
+        library.saveTo(path);
+        preferenceManager.saveTo(path);
     }
 
     public Node loadNode(String fxFile, Object controllerInstance) {
