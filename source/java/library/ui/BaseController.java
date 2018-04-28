@@ -86,8 +86,10 @@ public abstract class BaseController {
      */
     @FXML
     protected void goHome(Event event) {
+        if (spotlightManager != null) {
+            spotlightManager.disable();
+        }
         getInitializer().setContent("MainWindow.fxml");
-        spotlightManager.disable();
     }
 
     /**
@@ -159,20 +161,13 @@ public abstract class BaseController {
 
         //Set starting point of the animation - currently set to the current position of the items according to the layout
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
-                new KeyValue(headerBackground.scaleYProperty(), 1, Interpolator.EASE_IN),
-                new KeyValue(header.translateYProperty(), 0, Interpolator.EASE_IN),
-                new KeyValue(container.opacityProperty(), 1, Interpolator.EASE_IN)));
+                new KeyValue(container.opacityProperty(), 1, Interpolator.EASE_IN),
+                new KeyValue(header.translateYProperty(), 0)));
 
-        //Run the animation
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(150),
-                new KeyValue(header.translateYProperty(), -150),
-                new KeyValue(headerBackground.scaleYProperty(), 98.0 / 42.0, Interpolator.EASE_BOTH)
-        ));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(350),
-                new KeyValue(headerBackground.translateYProperty(), 18, Interpolator.EASE_BOTH),
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(400),
                 new KeyValue(container.opacityProperty(), 0, Interpolator.EASE_IN),
-                new KeyValue(container.translateYProperty(), 150, Interpolator.EASE_IN)));
+                new KeyValue(container.translateYProperty(), 150, Interpolator.EASE_IN),
+                new KeyValue(header.translateYProperty(), -150)));
 
         //Call the callback to insert the new content after the animation has finished
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(450), callback));

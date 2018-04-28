@@ -4,6 +4,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -20,6 +21,8 @@ import java.time.format.DateTimeFormatter;
  * maintain performance and code designs.
  */
 public class MainWindow extends BaseController {
+    @FXML
+    private Text schoolName;
     @FXML
     private Text currentDate;
     @FXML
@@ -126,8 +129,15 @@ public class MainWindow extends BaseController {
     @Override
     public void initializeData() {
         //Set the date in the UI to the formatted date right now when it is initialized
+        PreferenceManager preferenceManager = getInitializer().getPreferenceManager();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
         currentDate.setText(formatter.format(LocalDate.now()));
+        schoolName.setText(preferenceManager.getValue("school_name", "Robinson High School"));
+    }
+
+    @Override
+    protected void goHome(Event event) {
+        initializeData();
     }
 
     /**
@@ -142,7 +152,9 @@ public class MainWindow extends BaseController {
                 callback, // Call the callback after the initial state has been set
                 new KeyValue(container.translateYProperty(), 500),
                 new KeyValue(dateContainer.translateXProperty(), container.getWidth() + 5),
-                new KeyValue(header.translateXProperty(), -500),
+                new KeyValue(header.translateXProperty(), 0),
+                new KeyValue(headerBackground.scaleYProperty(), 47.0 / 90.0),
+                new KeyValue(headerBackground.translateYProperty(), -27),
                 new KeyValue(dateContainer.rotateProperty(), -3)));
 
         //Run the animation
@@ -156,8 +168,10 @@ public class MainWindow extends BaseController {
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1200), "Animate Date Container Rotation",
                 new KeyValue(dateContainer.rotateProperty(), 0, Interpolator.EASE_IN)));
 
-        animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1200), "Animate Date Container Rotation",
-                new KeyValue(header.translateXProperty(), 0, Interpolator.EASE_IN)));
+        animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(250), "Animate Header Container Rotation",
+                new KeyValue(header.translateXProperty(), 0, Interpolator.DISCRETE),
+                new KeyValue(headerBackground.scaleYProperty(), 1),
+                new KeyValue(headerBackground.translateYProperty(), 0)));
 
         //Start the animation
         animateInTimeline.play();

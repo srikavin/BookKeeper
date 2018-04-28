@@ -4,10 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -56,6 +53,23 @@ public class Menu extends BaseController {
     @FXML
     private void documentation(ActionEvent event) {
         getInitializer().loadHelp();
+    }
+
+    @FXML
+    private void editSchoolName(ActionEvent event) {
+        String currentSchoolName = getInitializer().getPreferenceManager().getValue("school_name", "Robinson High School");
+
+        TextInputDialog dialog = new TextInputDialog(currentSchoolName);
+        dialog.setTitle("Change School Name");
+        dialog.setHeaderText("Change School Name");
+        dialog.setContentText("Please enter your desired school name:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(chosenName -> {
+            getInitializer().getPreferenceManager().setValue("school_name", chosenName);
+            getInitializer().setContent("MainWindow.fxml");
+        });
+
     }
 
     @FXML
