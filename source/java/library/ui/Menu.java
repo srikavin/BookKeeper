@@ -32,13 +32,19 @@ public class Menu extends BaseController {
      * @param stage The main window stage
      */
     public void initialize(Stage stage) {
+        //When the user tries to close the window, make sure they intended to not save any changes
+        stage.setOnCloseRequest(this::quit);
+        initializeData();
+    }
+
+    @Override
+    public void initializeData() {
+        super.initializeData();
         //Update use of animations when the option is toggled
         useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
                 getInitializer().getPreferenceManager().setValue("use_transitions", newValue));
         useAnimations.setSelected(getInitializer().getPreferenceManager()
                 .getValueAsBoolean("use_transitions", true));
-        //When the user tries to close the window, make sure they intended to not save any changes
-        stage.setOnCloseRequest(this::quit);
     }
 
     @FXML
@@ -205,6 +211,7 @@ public class Menu extends BaseController {
             Path temp = Files.createTempDirectory("sampleData");
             Files.copy(getClass().getResourceAsStream("data.txt"), temp.resolve("data.txt"));
             getInitializer().loadFile(temp);
+            initializeData();
         } catch (IOException e) {
             showError("loading sample data", e);
         }
