@@ -37,6 +37,7 @@
             <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
         </accelerator>
         <CheckMenuItem fx:id="useAnimations" mnemonicParsing="false" text="Enable Animations"/>
+        <MenuItem mnemonicParsing="false" onAction="#editSchoolName" text="School Name"/>
     </Menu>
     <Menu text="Help">
         <accelerator>
