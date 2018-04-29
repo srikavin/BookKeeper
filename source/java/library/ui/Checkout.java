@@ -260,9 +260,9 @@ public class Checkout extends DataViewController<Book> {
             currentBook.pseudoClassStateChanged(errorClass, true);
             return;
         }
-        if (book.getStatus() == BookStatus.CHECKED_OUT) {
+        if (book.getStatus() == BookStatus.CHECKED_OUT || book.getStatus() == BookStatus.LOST) {
             bookStatus.pseudoClassStateChanged(errorClass, true);
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Book already checked out!", ButtonType.CANCEL, ButtonType.YES);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Book is checked out or lost!", ButtonType.CANCEL, ButtonType.YES);
             alert.setHeaderText("Override checkout?");
             Optional<ButtonType> buttonTypeOptional = alert.showAndWait();
             if (!buttonTypeOptional.isPresent()) {
