@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity"
@@ -47,11 +48,14 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patron Type" textAlignment="RIGHT"
-                      GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                <Text fill="#0000ee" onMouseClicked="#onPatronTypes" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Patron Type" textAlignment="RIGHT" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                     <GridPane.margin>
                         <Insets left="7.0"/>
                     </GridPane.margin>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
                 </Text>
                 <ChoiceBox fx:id="patronTypes" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0"
                            prefWidth="183.0" GridPane.columnIndex="1"/>
@@ -130,9 +134,8 @@
                     <Font name="Material Icons" size="31.0"/>
                 </font>
             </Label>
-            <Text fill="WHITE" layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE"
-                  strokeWidth="0.0" styleClass="selectable" text=""
-                  AnchorPane.leftAnchor="14.0">
+            <Text fill="WHITE" layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                  styleClass="selectable" text="" AnchorPane.leftAnchor="14.0">
                 <font>
                     <Font name="Material Icons" size="49.0"/>
                 </font>
@@ -143,20 +146,26 @@
                     <Font name="Roboto Condensed Bold" size="33.0"/>
                 </font>
             </Text>
-            <TextField fx:id="filter" promptText="Filter" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="6.0"/>
+            <TextField fx:id="filter" layoutX="314.0" layoutY="5.0" promptText="Filter" AnchorPane.rightAnchor="128.0"
+                       AnchorPane.topAnchor="5.0"/>
             <Text fill="WHITE" onMouseClicked="#goHome" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="selectable"
-                  text=""
-                  AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.5">
+                  text="" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.5">
                 <font>
                     <Font name="Material Icons" size="31.0"/>
                 </font>
             </Text>
-            <Text fill="#868686" layoutX="546.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
-                  AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="12.0">
+            <Text fill="#868686" layoutX="444.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                  AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="11.0">
                 <font>
                     <Font name="Material Icons" size="14.0"/>
                 </font>
             </Text>
+            <Label fx:id="patronTypesLink" layoutX="478.0" layoutY="3.0" onMouseClicked="#onPatronTypes"
+                   styleClass="selectable" text="" textFill="WHITE" AnchorPane.rightAnchor="88.0">
+                <font>
+                    <Font name="Material Icons" size="31.0"/>
+                </font>
+            </Label>
         </AnchorPane>
     </AnchorPane>
 </AnchorPane>

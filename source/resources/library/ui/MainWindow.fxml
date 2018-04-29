@@ -37,14 +37,14 @@
             </AnchorPane>
             <AnchorPane fx:id="typesTile" onMouseClicked="#types" prefHeight="117.0" prefWidth="118.0"
                         styleClass="main-selection">
-                <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Types"
-                      textAlignment="CENTER" wrappingWidth="116.99999570846558" AnchorPane.bottomAnchor="7.0"
-                      AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
+                <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Transactions" textAlignment="CENTER" wrappingWidth="116.99999570846558"
+                      AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
                     <font>
-                        <Font name="Roboto Condensed Light" size="27.0"/>
+                        <Font name="Roboto Condensed Light" size="22.0"/>
                     </font>
                 </Text>
-                <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
+                <Text fill="#003b8e" layoutX="6.0" layoutY="-85.0" strokeType="OUTSIDE" strokeWidth="0.0" text=""
                       textAlignment="CENTER" wrappingWidth="117.99999978393316" AnchorPane.leftAnchor="0.0"
                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <font>
