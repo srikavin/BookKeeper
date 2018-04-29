@@ -61,10 +61,10 @@ public class FXInitializer extends Application {
 
         //Load the menu items separately from the main content
         FXMLLoader menuLoader = new FXMLLoader(FXInitializer.class.getResource("Menu.fxml"));
-        menuBar = menuLoader.load();
+        menuLoader.setController(new Menu(primaryStage));
         menuController = menuLoader.getController();
+        menuBar = menuLoader.load();
         menuController.initialize(this, library);
-        menuController.initialize(primaryStage);
 
         //Load the default content
         FXMLInfoHolder mainWindow = loadFile("MainWindow.fxml");
@@ -114,7 +114,7 @@ public class FXInitializer extends Application {
      *
      * @throws IOException If the path does not exist, an IOException may be thrown
      */
-    public void loadFile(Path path) throws IOException {
+    public void loadDataFile(Path path) throws IOException {
         this.library = new Library(path);
         this.preferenceManager = new PreferenceManager(path);
         setContent("MainWindow.fxml");

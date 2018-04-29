@@ -31,14 +31,17 @@ public class Menu extends BaseController {
      *
      * @param stage The main window stage
      */
-    public void initialize(Stage stage) {
-        //When the user tries to close the window, make sure they intended to not save any changes
+    public Menu(Stage stage) {
         stage.setOnCloseRequest(this::quit);
-        initializeData();
     }
 
-    @Override
-    public void initializeData() {
+    /**
+     * {@inheritDoc}
+     * Used to initialize default values to the existing preferences
+     */
+    public void initialize(FXInitializer initializer, Library library) {
+        super.initialize(initializer, library);
+        //When the user tries to close the window, make sure they intended to not save any changes
         super.initializeData();
         //Update use of animations when the option is toggled
         useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
@@ -95,7 +98,7 @@ public class Menu extends BaseController {
         unsavedChanges(() -> {
             try {
                 isTempData = false;
-                getInitializer().loadFile(path);
+                getInitializer().loadDataFile(path);
             } catch (IOException e) {
                 showError("opening the data file", e);
             }
@@ -148,7 +151,7 @@ public class Menu extends BaseController {
         unsavedChanges(() -> {
             try {
                 isTempData = true;
-                getInitializer().loadFile(null);
+                getInitializer().loadDataFile(null);
             } catch (IOException e) {
                 //Display an error message if an exception occurs when saving
                 showError("creating a new library", e);
@@ -210,7 +213,7 @@ public class Menu extends BaseController {
             isTempData = true;
             Path temp = Files.createTempDirectory("sampleData");
             Files.copy(getClass().getResourceAsStream("data.txt"), temp.resolve("data.txt"));
-            getInitializer().loadFile(temp);
+            getInitializer().loadDataFile(temp);
             initializeData();
         } catch (IOException e) {
             showError("loading sample data", e);
