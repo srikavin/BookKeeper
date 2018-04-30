@@ -153,6 +153,7 @@ public class MainWindow extends BaseController {
                 new KeyValue(container.translateYProperty(), 500),
                 new KeyValue(dateContainer.translateXProperty(), container.getWidth() + 5),
                 new KeyValue(header.translateXProperty(), 0),
+                new KeyValue(header.translateYProperty(), 0),
                 new KeyValue(headerBackground.scaleYProperty(), 47.0 / 90.0),
                 new KeyValue(headerBackground.translateYProperty(), -27),
                 new KeyValue(dateContainer.rotateProperty(), -3)));
@@ -160,7 +161,8 @@ public class MainWindow extends BaseController {
         //Run the animation
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(700),
                 "Animate Properties",
-                new KeyValue(container.translateYProperty(), 0, Interpolator.EASE_IN)));
+                new KeyValue(container.translateYProperty(), 0, Interpolator.EASE_IN),
+                new KeyValue(header.translateYProperty(), 0)));
 
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(1200), "Animate Date Container Position",
                 new KeyValue(dateContainer.translateXProperty(), 0, Interpolator.EASE_IN)));
@@ -169,7 +171,8 @@ public class MainWindow extends BaseController {
                 new KeyValue(dateContainer.rotateProperty(), 0, Interpolator.EASE_IN)));
 
         animateInTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(250), "Animate Header Container Rotation",
-                new KeyValue(header.translateXProperty(), 0, Interpolator.DISCRETE),
+                new KeyValue(header.translateXProperty(), 0),
+                new KeyValue(container.translateXProperty(), 0),
                 new KeyValue(headerBackground.scaleYProperty(), 1),
                 new KeyValue(headerBackground.translateYProperty(), 0)));
 

@@ -47,8 +47,6 @@ public abstract class BaseController {
     @FXML
     protected Pane rootPane;
     @FXML
-    private Pane headerBackground;
-    @FXML
     private Pane header;
     private FXInitializer initializer;
     private Library library;
@@ -82,13 +80,9 @@ public abstract class BaseController {
 
     /**
      * Returns to the main window.
-     * Any currently active spotlights will be disabled and the {@link SpotlightManager} will be cleared of all registered spotlights.
      */
     @FXML
     protected void goHome(Event event) {
-        if (spotlightManager != null) {
-            spotlightManager.disable();
-        }
         getInitializer().setContent("MainWindow.fxml");
     }
 
@@ -112,14 +106,14 @@ public abstract class BaseController {
         timeline.setCycleCount(1);
 
         //Set starting point of the animation - currently set to off-screen
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0),
-                callback,
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0), callback,
                 new KeyValue(container.opacityProperty(), 0),
                 new KeyValue(header.translateYProperty(), -150)));
 
         //Run the animation
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(450),
                 new KeyValue(container.opacityProperty(), 1, Interpolator.EASE_IN),
+                new KeyValue(container.translateYProperty(), 0),
                 new KeyValue(header.translateYProperty(), 0, Interpolator.EASE_IN)));
 
         //Start the animation

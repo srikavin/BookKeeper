@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The starting point for the JavaFX GUI. Initializes the JavaFX system and starts the program.
@@ -26,6 +28,7 @@ import java.time.format.DateTimeFormatter;
  * @author Srikavin Ramkumar
  */
 public class FXInitializer extends Application {
+    Map<String, FXMLInfoHolder> infoHolderMap = new HashMap<>();
     private Stage helpStage;
     private Stage primaryStage;
     private BorderPane borderPane = new BorderPane();
@@ -229,13 +232,15 @@ public class FXInitializer extends Application {
     }
 
     private void changeContent(Node content, BaseController controller) {
+        //Set the current controller to the new content's controller
+        this.currentController = controller;
+
         //Set the center of the pane to the content loaded
+        borderPane.setCenter(null);
         borderPane.setCenter(content);
         //Keep the menu on top
         borderPane.setTop(null);
         borderPane.setTop(menuBar);
-        //Set the current controller to the new content's controller
-        this.currentController = controller;
     }
 
     /**
@@ -248,12 +253,23 @@ public class FXInitializer extends Application {
      * @throws IOException If an error occurs when opening the file.
      */
     private FXMLInfoHolder loadFile(String fileName) throws IOException {
+        FXMLInfoHolder infoHolder;
         //Load only if it has not been previously loaded
-        FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fileName));
+        if (!infoHolderMap.containsKey(fileName) || fileName.equals("Patrons.fxml")) {
+            System.out.println("saving " + fileName);
+            FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fileName));
+            //load before getting controller
+            Parent parent = loader.load();
+            infoHolder = new FXMLInfoHolder(loader.getController(), parent);
+            infoHolderMap.put(fileName, infoHolder);
+        } else {
+            System.out.println("loading " + fileName);
+            infoHolder = infoHolderMap.get(fileName);
+        }
 
+        System.out.println("controller is :" + infoHolder.controller.getClass().getName() + "\n");
         //Save the loaded content into the caches
-        Parent loadedParent = loader.load();
-        return new FXMLInfoHolder(loader.getController(), loadedParent);
+        return infoHolder;
     }
 
     /**
