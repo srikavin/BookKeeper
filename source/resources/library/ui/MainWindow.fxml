@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="670.0"
-            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.141"
+            style="-fx-background-color: #f0f0f0;" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/8.0.111"
             fx:controller="library.ui.MainWindow">
 
     <AnchorPane fx:id="container" layoutX="-1.0" layoutY="96.0" prefHeight="301.0" prefWidth="624.0"
@@ -35,7 +35,7 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </AnchorPane>
-            <AnchorPane fx:id="typesTile" onMouseClicked="#types" prefHeight="117.0" prefWidth="118.0"
+            <AnchorPane fx:id="transactionsTile" onMouseClicked="#transactions" prefHeight="117.0" prefWidth="118.0"
                         styleClass="main-selection">
                 <Text fill="#003b8e" layoutX="1.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
                       text="Transactions" textAlignment="CENTER" wrappingWidth="116.99999570846558"

@@ -40,7 +40,7 @@ public class MainWindow extends BaseController {
     @FXML
     private Pane patronsTile;
     @FXML
-    private Pane typesTile;
+    private Pane transactionsTile;
     @FXML
     private Pane booksTile;
     @FXML
@@ -94,8 +94,8 @@ public class MainWindow extends BaseController {
      * @param event Mouse Event of the click triggering this event handler
      */
     @FXML
-    private void types(MouseEvent event) {
-        getInitializer().setContent("PatronTypes.fxml");
+    private void transactions(MouseEvent event) {
+        getInitializer().setContent("Transactions.fxml");
     }
 
     /**
@@ -114,7 +114,8 @@ public class MainWindow extends BaseController {
     @Override
     protected void registerSpotlightItems(SpotlightManager manager) {
         manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons. \nIt is possible to add, create, and delete patrons.");
-        manager.registerSpotlight(typesTile, "Patron Types", "View and manage all patron types. \n" +
+        //#TODO - Update the spotlight text for Transactions
+        manager.registerSpotlight(transactionsTile, "Transactions", "View and manage all patron types. \n" +
                 "It is possible to add, create, and delete patrons. " +
                 "Patron types can be applied to patrons to " +
                 "set book checkout limits and time limits.");

@@ -98,7 +98,7 @@ public class Books extends DataViewController<Book> {
     @Override
     protected Predicate<Book> getFilterPredicate(String filter) {
         return book -> book.getIdentifier().getId().toLowerCase().contains(filter)
-                || book.getTitle().contains(filter)
+                || book.getTitle().toLowerCase().contains(filter)
                 || book.getIsbn().toLowerCase().contains(filter)
                 || book.getAuthor().toLowerCase().contains(filter);
     }

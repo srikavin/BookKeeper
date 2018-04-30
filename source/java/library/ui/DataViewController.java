@@ -264,7 +264,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      * @param list The list to traverse to provide an identifier unique to it
      * @return An identifier unique to the given list
      */
-    private Identifier getNextIdentifier(List<? extends LibraryData> list) {
+    protected final Identifier getNextIdentifier(List<? extends LibraryData> list) {
         int cur = list.size() + 1;
         Identifier curId = new Identifier(cur);
         for (LibraryData e : list) {
