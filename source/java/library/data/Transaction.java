@@ -73,7 +73,7 @@ public class Transaction implements LibraryData {
         return timestamp;
     }
 
-    enum Action {
+    public enum Action {
         CHECKOUT,
         RETURN
     }

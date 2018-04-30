@@ -22,18 +22,17 @@ public class Library {
     private List<Patron> patrons = new ArrayList<>();
     private List<PatronType> patronTypes = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
     private ReportGenerator reportGenerator;
     /**
      * Used to identify when changes are made to this library that are not saved.
      */
     private boolean modified = false;
-
     /**
      * Creates a library object from the saved data in the provided file path. The file will be parsed and loaded into
      * this Library instance. Path can be null to create an in-memory library instance that will not be saved to disk.
      *
      * @param dataFilePath The file to load library data from; can be null to create an in-memory instance
-     *
      * @throws IOException If an error occurs while reading the file, an IOException will be thrown
      */
     public Library(Path dataFilePath) throws IOException {
@@ -86,6 +85,10 @@ public class Library {
                         Book book = new Book(data, this);
                         books.add(book);
                         break;
+                    case "Transactions":
+                        Transaction transaction = new Transaction(data, this);
+                        transactions.add(transaction);
+                        break;
                 }
             });
         } else {
@@ -99,6 +102,15 @@ public class Library {
         }
         //Create a report generator using this as its data source
         reportGenerator = new ReportGenerator(this);
+    }
+
+    /**
+     * Gets all the transaction stored in this library instance
+     *
+     * @return A list of all {@link Transaction}s in this library
+     */
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
     /**
@@ -143,7 +155,6 @@ public class Library {
      * Resolves a {@link PatronType} from a specified identifier
      *
      * @param id The identifier to resolve
-     *
      * @return The {@linkplain PatronType} object represented by the specified identifier or null, if not found
      */
     public PatronType getPatronTypeFromId(Identifier id) {
@@ -159,7 +170,6 @@ public class Library {
      * Resolves a {@link PatronType} from a specified name
      *
      * @param name Name of the PatronType
-     *
      * @return The {@linkplain PatronType} object represented by the specified name or null, if not found
      */
     public PatronType getPatronTypeFromName(String name) {
@@ -175,7 +185,6 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
-     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Patron getPatronFromID(Identifier identifier) {
@@ -191,7 +200,6 @@ public class Library {
      * Resolves a {@link Patron} from a specified Identifier
      *
      * @param identifier The identifier to resolve
-     *
      * @return The {@linkplain Patron} object represented by the specified identifier or null, if not found
      */
     public Book getBookFromID(Identifier identifier) {
@@ -208,7 +216,6 @@ public class Library {
      *
      * @param path   The path at which to store the file; Must be a directory. A file "data.txt" is created inside of this directory
      * @param suffix the suffix to add to the end of the saved file
-     *
      * @throws IOException If the file cannot be accessed or written to, an IOException will be thrown
      */
     public void saveTo(Path path, String suffix) throws IOException {
@@ -227,7 +234,6 @@ public class Library {
      * Saves this library to the specified data file path
      *
      * @param path The path at which to store the file; Must be a directory. A file "data.txt" is created inside of this directory
-     *
      * @throws IOException If the file cannot be accessed or written to, an IOException will be thrown
      */
 
@@ -239,6 +245,7 @@ public class Library {
         appendToWriter("TYPES", writer, patronTypes);
         appendToWriter("PATRONS", writer, patrons);
         appendToWriter("BOOKS", writer, books);
+        appendToWriter("TRANSACTIONS", writer, transactions);
     }
 
     private void appendToWriter(String dataType, Writer writer, List<? extends LibraryData> libraryObjects) throws IOException {

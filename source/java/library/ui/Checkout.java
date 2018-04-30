@@ -235,6 +235,13 @@ public class Checkout extends DataViewController<Book> {
     private void returnBook(ActionEvent event) {
         Book selected = getCurrentlySelected();
         if (selected != null) {
+            //Create and add transaction
+            List<Transaction> transactions = getLibrary().getTransactions();
+            Transaction transaction = new Transaction(getNextIdentifier(transactions), selected.getCurrentPatron(), selected,
+                    Transaction.Action.CHECKOUT, Instant.now());
+            transactions.add(transaction);
+
+            //Update table's data
             selected.setCurrentPatron(null);
             selected.setCheckOutDate(null);
             selected.setStatus(BookStatus.AVAILABLE);
@@ -285,9 +292,18 @@ public class Checkout extends DataViewController<Book> {
             }
         }
 
+        //Update book
         book.setCheckOutDate(Instant.now());
         book.setCurrentPatron(patron);
         book.setStatus(BookStatus.CHECKED_OUT);
+
+        List<Transaction> transactions = getLibrary().getTransactions();
+        //Create transaction
+        Transaction transaction = new Transaction(getNextIdentifier(transactions), patron, book,
+                Transaction.Action.CHECKOUT, Instant.now());
+        transactions.add(transaction);
+
+        //Update table
         updateTable();
         setCurrentState(book);
     }
