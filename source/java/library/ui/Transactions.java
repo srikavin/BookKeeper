@@ -2,6 +2,7 @@ package library.ui;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
@@ -12,7 +13,11 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import library.data.*;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Predicate;
 
 /**
@@ -20,6 +25,10 @@ import java.util.function.Predicate;
  * instance to update. Uses event-driven operations to maintain state abd update the model layer.
  */
 public class Transactions extends DataViewController<Transaction> {
+    private static final DateTimeFormatter formatter =
+            DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                    .withLocale(Locale.US)
+                    .withZone(ZoneId.systemDefault());
     public TextField identifier;
     public TextField patronIdentifier;
     public TextField bookIdentifier;
@@ -91,13 +100,15 @@ public class Transactions extends DataViewController<Transaction> {
         TableColumn<Transaction, String> nameColumn = new TableColumn<>("Patron Name");
         TableColumn<Transaction, String> bookNameColumn = new TableColumn<>("Book Title");
         TableColumn<Transaction, Transaction.Action> actionColumn = new TableColumn<>("Action");
-        TableColumn<Transaction, BookStatus> bookStatusColumn = new TableColumn<>("Book Status");
+        TableColumn<Transaction, BookStatus> bookStatusColumn = new TableColumn<>("Prior Book Status");
+        TableColumn<Transaction, String> timestampColumn = new TableColumn<>("Timestamp");
 
         idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier()));
         nameColumn.setCellValueFactory((value) -> Bindings.concat(value.getValue().getChangedPatron().getFirstName(), " ", value.getValue().getChangedPatron().getLastName()));
         bookNameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getTitle()));
         actionColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAction()));
         bookStatusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getStatus()));
+        timestampColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(formatter.format(value.getValue().getTimestamp())));
         //Set columns
         columns.addAll(idColumn, nameColumn, bookNameColumn, actionColumn, bookStatusColumn);
     }
@@ -116,6 +127,7 @@ public class Transactions extends DataViewController<Transaction> {
         bookAuthor.setText(changedBook.getAuthor());
         bookStatus.setValue(changedBook.getStatus());
         patronName.setText(changedPatron.getFirstName() + " " + changedPatron.getLastName());
+        timestamp.setText(formatter.format(current.getTimestamp()));
     }
 
     /**

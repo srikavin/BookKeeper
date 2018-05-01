@@ -32,6 +32,12 @@ public class Transaction implements LibraryData {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Creates a transaction instance from the given data
+     *
+     * @param data
+     * @param library
+     */
     public Transaction(String[] data, Library library) {
         if (data.length != 5) {
             throw new RuntimeException("Invalid data array passed to create a Transaction object.");
@@ -43,6 +49,9 @@ public class Transaction implements LibraryData {
         timestamp = Instant.parse(data[4]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] asData() {
         return new String[]{identifier.getId(),
@@ -73,8 +82,18 @@ public class Transaction implements LibraryData {
         return timestamp;
     }
 
+    /**
+     * An enum containing all possible actions that a transaction can do.
+     * This includes checking out and returning books.
+     */
     public enum Action {
+        /**
+         * Indicates that a book was checked out
+         */
         CHECKOUT,
+        /**
+         * Indicates that a book was returned
+         */
         RETURN
     }
 }
