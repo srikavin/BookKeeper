@@ -110,7 +110,7 @@ public class Transactions extends DataViewController<Transaction> {
         bookStatusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getStatus()));
         timestampColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(formatter.format(value.getValue().getTimestamp())));
         //Set columns
-        columns.addAll(idColumn, nameColumn, bookNameColumn, actionColumn, bookStatusColumn);
+        columns.addAll(idColumn, nameColumn, bookNameColumn, actionColumn, bookStatusColumn, timestampColumn);
     }
 
     /**
