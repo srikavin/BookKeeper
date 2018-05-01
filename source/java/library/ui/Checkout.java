@@ -238,7 +238,7 @@ public class Checkout extends DataViewController<Book> {
             //Create and add transaction
             List<Transaction> transactions = getLibrary().getTransactions();
             Transaction transaction = new Transaction(getNextIdentifier(transactions), selected.getCurrentPatron(), selected,
-                    Transaction.Action.CHECKOUT, Instant.now());
+                    Transaction.Action.RETURN, Instant.now());
             transactions.add(transaction);
 
             //Update table's data
