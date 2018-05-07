@@ -22,30 +22,57 @@ import java.util.Locale;
 import java.util.function.Predicate;
 
 /**
- * The UI View for Transactions. Implements {@link DataViewController}. Holds a {@link Patron} and a {@link Book}
+ * The UI View for {@link Transaction}s. Implements {@link DataViewController}. Holds a {@link Patron} and a {@link Book}
  * instance to update. Uses event-driven operations to maintain state abd update the model layer.
  */
 public class Transactions extends DataViewController<Transaction> {
+    /**
+     * The DateTimeFormatter used to format the {@link java.time.Instant}'s stored in Transactions
+     */
     private static final DateTimeFormatter formatter =
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
                     .withLocale(Locale.US)
                     .withZone(ZoneId.systemDefault());
+    /**
+     * The TextField that stores the identifier of the Transaction
+     */
     @FXML
     private TextField identifier;
-    @FXML
-    private TextField patronIdentifier;
-    @FXML
-    private TextField bookIdentifier;
-    @FXML
-    private TextField patronName;
+    /**
+     * The TextField that stores the string representation of the stored timestamp in the current Transaction
+     */
     @FXML
     private TextField timestamp;
+    /**
+     * The TextField that stores the identifier of the {@link Patron} stored in the current Transaction
+     */
     @FXML
-    private ChoiceBox<BookStatus> bookStatus;
+    private TextField patronIdentifier;
+    /**
+     * The TextField that stores the name of the {@link Patron} stored in the current Transaction
+     */
     @FXML
-    private TextField bookAuthor;
+    private TextField patronName;
+    /**
+     * The TextField that stores the identifier of the {@link Book} stored in the current Transaction
+     */
+    @FXML
+    private TextField bookIdentifier;
+    /**
+     * The TextField that stores the title of the {@link Book} stored in the current Transaction
+     */
     @FXML
     private TextField bookTitle;
+    /**
+     * The TextField that stores the author of the {@link Book} stored in the current Transaction
+     */
+    @FXML
+    private TextField bookAuthor;
+    /**
+     * The ChoiceBox (selection menu) that stores the {@link BookStatus} of the stored Book in  the current Transaction
+     */
+    @FXML
+    private ChoiceBox<BookStatus> bookStatus;
 
     /**
      * {@inheritDoc}
@@ -92,6 +119,8 @@ public class Transactions extends DataViewController<Transaction> {
 
     /**
      * {@inheritDoc}
+     *
+     * Always returns false, as transactions cannot be created manually
      */
     @Override
     protected boolean validate() {
@@ -103,8 +132,10 @@ public class Transactions extends DataViewController<Transaction> {
      */
     @Override
     protected void setupColumns(TableView<Transaction> table) {
-        //Create Columns
+        //Get the list of columns on the table
         ObservableList<TableColumn<Transaction, ?>> columns = table.getColumns();
+
+        //Create columns with appropriate titles
         TableColumn<Transaction, Identifier> idColumn = new TableColumn<>("ID");
         TableColumn<Transaction, String> nameColumn = new TableColumn<>("Patron Name");
         TableColumn<Transaction, String> bookNameColumn = new TableColumn<>("Book Title");
@@ -112,13 +143,15 @@ public class Transactions extends DataViewController<Transaction> {
         TableColumn<Transaction, BookStatus> bookStatusColumn = new TableColumn<>("Prior Book Status");
         TableColumn<Transaction, String> timestampColumn = new TableColumn<>("Timestamp");
 
+        //Set the value generation scheme for each column
         idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier()));
         nameColumn.setCellValueFactory((value) -> Bindings.concat(value.getValue().getChangedPatron().getFirstName(), " ", value.getValue().getChangedPatron().getLastName()));
         bookNameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getTitle()));
         actionColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAction()));
         bookStatusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getStatus()));
         timestampColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(formatter.format(value.getValue().getTimestamp())));
-        //Set columns
+
+        //Add columns to the table
         columns.addAll(idColumn, nameColumn, bookNameColumn, actionColumn, bookStatusColumn, timestampColumn);
     }
 
