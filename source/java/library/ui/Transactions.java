@@ -5,6 +5,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,14 +30,22 @@ public class Transactions extends DataViewController<Transaction> {
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
                     .withLocale(Locale.US)
                     .withZone(ZoneId.systemDefault());
-    public TextField identifier;
-    public TextField patronIdentifier;
-    public TextField bookIdentifier;
-    public TextField patronName;
-    public TextField timestamp;
-    public ChoiceBox<BookStatus> bookStatus;
-    public TextField bookAuthor;
-    public TextField bookTitle;
+    @FXML
+    private TextField identifier;
+    @FXML
+    private TextField patronIdentifier;
+    @FXML
+    private TextField bookIdentifier;
+    @FXML
+    private TextField patronName;
+    @FXML
+    private TextField timestamp;
+    @FXML
+    private ChoiceBox<BookStatus> bookStatus;
+    @FXML
+    private TextField bookAuthor;
+    @FXML
+    private TextField bookTitle;
 
     /**
      * {@inheritDoc}
