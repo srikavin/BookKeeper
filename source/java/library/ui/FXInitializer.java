@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Srikavin Ramkumar
  */
 public class FXInitializer extends Application {
-    Map<String, FXMLInfoHolder> infoHolderMap = new HashMap<>();
+    private Map<String, FXMLInfoHolder> infoHolderMap = new HashMap<>();
     private Stage helpStage;
     private Stage primaryStage;
     private BorderPane borderPane = new BorderPane();
@@ -148,7 +148,7 @@ public class FXInitializer extends Application {
         preferenceManager.saveTo(path);
     }
 
-    public Node loadNode(String fxFile, Object controllerInstance) {
+    public Parent loadNode(String fxFile, Object controllerInstance) {
         try {
             FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fxFile));
             loader.setController(controllerInstance);
@@ -168,16 +168,10 @@ public class FXInitializer extends Application {
      * @return The stage the fx file was loaded on to
      */
     public <T> Stage getDialog(String fxFile, T controllerInstance) {
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fxFile));
-            loader.setController(controllerInstance);
-            Parent root = loader.load();
-            stage.setScene(new Scene(root));
-            return stage;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Stage stage = new Stage();
+        Parent root = loadNode(fxFile, controllerInstance);
+        stage.setScene(new Scene(root));
+        return stage;
     }
 
     /**
@@ -299,9 +293,21 @@ public class FXInitializer extends Application {
      * This class holds the controller and root element of a loaded JavaFX file.
      */
     private static class FXMLInfoHolder {
+        /**
+         * The controller of {@link #parent} stored in this instance
+         */
         BaseController controller;
+        /**
+         * The root node of the loaded .fxml file
+         */
         Parent parent;
 
+        /**
+         * Creates an instance of a cache object for any given loaded node
+         *
+         * @param controller The controller of the root node given
+         * @param parent     The root node to store
+         */
         FXMLInfoHolder(BaseController controller, Parent parent) {
             this.controller = controller;
             this.parent = parent;
