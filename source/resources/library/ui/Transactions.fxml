@@ -123,20 +123,16 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
-                <children>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transaction ID" textAlignment="RIGHT"/>
-                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                        <children>
-                            <TextField fx:id="identifier" editable="false" focusTraversable="false" opacity="0.79"
-                                       promptText="Transaction ID" AnchorPane.leftAnchor="-3.0"
-                                       AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.0">
-                                <cursor>
-                                    <Cursor fx:constant="DEFAULT"/>
-                                </cursor>
-                            </TextField>
-                        </children>
-                    </AnchorPane>
-                </children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transaction ID" textAlignment="RIGHT"/>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                    <TextField fx:id="identifier" editable="false" focusTraversable="false" opacity="0.79"
+                               promptText="Transaction ID" AnchorPane.leftAnchor="-3.0"
+                               AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.0">
+                        <cursor>
+                            <Cursor fx:constant="DEFAULT"/>
+                        </cursor>
+                    </TextField>
+                </AnchorPane>
             </GridPane>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0"
                       prefWidth="262.0" GridPane.rowIndex="1">
@@ -147,20 +143,16 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
-                <children>
-                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                        <children>
-                            <TextField fx:id="patronIdentifier" editable="false" focusTraversable="false" opacity="0.79"
-                                       promptText="Patron ID" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="8.0"
-                                       AnchorPane.topAnchor="2.0">
-                                <cursor>
-                                    <Cursor fx:constant="DEFAULT"/>
-                                </cursor>
-                            </TextField>
-                        </children>
-                    </AnchorPane>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patron ID"/>
-                </children>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                    <TextField fx:id="patronIdentifier" editable="false" focusTraversable="false" opacity="0.79"
+                               promptText="Patron ID" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="8.0"
+                               AnchorPane.topAnchor="2.0">
+                        <cursor>
+                            <Cursor fx:constant="DEFAULT"/>
+                        </cursor>
+                    </TextField>
+                </AnchorPane>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patron ID"/>
             </GridPane>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0"
                       prefWidth="262.0" GridPane.rowIndex="2">
@@ -171,20 +163,16 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
-                <children>
-                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                        <children>
-                            <TextField fx:id="bookIdentifier" editable="false" focusTraversable="false" opacity="0.79"
-                                       promptText="Book ID" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="8.0"
-                                       AnchorPane.topAnchor="2.0">
-                                <cursor>
-                                    <Cursor fx:constant="DEFAULT"/>
-                                </cursor>
-                            </TextField>
-                        </children>
-                    </AnchorPane>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Book ID" textAlignment="RIGHT"/>
-                </children>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                    <TextField fx:id="bookIdentifier" editable="false" focusTraversable="false" opacity="0.79"
+                               promptText="Book ID" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="8.0"
+                               AnchorPane.topAnchor="2.0">
+                        <cursor>
+                            <Cursor fx:constant="DEFAULT"/>
+                        </cursor>
+                    </TextField>
+                </AnchorPane>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Book ID" textAlignment="RIGHT"/>
             </GridPane>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0"
                       prefWidth="262.0" GridPane.rowIndex="3">
@@ -195,20 +183,16 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
-                <children>
-                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                        <children>
-                            <TextField fx:id="timestamp" editable="false" focusTraversable="false" opacity="0.79"
-                                       promptText="Timestamp" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="8.0"
-                                       AnchorPane.topAnchor="2.0">
-                                <cursor>
-                                    <Cursor fx:constant="DEFAULT"/>
-                                </cursor>
-                            </TextField>
-                        </children>
-                    </AnchorPane>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Timestamp" textAlignment="RIGHT"/>
-                </children>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                    <TextField fx:id="timestamp" editable="false" focusTraversable="false" opacity="0.79"
+                               promptText="Timestamp" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="8.0"
+                               AnchorPane.topAnchor="2.0">
+                        <cursor>
+                            <Cursor fx:constant="DEFAULT"/>
+                        </cursor>
+                    </TextField>
+                </AnchorPane>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Timestamp" textAlignment="RIGHT"/>
             </GridPane>
         </GridPane>
         <TableView fx:id="table" editable="true" maxHeight="1.7976931348623157E308" prefHeight="241.0" prefWidth="600.0"
@@ -219,7 +203,7 @@
             </columnResizePolicy>
         </TableView>
     </AnchorPane>
-    <AnchorPane fx:id="headerBackground" layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
+    <AnchorPane layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
                 style="-fx-background-color: #1564bf;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="header" prefHeight="39.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0"
