@@ -33,10 +33,6 @@ public class Reports extends BaseController {
     @FXML
     private TextArea reportView;
     @FXML
-    private RadioButton checkedOutItems;
-    @FXML
-    private RadioButton overDueItems;
-    @FXML
     private RadioButton itemSort;
     @FXML
     private RadioButton patronSort;

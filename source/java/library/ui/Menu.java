@@ -23,7 +23,8 @@ import java.util.Optional;
  * File, Preferences, and Help
  */
 public class Menu extends BaseController {
-    public CheckMenuItem useAnimations;
+    @FXML
+    private CheckMenuItem useAnimations;
     private boolean isTempData = true;
 
     /**

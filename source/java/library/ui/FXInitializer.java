@@ -236,7 +236,6 @@ public class FXInitializer extends Application {
         this.currentController = controller;
 
         //Set the center of the pane to the content loaded
-        borderPane.setCenter(null);
         borderPane.setCenter(content);
         //Keep the menu on top
         borderPane.setTop(null);

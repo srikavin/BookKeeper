@@ -3,7 +3,6 @@ package library.ui;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -19,8 +18,6 @@ import java.util.Map;
  * the list view and the web view. Includes implementation for comments with '#' as the first character in the line.
  */
 public class Help extends BaseController {
-    @FXML
-    private Label help;
     @FXML
     private ListView<String> helpList;
     @FXML

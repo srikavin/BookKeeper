@@ -24,13 +24,20 @@ import java.util.function.Predicate;
  * instance to update. Uses event-driven operations to maintain state abd update the model layer.
  */
 public class Checkout extends DataViewController<Book> {
-    public TextField patronName;
-    public Text booksCheckedOut;
-    public ChoiceBox<BookStatus> bookStatus;
-    public TextField bookAuthor;
-    public TextField bookTitle;
-    public TextField currentBook;
-    public TextField currentPatron;
+    @FXML
+    private TextField patronName;
+    @FXML
+    private Text booksCheckedOut;
+    @FXML
+    private ChoiceBox<BookStatus> bookStatus;
+    @FXML
+    private TextField bookAuthor;
+    @FXML
+    private TextField bookTitle;
+    @FXML
+    private TextField currentBook;
+    @FXML
+    private TextField currentPatron;
     @FXML
     private Button checkoutButton;
     @FXML
