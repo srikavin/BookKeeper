@@ -45,8 +45,11 @@ public class Menu extends BaseController {
         //When the user tries to close the window, make sure they intended to not save any changes
         super.initializeData();
         //Update use of animations when the option is toggled
-        useAnimations.selectedProperty().addListener((observable, oldValue, newValue) ->
-                getInitializer().getPreferenceManager().setValue("use_transitions", newValue));
+        useAnimations.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            getInitializer().getPreferenceManager().setValue("use_transitions", newValue);
+            //clear loaded cache to prevent blank screens from showing
+            getInitializer().resetCache();
+        });
         useAnimations.setSelected(getInitializer().getPreferenceManager()
                 .getValueAsBoolean("use_transitions", true));
     }

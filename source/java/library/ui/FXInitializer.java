@@ -125,6 +125,14 @@ public class FXInitializer extends Application {
         dataFilePath = path;
     }
 
+    /**
+     * Used to reset the loaded node cache
+     * Should be called when animations are changed
+     */
+    public void resetCache() {
+        infoHolderMap.clear();
+    }
+
     public void saveDataFile() throws IOException {
         saveDataFileTo(dataFilePath);
     }
