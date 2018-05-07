@@ -16,7 +16,7 @@
                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                            AnchorPane.topAnchor="0.0">
                     <AnchorPane maxWidth="-Infinity" prefHeight="160.0" prefWidth="250.0">
-                        <RadioButton fx:id="checkedOutItems" layoutX="14.0" layoutY="33.0" mnemonicParsing="false"
+                        <RadioButton layoutX="14.0" layoutY="33.0" mnemonicParsing="false"
                                      onAction="#checkoutView" selected="true" text="Checked Out Books"
                                      AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="30.0">
                             <toggleGroup>
@@ -29,10 +29,10 @@
                                 <Font name="System Bold" size="12.0"/>
                             </font>
                         </Text>
-                        <RadioButton fx:id="overDueItems" layoutX="14.0" layoutY="57.0" mnemonicParsing="false"
+                        <RadioButton layoutX="14.0" layoutY="57.0" mnemonicParsing="false"
                                      onAction="#viewOverdueItems" text="Overdue Books" toggleGroup="$view"
                                      AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="55.0"/>
-                        <RadioButton fx:id="fines" layoutX="14.0" layoutY="81.0" mnemonicParsing="false"
+                        <RadioButton layoutX="14.0" layoutY="81.0" mnemonicParsing="false"
                                      onAction="#viewFines" text="Fines" toggleGroup="$view"
                                      AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="80.0"/>
                         <RadioButton fx:id="patronSort" layoutX="14.0" layoutY="136.0" mnemonicParsing="false"
@@ -115,7 +115,7 @@
             </AnchorPane>
         </Tab>
     </TabPane>
-    <AnchorPane fx:id="headerBackground" layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
+    <AnchorPane layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
                 style="-fx-background-color: #1564bf;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="header" prefHeight="39.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0"

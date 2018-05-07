@@ -120,7 +120,7 @@
                         text="New Patron Type" AnchorPane.leftAnchor="14.0"/>
             </AnchorPane>
         </AnchorPane>
-    <AnchorPane fx:id="headerBackground" layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
+    <AnchorPane layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
                 style="-fx-background-color: #1564bf;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="header" prefHeight="39.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0"

@@ -37,3 +37,9 @@
     -fx-fill: #c7c7c7;
     -fx-text-fill: #c7c7c7;
 }
+
+.link {
+    -fx-text-fill: #0000ee;
+    -fx-fill: #0000ee;
+    -fx-cursor: hand;
+}

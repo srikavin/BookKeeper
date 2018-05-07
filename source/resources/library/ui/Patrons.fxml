@@ -48,13 +48,13 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
-                <Text fill="#0000ee" onMouseClicked="#onPatronTypes" strokeType="OUTSIDE" strokeWidth="0.0"
+                <Text onMouseClicked="#onPatronTypes" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="link"
                       text="Patron Type" textAlignment="RIGHT" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                     <GridPane.margin>
                         <Insets left="7.0"/>
                     </GridPane.margin>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="DEFAULT"/>
                     </cursor>
                 </Text>
                 <ChoiceBox fx:id="patronTypes" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0"
@@ -123,9 +123,8 @@
                     text="New Patron" AnchorPane.leftAnchor="14.0"/>
         </AnchorPane>
     </AnchorPane>
-    <AnchorPane fx:id="headerBackground" layoutY="-1.0" prefHeight="48.0" prefWidth="600.0"
-                style="-fx-background-color: #1564bf;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                AnchorPane.topAnchor="0.0">
+    <AnchorPane layoutY="-1.0" prefHeight="48.0" prefWidth="600.0" style="-fx-background-color: #1564bf;"
+                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="header" prefHeight="39.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
             <Label onMouseClicked="#onSpotlightHelp" styleClass="selectable" text="" textFill="WHITE"
