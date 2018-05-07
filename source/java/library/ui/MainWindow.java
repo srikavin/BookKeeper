@@ -9,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -28,11 +27,7 @@ public class MainWindow extends BaseController {
     @FXML
     private Pane container;
     @FXML
-    private Pane rootPane;
-    @FXML
     private Pane header;
-    @FXML
-    private TilePane tiles;
     @FXML
     private Pane dateContainer;
     @FXML

@@ -254,20 +254,17 @@ public class FXInitializer extends Application {
      */
     private FXMLInfoHolder loadFile(String fileName) throws IOException {
         FXMLInfoHolder infoHolder;
-        //Load only if it has not been previously loaded
-        if (!infoHolderMap.containsKey(fileName) || fileName.equals("Patrons.fxml")) {
-            System.out.println("saving " + fileName);
+        //Load only if it has not been previously loaded and always reload the MainWindow from disk
+        if (!infoHolderMap.containsKey(fileName) || fileName.equals("MainWindow.fxml")) {
             FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fileName));
             //load before getting controller
             Parent parent = loader.load();
             infoHolder = new FXMLInfoHolder(loader.getController(), parent);
             infoHolderMap.put(fileName, infoHolder);
         } else {
-            System.out.println("loading " + fileName);
             infoHolder = infoHolderMap.get(fileName);
         }
 
-        System.out.println("controller is :" + infoHolder.controller.getClass().getName() + "\n");
         //Save the loaded content into the caches
         return infoHolder;
     }
