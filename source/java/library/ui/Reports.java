@@ -55,6 +55,8 @@ public class Reports extends BaseController {
                 break;
             case FINES:
                 reportView.setText(reportGenerator.getFines());
+                reportGenerator.setFineRate(fineRate.getValue());
+                reportGenerator.setFineLimit(fineLimit.getValue());
                 sortByItem = false;
                 itemSort.setSelected(false);
                 itemSort.setDisable(true);
