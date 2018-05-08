@@ -57,7 +57,7 @@ public class Transaction implements LibraryData {
         return new String[]{identifier.getId(),
                 changedPatron.getIdentifier().getId(),
                 changedBook.getIdentifier().getId(),
-                Action.CHECKOUT.name(),
+                action.name(),
                 timestamp.toString()};
     }
 
