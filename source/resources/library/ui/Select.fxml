@@ -49,14 +49,15 @@
             </HBox.margin>
         </HBox>
         <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS"/>
-        <Button cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#cancel" text="Cancel"
+        <Button cancelButton="true" minWidth="80.0" mnemonicParsing="false" fx:id="cancelButton" onAction="#cancel"
+                text="Cancel"
                 HBox.hgrow="NEVER">
             <HBox.margin>
                 <Insets/>
             </HBox.margin>
         </Button>
         <HBox alignment="CENTER">
-            <Button minWidth="80.0" mnemonicParsing="false" onAction="#select" text="Select" HBox.hgrow="NEVER">
+            <Button minWidth="80.0" mnemonicParsing="false" fx:id="selectButton" text="Select" HBox.hgrow="NEVER">
                 <HBox.margin>
                     <Insets left="14.0"/>
                 </HBox.margin>

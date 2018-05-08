@@ -85,7 +85,7 @@ public class Library {
                         Book book = new Book(data, this);
                         books.add(book);
                         break;
-                    case "Transactions":
+                    case "TRANSACTIONS":
                         Transaction transaction = new Transaction(data, this);
                         transactions.add(transaction);
                         break;

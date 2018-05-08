@@ -4,16 +4,14 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import library.data.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +24,8 @@ import java.util.function.Predicate;
  * @author Srikavin Ramkumar
  */
 public class Books extends DataViewController<Book> {
+    @FXML
+    private Label currentCopies;
     @FXML
     private ChoiceBox<BookStatus> status;
     @FXML
@@ -220,6 +220,32 @@ public class Books extends DataViewController<Book> {
         stage.showAndWait();
     }
 
+    @FXML
+    private void viewCopies(MouseEvent mouseEvent) {
+        Book current = getCurrentlySelected();
+        if (current == null) {
+            return;
+        }
+
+        List<Book> copies = findCopies(current);
+        Select.BookView bookView = new Select.BookView("All Copies of " + current.getTitle());
+        Stage stage = getInitializer().getDialog("Select.fxml", bookView);
+        bookView.init(copies, stage);
+        stage.showAndWait();
+    }
+
+    private List<Book> findCopies(Book toFind) {
+        List<Book> toRet = new ArrayList<>();
+        List<Book> books = getDataSource();
+        for (Book e : books) {
+            if (e.getAuthor().equals(toFind.getAuthor()) && e.getTitle().equals(toFind.getTitle())
+                    && e.getIsbn().equals(toFind.getIsbn())) {
+                toRet.add(e);
+            }
+        }
+        return toRet;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -227,5 +253,13 @@ public class Books extends DataViewController<Book> {
     public void initializeData() {
         super.initializeData();
         status.getItems().setAll(BookStatus.values());
+        currentCopies.setText("");
+        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                currentCopies.setText("");
+            } else {
+                currentCopies.setText(findCopies(newValue).size() + " Copies Found");
+            }
+        });
     }
 }
