@@ -166,6 +166,7 @@ public class Transactions extends DataViewController<Transaction> {
         identifier.setText(current.getIdentifier().getId());
         patronIdentifier.setText(changedPatron.getIdentifier().getId());
         bookIdentifier.setText(changedBook.getIdentifier().getId());
+        bookTitle.setText(changedBook.getTitle());
         bookAuthor.setText(changedBook.getAuthor());
         bookStatus.setValue(changedBook.getStatus());
         patronName.setText(changedPatron.getFirstName() + " " + changedPatron.getLastName());
