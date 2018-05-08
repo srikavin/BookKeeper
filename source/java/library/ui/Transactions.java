@@ -140,7 +140,6 @@ public class Transactions extends DataViewController<Transaction> {
         TableColumn<Transaction, String> nameColumn = new TableColumn<>("Patron Name");
         TableColumn<Transaction, String> bookNameColumn = new TableColumn<>("Book Title");
         TableColumn<Transaction, Transaction.Action> actionColumn = new TableColumn<>("Action");
-        TableColumn<Transaction, BookStatus> bookStatusColumn = new TableColumn<>("Prior Book Status");
         TableColumn<Transaction, String> timestampColumn = new TableColumn<>("Timestamp");
 
         //Set the value generation scheme for each column
@@ -148,11 +147,10 @@ public class Transactions extends DataViewController<Transaction> {
         nameColumn.setCellValueFactory((value) -> Bindings.concat(value.getValue().getChangedPatron().getFirstName(), " ", value.getValue().getChangedPatron().getLastName()));
         bookNameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getTitle()));
         actionColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAction()));
-        bookStatusColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getStatus()));
         timestampColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(formatter.format(value.getValue().getTimestamp())));
 
         //Add columns to the table
-        columns.addAll(idColumn, nameColumn, bookNameColumn, actionColumn, bookStatusColumn, timestampColumn);
+        columns.addAll(idColumn, nameColumn, bookNameColumn, actionColumn, timestampColumn);
     }
 
     /**
