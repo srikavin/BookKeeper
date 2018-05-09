@@ -48,12 +48,12 @@ public class FXInitializer extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Load all fonts before initializing the program
+        loadFonts();
+
         this.primaryStage = primaryStage;
         library = new Library(null);
         preferenceManager = new PreferenceManager();
-
-        //Load all fonts before initializing the program
-        loadFonts();
 
         //Add app icons
         ObservableList<Image> icons = primaryStage.getIcons();
@@ -186,11 +186,12 @@ public class FXInitializer extends Application {
      * Load all fonts needed to load the application
      */
     private void loadFonts() {
-        Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto-Light.ttf"), 10);
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/MaterialIcons-Regular.ttf"), 10);
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto-Bold.ttf"), 10);
+        Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto-Light.ttf"), 10);
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/Roboto_Condensed_Regular.ttf"), 10);
         Font.loadFont(FXInitializer.class.getResourceAsStream("font/RobotoCondensed-Bold.ttf"), 10);
+        Font.loadFont(FXInitializer.class.getResourceAsStream("font/RobotoCondensed-Light.ttf"), 10);
     }
 
     /**
