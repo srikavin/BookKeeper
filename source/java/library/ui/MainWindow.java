@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * The controller for the MainWindow view. Includes links to other controllers and uses an event-driven design to
  * maintain performance and code designs.
+ * @author Srikavin Ramkumar
  */
 public class MainWindow extends BaseController {
     @FXML

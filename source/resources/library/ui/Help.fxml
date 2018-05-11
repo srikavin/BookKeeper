@@ -21,7 +21,7 @@
                 <WebView fx:id="helpWebView" maxHeight="-1.0" maxWidth="-1.0" prefHeight="589.0" prefWidth="446.0"
                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                          AnchorPane.topAnchor="0.0"/>
-                <Label fx:id="help" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="551.0" prefHeight="27.0"
+                <Label alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="551.0" prefHeight="27.0"
                        prefWidth="91.0" style="&#10;" text="Help" AnchorPane.rightAnchor="14.0"
                        AnchorPane.topAnchor="0.0">
                     <font>

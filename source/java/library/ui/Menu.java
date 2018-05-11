@@ -21,6 +21,7 @@ import java.util.Optional;
  * Implements the controller for the FileMenu. This controller is responsible for delegating calls to the
  * {@link FXInitializer} and the {@link Library} object. Handles all of the operations within the file menu, including
  * File, Preferences, and Help
+ * @author Srikavin Ramkumar
  */
 public class Menu extends BaseController {
     @FXML

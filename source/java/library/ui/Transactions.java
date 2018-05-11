@@ -24,6 +24,8 @@ import java.util.function.Predicate;
 /**
  * The UI View for {@link Transaction}s. Implements {@link DataViewController}. Holds a {@link Patron} and a {@link Book}
  * instance to update. Uses event-driven operations to maintain state abd update the model layer.
+ *
+ * @author Srikavin Ramkumar
  */
 public class Transactions extends DataViewController<Transaction> {
     /**
@@ -119,7 +121,7 @@ public class Transactions extends DataViewController<Transaction> {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Always returns false, as transactions cannot be created manually
      */
     @Override

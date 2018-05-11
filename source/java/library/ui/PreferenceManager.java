@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * Contains, reads, and writes preference data. Used to manage saved preferences, set the values of preferences,
  * and retrieve saved preference values.
+ * @author Srikavin Ramkumar
  */
 public class PreferenceManager {
     /**
@@ -46,6 +47,7 @@ public class PreferenceManager {
     /**
      * Creates a empty preference manager. Should be called when no existing preferences exist or a new library is
      * created.
+     * @throws IOException If the preferences file is unable to be created, an IOException is thrown
      */
     public PreferenceManager() throws IOException {
         //empty constructor; used when no existing preferences exist

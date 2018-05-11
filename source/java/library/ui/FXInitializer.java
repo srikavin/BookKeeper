@@ -173,6 +173,14 @@ public class FXInitializer extends Application {
         preferenceManager.saveTo(path);
     }
 
+    /**
+     * Loads a node from a JavaFX file and returns it. Also assigns the given controller to the loaded node.
+     *
+     * @param fxFile             The fx file to load
+     * @param controllerInstance The controller to set on to the loaded fx file
+     *
+     * @return The root node loaded form the fx file
+     */
     public Parent loadNode(String fxFile, Object controllerInstance) {
         try {
             FXMLLoader loader = new FXMLLoader(FXInitializer.class.getResource(fxFile));
@@ -184,7 +192,7 @@ public class FXInitializer extends Application {
     }
 
     /**
-     * Load a JavaFX file and return the stage it is on
+     * Load a JavaFX file and return the stage it is on. Also assigns the given controller to the loaded node.
      *
      * @param fxFile             The fx file to load
      * @param controllerInstance The controller to set on the loaded fx file
@@ -311,6 +319,11 @@ public class FXInitializer extends Application {
         return primaryStage;
     }
 
+    /**
+     * Getter for the preference manager. It contains preferences for common settings and actions.
+     *
+     * @return An instance of a {@linkplain PreferenceManager}.
+     */
     public PreferenceManager getPreferenceManager() {
         return preferenceManager;
     }

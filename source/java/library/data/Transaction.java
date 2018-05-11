@@ -6,6 +6,8 @@ import java.time.Instant;
  * Used to store all transactions that take place in a library instance.
  * Stores the affected patron, affected book, the action that took place, and a timestamp of when it occurred.
  * This object is identified by an {@link Identifier}.
+ *
+ * @author Srikavin Ramkumar
  */
 public class Transaction implements LibraryData {
     private final Identifier identifier;
@@ -35,8 +37,8 @@ public class Transaction implements LibraryData {
     /**
      * Creates a transaction instance from the given data
      *
-     * @param data
-     * @param library
+     * @param data    The data object returned from {@link #asData()}
+     * @param library The library to resolve references to {@link Patron}s and {@link Book}s
      */
     public Transaction(String[] data, Library library) {
         if (data.length != 5) {
@@ -61,23 +63,43 @@ public class Transaction implements LibraryData {
                 timestamp.toString()};
     }
 
+    /**
+     * Getter for the action performed by this transaction
+     *
+     * @return The action the took place during this transaction
+     */
     public Action getAction() {
         return action;
     }
 
+    /**
+     * Getter for the book affected by this transaction
+     * @return The book affected by this transaction
+     */
     public Book getChangedBook() {
         return changedBook;
     }
 
+    /**
+     * Getter for the patron affected by this transaction
+     * @return The patron affected by this transaction
+     */
     public Patron getChangedPatron() {
         return changedPatron;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Identifier getIdentifier() {
         return identifier;
     }
 
+    /**
+     * Getter for the {@link Instant} that this transaction took place
+     * @return An {@linkplain Instant} containing the date and time this transaction occurred
+     */
     public Instant getTimestamp() {
         return timestamp;
     }

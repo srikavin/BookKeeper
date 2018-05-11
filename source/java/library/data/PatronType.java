@@ -3,6 +3,7 @@ package library.data;
 /**
  * Can be applied to {@link Patron}s to set checkout days and checkout limits. The same PatronType can be applied to
  * multiple Patrons. This object contains a checkout time limit, checkout day limit, a name, and an {@link Identifier}.
+ * @author Srikavin Ramkumar
  */
 public class PatronType implements LibraryData {
     private Identifier identifier;

@@ -254,15 +254,17 @@
                                     <Font name="System Bold" size="12.0"/>
                                 </font>
                             </Text>
-                            <RadioButton mnemonicParsing="false" onAction="#viewSpecificCheckedOut" text="All Books"
-                                         AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="30.0">
+                            <RadioButton fx:id="allCheckedOutButton" mnemonicParsing="false"
+                                         onAction="#viewAllCheckedOut" text="All Books" AnchorPane.leftAnchor="14.0"
+                                         AnchorPane.topAnchor="30.0">
                                 <toggleGroup>
                                     <ToggleGroup fx:id="checkedOut"/>
                                 </toggleGroup>
                             </RadioButton>
-                            <RadioButton fx:id="allCheckedOutButton" mnemonicParsing="false"
-                                         onAction="#viewAllCheckedOut" text="All Copies of:" toggleGroup="$checkedOut"
-                                         AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="55.0"/>
+                            <RadioButton fx:id="specificCheckedOutButton" mnemonicParsing="false"
+                                         onAction="#viewSpecificCheckedOut" text="All Copies of:"
+                                         toggleGroup="$checkedOut" AnchorPane.leftAnchor="14.0"
+                                         AnchorPane.topAnchor="55.0"/>
                         </AnchorPane>
                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                     prefHeight="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="7.0"
@@ -327,14 +329,14 @@
                         </AnchorPane>
                     </AnchorPane>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                        <BarChart fx:id="checkouts" animated="false" layoutX="-167.0" layoutY="-98.0"
-                                  legendVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <BarChart fx:id="checkouts" layoutX="-167.0" layoutY="-98.0" AnchorPane.bottomAnchor="0.0"
+                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <xAxis>
                                 <CategoryAxis fx:id="dateAxis" side="BOTTOM"/>
                             </xAxis>
                             <yAxis>
-                                <NumberAxis fx:id="checkoutAxis" label="Checkouts" side="LEFT"/>
+                                <NumberAxis fx:id="checkoutAxis" autoRanging="false" label="Checkouts"
+                                            minorTickVisible="false" side="LEFT"/>
                             </yAxis>
                         </BarChart>
                     </AnchorPane>

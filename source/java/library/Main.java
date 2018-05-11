@@ -8,6 +8,11 @@ import library.ui.FXInitializer;
  * @author Srikavin Ramkumar
  */
 public class Main {
+    /**
+     * The starting point of the application
+     *
+     * @param args Any given command-line arguments
+     */
     public static void main(String[] args){
         //Start the JavaFX GUI
         Application.launch(FXInitializer.class);

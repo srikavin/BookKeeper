@@ -16,10 +16,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import library.data.Book;
-import library.data.BookStatus;
-import library.data.Library;
-import library.data.ReportGenerator;
+import library.data.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,6 +30,8 @@ import java.util.Map;
  * @author Srikavin Ramkumar
  */
 public class Reports extends BaseController {
+    @FXML
+    private RadioButton specificCheckedOutButton;
     @FXML
     private RadioButton allCheckedOutButton;
     @FXML
@@ -115,13 +114,29 @@ public class Reports extends BaseController {
 
         checkouts.getData().clear();
 
-        ObservableList<XYChart.Data<String, Number>> chartData = FXCollections.observableArrayList();
+        ObservableList<XYChart.Data<String, Number>> returnSeries = FXCollections.observableArrayList();
+        ObservableList<XYChart.Data<String, Number>> checkoutSeries = FXCollections.observableArrayList();
         Book book = allBooksCharted ? null : selectedBook;
-        Map<String, Integer> checkoutData = reportGenerator.getCheckoutsBetweenDates(startDate.getValue(), endDate.getValue(), book);
+        Map<String, Integer> checkoutData = reportGenerator.getCheckoutsBetweenDates(startDate.getValue(), endDate.getValue(), book, Transaction.Action.CHECKOUT);
+        Map<String, Integer> returnData = reportGenerator.getCheckoutsBetweenDates(startDate.getValue(), endDate.getValue(), book, Transaction.Action.RETURN);
+        int max = -1;
         for (Map.Entry<String, Integer> e : checkoutData.entrySet()) {
-            chartData.add(new XYChart.Data<>(e.getKey(), e.getValue()));
+            if (e.getValue() > max) {
+                max = e.getValue();
+            }
+            checkoutSeries.add(new XYChart.Data<>(e.getKey(), e.getValue()));
         }
-        checkouts.getData().add(new XYChart.Series<>(chartData));
+        for (Map.Entry<String, Integer> e : returnData.entrySet()) {
+            if (e.getValue() > max) {
+                max = e.getValue();
+            }
+            returnSeries.add(new XYChart.Data<>(e.getKey(), e.getValue()));
+        }
+        checkouts.getData().add(new XYChart.Series<>("Checked Out", checkoutSeries));
+        checkouts.getData().add(new XYChart.Series<>("Returned", returnSeries));
+        checkoutAxis.setUpperBound(Math.max(1.5 * max, 5));
+        checkoutAxis.setLowerBound(0);
+        checkoutAxis.setTickUnit(Math.max((max) / 20, 1));
     }
 
     @FXML
@@ -223,6 +238,8 @@ public class Reports extends BaseController {
         endDate.setValue(LocalDate.now());
 
         bookStatus.setItems(FXCollections.observableArrayList(BookStatus.values()));
+        allCheckedOutButton.setSelected(true);
+        allBooksCharted = true;
 
         setReportContent();
     }
@@ -254,7 +271,7 @@ public class Reports extends BaseController {
         bookTitle.setText(selectedBook.getTitle());
         bookAuthor.setText(selectedBook.getAuthor());
         bookStatus.setValue(selectedBook.getStatus());
-        allCheckedOutButton.setSelected(true);
+        specificCheckedOutButton.setSelected(true);
         allBooksCharted = false;
         setReportContent();
     }

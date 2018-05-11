@@ -147,13 +147,14 @@ public class ReportGenerator {
      * May 1 => 5
      * May 2 => 8
      *
-     * @param start The minimum date of transactions to consider
-     * @param end   The maximum date of transactions to consider
-     * @param book  The book to return data for; null be used to indicate all books to be counted
+     * @param start  The minimum date of transactions to consider
+     * @param end    The maximum date of transactions to consider
+     * @param book   The book to return data for; null be used to indicate all books to be counted
+     * @param action The transaction action to filter for
      *
      * @return A map containing dates and the number of times books were checked out on that date.
      */
-    public Map<String, Integer> getCheckoutsBetweenDates(LocalDate start, LocalDate end, Book book) {
+    public Map<String, Integer> getCheckoutsBetweenDates(LocalDate start, LocalDate end, Book book, Transaction.Action action) {
         boolean allBooks = book == null;
 
         List<Transaction> transactions = library.getTransactions();
@@ -169,8 +170,7 @@ public class ReportGenerator {
             LocalDate timestamp = instantToLocalDate(e.getTimestamp());
 
             //Verify the transaction took place at the correct time
-            if ((allBooks || book.isCopyOf(e.getChangedBook())) && e.getAction() == Transaction.Action.CHECKOUT
-                    && timestamp.isBefore(end) && timestamp.isAfter(start)) {
+            if ((allBooks || book.isCopyOf(e.getChangedBook())) && e.getAction() == action && timestamp.isBefore(end) && timestamp.isAfter(start)) {
                 String key = dateFormatter.format(timestamp);
                 toRet.put(key, toRet.get(key) + 1);
             }
@@ -260,6 +260,11 @@ public class ReportGenerator {
         return formatter.out().toString();
     }
 
+    /**
+     * Find all books that are currently checked out
+     *
+     * @return A list of all {@linkplain Book}s that are checked out in the library
+     */
     public List<Book> getCheckedOutBooks() {
         List<Book> checkedOutBooks = new ArrayList<>();
         for (Book e : library.getBooks()) {
