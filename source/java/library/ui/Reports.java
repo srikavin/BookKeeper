@@ -6,16 +6,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.*;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Scale;
-import javafx.stage.Screen;
 import library.data.Book;
 import library.data.BookStatus;
 import library.data.Library;
@@ -114,30 +115,36 @@ public class Reports extends BaseController {
         Text reportText = new Text(reportView.getText());
         reportText.setFont(Font.font("monospaced"));
         TextFlow printArea = new TextFlow(reportText);
+        printArea.setBackground(null);
 
         //Layout the page and format it with the correct size and orientation
         Printer printer = Printer.getDefaultPrinter();
         PrinterJob printerJob = PrinterJob.createPrinterJob();
-        PageLayout pageLayout = printer.createPageLayout(Paper.NA_LETTER, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+        PageLayout pageLayout = printer.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
 
-        //Calculate the scaling to match the paper size
-        double maxRatio = (pageLayout.getPrintableWidth() / pageLayout.getPrintableHeight());
-        double scaleX = maxRatio * printArea.getBoundsInParent().getWidth();
-        double scaleY = maxRatio * printArea.getBoundsInParent().getHeight();
-        Scale scale = new Scale(scaleX, scaleY);
+        Scene s = new Scene(printArea);
+        s.snapshot(new WritableImage(1, 1));
+
+
+        //Calculate the scaling to match the paper size in terms of width
+        double availHorizontal = printArea.getBoundsInParent().getWidth();
+        double scaleRatio = pageLayout.getPrintableWidth() / availHorizontal;
+        Scale scale = new Scale(scaleRatio, scaleRatio);
         printArea.getTransforms().add(scale);
 
-        int pages = (int) (Screen.getPrimary().getDpi() * (printArea.getHeight() / pageLayout.getPrintableHeight()) + 1);
+        //Calculate the requires number of pages to print all content
+        int pages = (int) ((printArea.getBoundsInParent().getHeight() / pageLayout.getPrintableHeight()) + 1);
 
-        //Make sure user wants to print
+        // Make sure user wants to print
         if (printerJob != null && printerJob.showPrintDialog(getInitializer().getPrimaryStage())) {
-            //Set page layout and other settings
-            printArea.setMaxWidth(pageLayout.getPrintableWidth());
-            //Print all pages in the node
-            for (int page = 0; page <= pages; page++) {
+            // Set page layout and other settings
+            // Print all pages in the node
+            // Start at 1 instead of zero, as starting at 0 prints a page twice because it results in a translation of 0
+            for (int page = 1; page <= pages; page++) {
                 printerJob.printPage(pageLayout, printArea);
-                printArea.setTranslateX(-1 * page * pageLayout.getPrintableHeight());
+                printArea.setTranslateY(-1 * page * pageLayout.getPrintableHeight());
             }
+            //End the job and send it to the print spooler
             printerJob.endJob();
         }
     }
