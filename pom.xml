@@ -29,6 +29,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.8.3</version>
                 <configuration>
+                    <vendor>Srikavin Ramkumar</vendor>
                     <mainClass>library.Main</mainClass>
                 </configuration>
             </plugin>
@@ -48,15 +49,6 @@
                         <version>5.0.1</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.8.3</version>
-                <configuration>
-                    <vendor>Srikavin Ramkumar</vendor>
-                    <mainClass>library.ui.FXInitializer</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>

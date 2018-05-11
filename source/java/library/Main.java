@@ -5,15 +5,16 @@ import library.ui.FXInitializer;
 
 /**
  * The starting point of the application
+ *
  * @author Srikavin Ramkumar
  */
 public class Main {
     /**
-     * The starting point of the application
+     * The application entry point -- this is where the application will begin.
      *
-     * @param args Any given command-line arguments
+     * @param args Any command line arguments that are passed to the program
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         //Start the JavaFX GUI
         Application.launch(FXInitializer.class);
     }

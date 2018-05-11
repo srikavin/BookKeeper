@@ -40,15 +40,6 @@ public class FXInitializer extends Application {
     private Path dataFilePath;
 
     /**
-     * The application entry point
-     *
-     * @param args Any command line arguments that are passed to the program
-     */
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
