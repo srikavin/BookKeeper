@@ -43,7 +43,7 @@ public class Book implements LibraryData {
      * Initialize this object using saved data from {@link #asData()}.
      *
      * @param library A library to resolve the PatronType {@link Identifier} to a {@link PatronType}
-     * @param data A string array in the same format as returned by {@link #asData()}
+     * @param data    A string array in the same format as returned by {@link #asData()}
      */
     public Book(String[] data, Library library) {
         this(new Identifier(data[0]), data[1], data[2], data[3], BookStatus.valueOf(data[4]),
@@ -100,6 +100,11 @@ public class Book implements LibraryData {
         return identifier;
     }
 
+    /**
+     * Sets the identifier of this book.
+     *
+     * @param identifier The new identifier to set
+     */
     public void setIdentifier(Identifier identifier) {
         this.identifier = identifier;
     }

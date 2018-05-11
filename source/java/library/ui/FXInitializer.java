@@ -39,8 +39,13 @@ public class FXInitializer extends Application {
     private Library library;
     private Path dataFilePath;
 
+    /**
+     * The application entry point
+     *
+     * @param args Any command line arguments that are passed to the program
+     */
     public static void main(String[] args) {
-        Application.launch();
+        Application.launch(args);
     }
 
     /**
@@ -133,10 +138,22 @@ public class FXInitializer extends Application {
         infoHolderMap.clear();
     }
 
+    /**
+     * Saves the data file to the location of the data file that was most recently loaded
+     *
+     * @throws IOException If the data file cannot be saved for any reason, an IOException will be thrown
+     */
     public void saveDataFile() throws IOException {
         saveDataFileTo(dataFilePath);
     }
 
+    /**
+     * Saves the data file to the path given
+     *
+     * @param path The location to save the data file to
+     *
+     * @throws IOException If the data file cannot be saved for any reason, an IOException will be thrown
+     */
     public void saveDataFileTo(Path path) throws IOException {
         dataFilePath = path;
 
@@ -305,11 +322,11 @@ public class FXInitializer extends Application {
         /**
          * The controller of {@link #parent} stored in this instance
          */
-        BaseController controller;
+        final BaseController controller;
         /**
          * The root node of the loaded .fxml file
          */
-        Parent parent;
+        final Parent parent;
 
         /**
          * Creates an instance of a cache object for any given loaded node

@@ -2,6 +2,8 @@ package library.data;
 
 /**
  * Used to indicate that the object is LibraryData and can be saved to a file and loaded from a file.
+ *
+ * @author Srikavin Ramkumar
  */
 public interface LibraryData {
     /**

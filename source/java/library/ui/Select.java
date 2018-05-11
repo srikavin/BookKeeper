@@ -23,17 +23,26 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Abstract class for quickly building a select dialog.
- * The select dialog includes items of the specified type and calls the specified callback when an item is chosen by the user.
+ * Abstract class for quickly building a data view dialog.
  *
  * @param <T> The type of the selectable object. Should extend {@link LibraryData}
  *
  * @author Srikavin Ramkumar
  */
 abstract class AbstractView<T extends LibraryData> {
+    /**
+     * The table holding all of the given data objects of Type {@linkplain T}
+     */
     @FXML
     protected TableView<T> table;
+    /**
+     * The stage containing the dialog
+     */
     protected Stage stage;
+    /**
+     * The button that is used to select a given item.
+     * Automatically removed from the scene graph if a view dialog is used instead.
+     */
     @FXML
     protected Button selectButton;
     @FXML
@@ -121,6 +130,14 @@ abstract class AbstractView<T extends LibraryData> {
     protected abstract boolean filterPredicate(String filterText, T current);
 }
 
+/**
+ * This class includes commonly used selection dialogs for {@link Patron}s and {@link Book}s.
+ * The select dialog includes items of the specified type and calls the specified callback when an item is chosen by the user.
+ *
+ * @param <T> The type of DataType used. Must extend {@link LibraryData}
+ *
+ * @author Srikavin Ramkumar
+ */
 abstract class AbstractSelect<T extends LibraryData> extends AbstractView<T> {
     /**
      * Used to return to the original caller with the identifier of the Patron object selected
@@ -153,6 +170,8 @@ abstract class AbstractSelect<T extends LibraryData> extends AbstractView<T> {
 
 /**
  * Class that allows for selecting of a specific commonly-used Library Data Types
+ *
+ * @author Srikavin Ramkumar
  */
 public class Select {
     /**

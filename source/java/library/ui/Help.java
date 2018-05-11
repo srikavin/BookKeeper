@@ -16,6 +16,8 @@ import java.util.Map;
 /**
  * The controller for the help class. This controller is responsible for loading the information from the help file into
  * the list view and the web view. Includes implementation for comments with '#' as the first character in the line.
+ *
+ * @author Srikavin Ramkumar
  */
 public class Help extends BaseController {
     @FXML

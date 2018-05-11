@@ -22,6 +22,8 @@ import java.util.function.Predicate;
 /**
  * The UI View for checkouts. Implements {@link DataViewController}. Holds a {@link Patron} and a {@link Book}
  * instance to update. Uses event-driven operations to maintain state abd update the model layer.
+ *
+ * @author Srikavin Ramkumar
  */
 public class Checkout extends DataViewController<Book> {
     @FXML

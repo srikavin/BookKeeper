@@ -5,6 +5,8 @@ import java.util.Objects;
 /**
  * An unique identifier that is used to identify all {@link LibraryData} objects.
  * This class does not enforce uniqueness; it is up to the client class to maintain uniqueness
+ *
+ * @author Srikavin Ramkumar
  */
 public class Identifier implements Comparable<Identifier> {
     private final String id;
@@ -20,6 +22,7 @@ public class Identifier implements Comparable<Identifier> {
 
     /**
      * Creates an identifier using a integer identifier
+     *
      * @param id This identifier is converted to a string identifier as a 6 digit zero-padded number
      */
     public Identifier(int id) {
@@ -28,6 +31,7 @@ public class Identifier implements Comparable<Identifier> {
 
     /**
      * Returns the identifier as a String
+     *
      * @return The identifier as a String
      */
     public String getId() {
