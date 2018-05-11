@@ -186,6 +186,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
             //Ensure that a change actually occurred in the selection
             if (newValue != null && oldValue != newValue) {
                 setCurrentState(newValue);
+                validate();
             }
         });
     }
