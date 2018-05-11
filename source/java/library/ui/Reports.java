@@ -7,26 +7,52 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.print.*;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextArea;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import library.data.Book;
 import library.data.BookStatus;
 import library.data.Library;
 import library.data.ReportGenerator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class serves as a controller of the Reports view defined in the FXML.
+ * This handles the display, graphing, and communication between the {@link ReportGenerator} class and the view.
+ *
+ * @author Srikavin Ramkumar
+ */
 public class Reports extends BaseController {
+    @FXML
+    private RadioButton allCheckedOutButton;
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
+    @FXML
+    private CategoryAxis dateAxis;
+    @FXML
+    private BarChart<String, Number> checkouts;
+    @FXML
+    private TextField currentBook;
+    @FXML
+    private TextField bookTitle;
+    @FXML
+    private TextField bookAuthor;
+    @FXML
+    private ChoiceBox<BookStatus> bookStatus;
+    @FXML
+    private NumberAxis checkoutAxis;
     @FXML
     private Spinner<Double> fineLimit;
     @FXML
@@ -39,8 +65,11 @@ public class Reports extends BaseController {
     private RadioButton patronSort;
     @FXML
     private PieChart bookStatusChart;
+
     private boolean sortByItem = false;
+    private boolean allBooksCharted = true;
     private Views currentView = Views.CHECKED_OUT;
+    private Book selectedBook;
 
     private void setReportContent() {
         Library library = getLibrary();
@@ -83,6 +112,16 @@ public class Reports extends BaseController {
         });
         //Set the data into the PieChart
         bookStatusChart.setData(bookStatusData);
+
+        checkouts.getData().clear();
+
+        ObservableList<XYChart.Data<String, Number>> chartData = FXCollections.observableArrayList();
+        Book book = allBooksCharted ? null : selectedBook;
+        Map<String, Integer> checkoutData = reportGenerator.getCheckoutsBetweenDates(startDate.getValue(), endDate.getValue(), book);
+        for (Map.Entry<String, Integer> e : checkoutData.entrySet()) {
+            chartData.add(new XYChart.Data<>(e.getKey(), e.getValue()));
+        }
+        checkouts.getData().add(new XYChart.Series<>(chartData));
     }
 
     @FXML
@@ -180,6 +219,11 @@ public class Reports extends BaseController {
             setReportContent();
         });
 
+        startDate.setValue(LocalDate.of(2018, 3, 12));
+        endDate.setValue(LocalDate.now());
+
+        bookStatus.setItems(FXCollections.observableArrayList(BookStatus.values()));
+
         setReportContent();
     }
 
@@ -192,6 +236,47 @@ public class Reports extends BaseController {
     @FXML
     private void refreshReports(ActionEvent actionEvent) {
         reportView.clear();
+        setReportContent();
+    }
+
+    @FXML
+    private void findBook(MouseEvent mouseEvent) {
+        Select.BookSelect bookSelect = new Select.BookSelect();
+        Stage stage = getInitializer().getDialog("Select.fxml", bookSelect);
+        bookSelect.init((e) -> selectedBook = getLibrary().getBookFromID(e), getLibrary().getBooks(), stage);
+        stage.showAndWait();
+        updateCurrentBook(null);
+    }
+
+    @FXML
+    private void updateCurrentBook(ActionEvent event) {
+        currentBook.setText(selectedBook.getIdentifier().getId());
+        bookTitle.setText(selectedBook.getTitle());
+        bookAuthor.setText(selectedBook.getAuthor());
+        bookStatus.setValue(selectedBook.getStatus());
+        allCheckedOutButton.setSelected(true);
+        allBooksCharted = false;
+        setReportContent();
+    }
+
+    @FXML
+    private void viewSpecificCheckedOut(ActionEvent event) {
+        if (allBooksCharted && selectedBook != null) {
+            allBooksCharted = false;
+            setReportContent();
+        }
+    }
+
+    @FXML
+    private void viewAllCheckedOut(ActionEvent event) {
+        if (!allBooksCharted) {
+            allBooksCharted = true;
+            setReportContent();
+        }
+    }
+
+    @FXML
+    private void updateDate(ActionEvent event) {
         setReportContent();
     }
 

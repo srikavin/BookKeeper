@@ -1,8 +1,6 @@
 package library.data;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
@@ -19,6 +17,7 @@ public class ReportGenerator {
     private static final String BOOK_CONTENT_FORMAT = "%-8s%-30.30s%-30.30s%-12s%-8s%n";
     private static final String SEPARATOR = "---------------------------------------------------------------------------------------------\n";
     private final Library library;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM d");
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
             .withLocale(Locale.US)
             .withZone(ZoneId.systemDefault());
@@ -59,6 +58,7 @@ public class ReportGenerator {
      * be handed out to groups of patrons easily.
      *
      * @param books The list of books to format
+     *
      * @return A string representation of the books in this library grouped by patron
      */
     public String formatByPatron(List<Book> books) {
@@ -109,6 +109,7 @@ public class ReportGenerator {
      * Groups the books by the patron who has them checked out.
      *
      * @param books The list of books to format
+     *
      * @return A string representation of the books in this library with no grouping
      */
     public String formatByItems(List<Book> books) {
@@ -139,6 +140,48 @@ public class ReportGenerator {
         return formatter.out().toString();
     }
 
+    /**
+     * Returns a map containing a date and the number of times a given book (or all books) were checked out on that date.
+     * For example, if 5 books were checked out on May 1st; and 8 books were checked out on May 2nd, calling this method
+     * will return a map with the following entries:
+     * May 1 => 5
+     * May 2 => 8
+     *
+     * @param start The minimum date of transactions to consider
+     * @param end   The maximum date of transactions to consider
+     * @param book  The book to return data for; null be used to indicate all books to be counted
+     *
+     * @return A map containing dates and the number of times books were checked out on that date.
+     */
+    public Map<String, Integer> getCheckoutsBetweenDates(LocalDate start, LocalDate end, Book book) {
+        boolean allBooks = book == null;
+
+        List<Transaction> transactions = library.getTransactions();
+        Map<String, Integer> toRet = new LinkedHashMap<>();
+
+        int daysBetween = (int) (end.toEpochDay() - start.toEpochDay());
+
+        for (int i = 0; i < daysBetween; i++) {
+            toRet.put(dateFormatter.format(start.plusDays(i)), 0);
+        }
+
+        for (Transaction e : transactions) {
+            LocalDate timestamp = instantToLocalDate(e.getTimestamp());
+
+            //Verify the transaction took place at the correct time
+            if ((allBooks || book.isCopyOf(e.getChangedBook())) && e.getAction() == Transaction.Action.CHECKOUT
+                    && timestamp.isBefore(end) && timestamp.isAfter(start)) {
+                String key = dateFormatter.format(timestamp);
+                toRet.put(key, toRet.get(key) + 1);
+            }
+        }
+        return toRet;
+    }
+
+    private LocalDate instantToLocalDate(Instant instant) {
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+    }
+
     private int getDayTillDue(Book e) {
         Patron patron = e.getCurrentPatron();
         PatronType patronType = patron.getPatronType();
@@ -152,6 +195,7 @@ public class ReportGenerator {
      * Formats the number of days left as a string
      *
      * @param daysLeft An integer number of days until the book is due. A negative number indicates that it is overdue.
+     *
      * @return A string containing the number of days left or the string "overdue".
      */
     private String getDaysTillDue(int daysLeft) {

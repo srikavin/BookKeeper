@@ -1,6 +1,7 @@
 package library.data;
 
 import java.time.Instant;
+import java.util.Objects;
 
 /**
  * Represents a single library book. Includes a title, author, and ISBN.
@@ -52,6 +53,31 @@ public class Book implements LibraryData {
         if (data.length != 7) {
             throw new RuntimeException("Invalid data type!");
         }
+    }
+
+    /**
+     * Checks if the given book is a copy of another book. This is true if and only if the ISBN, the author, and the
+     * title of both books match. None of the other fields (Book status, current patron) are taken into consideration.
+     *
+     * @param book The book to compare with
+     *
+     * @return True if and only if the ISBN, the author, and the title of both books match; otherwise false
+     */
+    public boolean isCopyOf(Book book) {
+        if (book == null) {
+            return false;
+        }
+        if (this == book) {
+            return true;
+        }
+        return Objects.equals(isbn, book.isbn) &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(author, book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn, title, author, status);
     }
 
     /**
