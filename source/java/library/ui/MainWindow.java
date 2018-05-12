@@ -109,14 +109,11 @@ public class MainWindow extends BaseController {
      */
     @Override
     protected void registerSpotlightItems(SpotlightManager manager) {
-        manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons. \nIt is possible to add, create, and delete patrons.");
-        //#TODO - Update the spotlight text for Transactions
-        manager.registerSpotlight(transactionsTile, "Transactions", "View and manage all patron types. \n" +
-                "It is possible to add, create, and delete patrons. " +
-                "Patron types can be applied to patrons to " +
-                "set book checkout limits and time limits.");
-        manager.registerSpotlight(booksTile, "Books", "View and manage all books. \nIt is possible to add, create, and delete books.");
-        manager.registerSpotlight(reportsTile, "Reports", "View reports on patrons and current fines.");
+        manager.registerSpotlight(patronsTile, "Patrons", "View and manage all patrons and patron types. It is possible to add, create, and delete patrons and patron types.");
+        manager.registerSpotlight(transactionsTile, "Transactions", "View all existing transactions. " +
+                "Transactions are automatically generated. Transactions may not be created, modified, or deleted.");
+        manager.registerSpotlight(booksTile, "Books", "View and manage all books. It is possible to add, create, and delete books.");
+        manager.registerSpotlight(reportsTile, "Reports", "View reports on patrons, book data and current fines.");
         manager.registerSpotlight(checkoutTile, "Checkout & Return", "Manage books and checkout books to patrons.");
     }
 

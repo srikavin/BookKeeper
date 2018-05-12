@@ -253,7 +253,7 @@ public class FXInitializer extends Application {
     private void changeContent(Node content, BaseController controller) {
         //Set the current controller to the new content's controller
         this.currentController = controller;
-
+        controller.initializeData();
         //Set the center of the pane to the content loaded
         borderPane.setCenter(content);
         //Keep the menu on top
