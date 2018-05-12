@@ -150,8 +150,8 @@ public class Transactions extends DataViewController<Transaction> {
 
         //Set the value generation scheme for each column
         idColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getIdentifier()));
-        nameColumn.setCellValueFactory((value) -> Bindings.concat(value.getValue().getChangedPatron().getFirstName(), " ", value.getValue().getChangedPatron().getLastName()));
-        bookNameColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getTitle()));
+        nameColumn.setCellValueFactory((value) -> value == null ? new ReadOnlyStringWrapper("DELETED") : Bindings.concat(value.getValue().getChangedPatron().getFirstName(), " ", value.getValue().getChangedPatron().getLastName()));
+        bookNameColumn.setCellValueFactory((value) -> value == null ? new ReadOnlyStringWrapper("DELETED") : new ReadOnlyObjectWrapper<>(value.getValue().getChangedBook().getTitle()));
         actionColumn.setCellValueFactory((value) -> new ReadOnlyObjectWrapper<>(value.getValue().getAction()));
         timestampColumn.setCellValueFactory((value) -> new ReadOnlyStringWrapper(formatter.format(value.getValue().getTimestamp())));
 

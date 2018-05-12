@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -114,6 +115,22 @@ public class Library {
      * @return A list of all {@link Transaction}s in this library
      */
     public List<Transaction> getTransactions() {
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction e = transactions.get(i);
+            boolean removed = false;
+            if (e.getChangedBook() == null || getBookFromID(e.getChangedBook().getIdentifier()) == null) {
+                transactions.remove(e);
+                removed = true;
+            }
+            if (e.getChangedPatron() == null || getPatronFromID(e.getChangedPatron().getIdentifier()) == null) {
+                transactions.remove(e);
+                removed = true;
+            }
+            if (removed) {
+                transactions.add(new Transaction(e.asData(), this));
+            }
+        }
+        transactions.sort(Comparator.comparing(Transaction::getIdentifier));
         return transactions;
     }
 

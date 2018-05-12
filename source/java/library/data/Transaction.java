@@ -1,6 +1,7 @@
 package library.data;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 /**
  * Used to store all transactions that take place in a library instance.
@@ -10,6 +11,10 @@ import java.time.Instant;
  * @author Srikavin Ramkumar
  */
 public class Transaction implements LibraryData {
+    private final static Patron deletedPatron = new Patron(new Identifier("DELETED"), "DELETED", "DELETED",
+            new PatronType(new Identifier("DELETED"), "DELETED", 1, 1));
+    private final static Book deletedBook = new Book(new Identifier("DELETED"), "DELETED", "DELETED", "0000000000", BookStatus.LOST, null, null);
+
     private final Identifier identifier;
     private final Patron changedPatron;
     private final Book changedBook;
@@ -27,6 +32,12 @@ public class Transaction implements LibraryData {
      * @param timestamp     The {@link Instant} that this transaction took place
      */
     public Transaction(Identifier identifier, Patron changedPatron, Book changedBook, Action action, Instant timestamp) {
+        if (changedBook == null) {
+            changedBook = deletedBook;
+        }
+        if (changedPatron == null) {
+            changedPatron = deletedPatron;
+        }
         this.identifier = identifier;
         this.changedPatron = changedPatron;
         this.changedBook = changedBook;
@@ -42,11 +53,22 @@ public class Transaction implements LibraryData {
      */
     public Transaction(String[] data, Library library) {
         if (data.length != 5) {
+            System.out.println(Arrays.toString(data));
             throw new RuntimeException("Invalid data array passed to create a Transaction object.");
         }
         identifier = new Identifier(data[0]);
-        changedPatron = library.getPatronFromID(new Identifier(data[1]));
-        changedBook = library.getBookFromID(new Identifier(data[2]));
+        Patron patron = library.getPatronFromID(new Identifier(data[1]));
+        Book book = library.getBookFromID(new Identifier(data[2]));
+        if (patron == null) {
+            changedBook = deletedBook;
+        } else {
+            changedBook = book;
+        }
+        if (book == null) {
+            changedPatron = deletedPatron;
+        } else {
+            changedPatron = patron;
+        }
         action = Action.valueOf(data[3]);
         timestamp = Instant.parse(data[4]);
     }
@@ -57,8 +79,8 @@ public class Transaction implements LibraryData {
     @Override
     public String[] asData() {
         return new String[]{identifier.getId(),
-                changedPatron.getIdentifier().getId(),
-                changedBook.getIdentifier().getId(),
+                changedPatron == null ? "DELETED" : changedPatron.getIdentifier().getId(),
+                changedBook == null ? "DELETED" : changedBook.getIdentifier().getId(),
                 action.name(),
                 timestamp.toString()};
     }
@@ -74,6 +96,7 @@ public class Transaction implements LibraryData {
 
     /**
      * Getter for the book affected by this transaction
+     *
      * @return The book affected by this transaction
      */
     public Book getChangedBook() {
@@ -82,6 +105,7 @@ public class Transaction implements LibraryData {
 
     /**
      * Getter for the patron affected by this transaction
+     *
      * @return The patron affected by this transaction
      */
     public Patron getChangedPatron() {
@@ -98,6 +122,7 @@ public class Transaction implements LibraryData {
 
     /**
      * Getter for the {@link Instant} that this transaction took place
+     *
      * @return An {@linkplain Instant} containing the date and time this transaction occurred
      */
     public Instant getTimestamp() {
