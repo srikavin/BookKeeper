@@ -218,6 +218,17 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
      */
     protected abstract void update(T toUpdate);
 
+    /**
+     * Checks if the given object can be deleted.
+     *
+     * @param object The object to check if it can be deleted
+     *
+     * @return True if it can be deleted; false otherwise
+     */
+    protected boolean canDelete(T object) {
+        return true;
+    }
+
     @FXML
     private void delete(ActionEvent event) {
         if (currentlyCreating != null) {
@@ -229,7 +240,7 @@ public abstract class DataViewController<T extends LibraryData> extends BaseCont
             return;
         }
         T current = getCurrentlySelected();
-        if (current != null) {
+        if (current != null && canDelete(current)) {
             dataSource.remove(current);
             getLibrary().modify();
         }

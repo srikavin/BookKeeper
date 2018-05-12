@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import library.data.Identifier;
 import library.data.Library;
+import library.data.Patron;
 import library.data.PatronType;
 
 import java.util.HashSet;
@@ -163,5 +164,22 @@ public class PatronTypes extends DataViewController<PatronType> {
         type.setMaxCheckedOutBooks(maxCheckedOutBooks.getValue());
         type.setMaxCheckoutDays(maxCheckoutDays.getValue());
         type.setName(name.getText());
+    }
+
+    @Override
+    protected boolean canDelete(PatronType object) {
+        Library library = getLibrary();
+        for (Patron e : library.getPatrons()) {
+            if (e.getPatronType().equals(object)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Cannot Delete Patron Type");
+                alert.setHeaderText("The Patron Type is in use by some Patrons");
+                alert.setContentText("Please change the patron type used by patrons to another type before deleting this type.");
+
+                alert.showAndWait();
+                return false;
+            }
+        }
+        return true;
     }
 }
