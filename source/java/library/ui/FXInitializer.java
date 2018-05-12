@@ -150,7 +150,7 @@ public class FXInitializer extends Application {
 
         //If either the preference or the library data has been modified, create a backup of both before overwriting them
         //"Dynamic Backup"
-        if (Files.isRegularFile(dataFilePath) && (library.isModified() || preferenceManager.isModified())) {
+        if (Files.isDirectory(dataFilePath) && (library.isModified() || preferenceManager.isModified())) {
             //Generate the timestamp
             final DateTimeFormatter saveFileFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-SS");
             String timestamp = LocalDateTime.now().format(saveFileFormatter);

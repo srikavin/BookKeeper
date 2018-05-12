@@ -254,6 +254,7 @@ public class Library {
         BufferedWriter writer = Files.newBufferedWriter(dataFile);
         save(writer);
         writer.close();
+        modified = false;
     }
 
     /**
