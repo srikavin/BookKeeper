@@ -134,7 +134,7 @@ public class Reports extends BaseController {
         }
         checkouts.getData().add(new XYChart.Series<>("Checked Out", checkoutSeries));
         checkouts.getData().add(new XYChart.Series<>("Returned", returnSeries));
-        checkoutAxis.setUpperBound(Math.max(1.5 * max, 5));
+        checkoutAxis.setUpperBound(Math.max(1.2 * max, 3));
         checkoutAxis.setLowerBound(0);
         checkoutAxis.setTickUnit(Math.max((max) / 20, 1));
     }
@@ -260,9 +260,11 @@ public class Reports extends BaseController {
     private void findBook(MouseEvent mouseEvent) {
         Select.BookSelect bookSelect = new Select.BookSelect();
         Stage stage = getInitializer().getDialog("Select.fxml", bookSelect);
-        bookSelect.init((e) -> selectedBook = getLibrary().getBookFromID(e), getLibrary().getBooks(), stage);
+        bookSelect.init((e) -> {
+            selectedBook = getLibrary().getBookFromID(e);
+            updateCurrentBook(null);
+        }, getLibrary().getBooks(), stage);
         stage.showAndWait();
-        updateCurrentBook(null);
     }
 
     @FXML
