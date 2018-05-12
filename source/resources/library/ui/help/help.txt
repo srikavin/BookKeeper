@@ -1,4 +1,5 @@
 #CatalogName HelpFile
+Frequently Asked Questions (FAQ) --- faq.html
 Navigating the File Menu --- file.html
 Navigating the Main Menu --- navigation.html
 Managing Patrons --- patrons.html
