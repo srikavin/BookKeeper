@@ -3,7 +3,6 @@
 ## BookKeeper - Library Management System
 BookKeeper was designed for the management of large scale libraries from the ground up. 
 
-> #### This file may be outdated, view README.html
 
 ### Usage
 BookKeeper requires Java 8. If java 8 is not installed, the program will use a bundled JVM to execute.
@@ -23,6 +22,17 @@ Used for creating a executable file with a bundled-JVM using the JDK-bundled `ja
 * Cross Platform and can run on Windows, Linux, and MacOS 
 * Includes fully-featured interactive documentation featuring images and videos 
 
+
+### Technologies Used
+* Gluon Scenebuilder - used to quickly create JavaFX layouts
+* IntelliJ IDEA - used to write Java code efficiently and quickly
+* Java 8 - used to write efficient and robust code
+* JavaFX - used to create general UI layout
+* Git - used for version control
+* Skeleton - used in application help for styling
+* Adobe Illustrator - used to customize and design application icons
+* HTML & CSS - used to create application help
+
 ### Screenshots
 #### Main Window:
 ![Main Window of BookKeeper](readme_assets/mainWindow.png)
@@ -40,18 +50,5 @@ knowledge of the specific patron entry.
 ###### *Balasmiq mockup was used to design wireframes and aid in planning*
 More planning images can be found [here](readme_assets/mockup). These planning documents were modified when I discovered a more elegant solution during development. 
 
-#### Technologies Used
-* Gluon Scenebuilder - used to quickly create JavaFX layouts
-* IntelliJ IDEA - used to write Java code efficiently and quickly
-* Java 8 - used to write efficient and robust code
-* JavaFX - used to create general UI layout
-* Git - used for version control
-* Skeleton - used in application help for styling
-* Adobe Illustrator - used to customize and design application icons
-* HTML & CSS - used to create application help
-
 ### Technical Documentation
 Documentation (javadocs) can be found inside javadocs or [here](javadoc/index.html)
-
-### About
-Written by Srikavin Ramkumar for the FBLA Coding and Programming Competition.
